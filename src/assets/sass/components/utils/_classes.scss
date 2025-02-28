@@ -1,0 +1,247 @@
+// * Color Variables
+
+.text_color01 {
+	color: var(--text_color01);
+}
+
+.text_color02 {
+	color: var(--text_color02);
+}
+
+.text_color03 {
+	color: var(--text_color03);
+}
+
+.text_color04 {
+	color: var(--text_color04);
+}
+
+.text_color05 {
+	color: var(--text_color05);
+}
+
+.bg_color01 {
+	background-color: var(--bg_color01);
+}
+
+.bg_color02 {
+	background-color: var(--bg_color02);
+}
+
+.bg_color03 {
+	background-color: var(--bg_color03);
+}
+
+.bg_color04 {
+	background-color: var(--bg_color04);
+}
+
+.bg_color05 {
+	background-color: var(--bg_color05);
+}
+
+.text_center {
+	text-align: center;
+}
+
+// * Font Variables
+
+.title_size01 {
+	font-size: var(--title_size01);
+}
+
+.text_size01 {
+	font-size: var(--text_size01);
+}
+
+.text_size02 {
+	font-size: var(--text_size02);
+}
+
+.text_size03 {
+	font-size: var(--text_size03);
+}
+
+.text_size04 {
+	font-size: var(--text_size04);
+}
+
+.text_size05 {
+	font-size: var(--text_size05);
+}
+
+.text_size06 {
+	font-size: var(--text_size06);
+}
+
+.text_size07 {
+	font-size: var(--text_size07);
+}
+
+.text_size08 {
+	font-size: var(--text_size08);
+}
+
+.text_size09 {
+	font-size: var(--text_size09);
+}
+
+.text_size10 {
+	font-size: var(--text_size10);
+}
+
+.title_size02 {
+	font-size: var(--title_size02);
+}
+
+.title_size03 {
+	font-size: var(--title_size03);
+}
+
+.title_size04 {
+	font-size: var(--title_size04);
+}
+
+.title_size05 {
+	font-size: var(--title_size05);
+}
+
+.title_size06 {
+	font-size: var(--title_size06);
+}
+
+.title_size07 {
+	font-size: var(--title_size07);
+}
+
+.title_size08 {
+	font-size: var(--title_size08);
+}
+
+.title_size09 {
+	font-size: var(--title_size09);
+}
+
+.title_size10 {
+	font-size: var(--title_size10);
+}
+
+// * Flex 
+.f_basis10 {
+	flex-basis: 10%;
+}
+
+.f_basis20 {
+	flex-basis: 20%;
+}
+
+.f_basis30 {
+	flex-basis: 30%;
+}
+
+.f_basis40 {
+	flex-basis: 40%;
+}
+
+.f_basis50 {
+	flex-basis: 50%;
+}
+
+.f_basis60 {
+	flex-basis: 60%;
+}
+
+.f_basis70 {
+	flex-basis: 70%;
+}
+
+.f_basis80 {
+	flex-basis: 80%;
+}
+
+.f_basis90 {
+	flex-basis: 90%;
+}
+
+.f_basis100 {
+	flex-basis: 100%;
+}
+
+.flex {
+	display: flex;
+}
+
+.upper {
+	text-transform: uppercase;
+}
+
+.flex_column {
+	flex-direction: column;
+}
+.flex_row {
+	flex-direction: row;
+}
+
+.space_between {
+	justify-content: space-between;
+}
+.j_center {
+	justify-content: center;
+}
+
+.a_center {
+	align-items: center;
+}
+
+.flex_wrap {
+	flex-wrap: wrap;
+}
+
+.relative {
+	position: relative;
+}
+
+// * Size Variables
+.w_100 {
+	width: 100%;
+}
+
+.h_100 {
+	height: 100%;
+}
+
+.gap05 {
+	gap:0.5rem;
+}
+
+.gap1{
+	gap:1rem;
+}
+
+.gap2{
+	gap:2rem;
+}
+
+.gap3{
+	gap:3rem;
+}
+
+.gap4{
+	gap:4rem;
+}
+
+.gap5{
+	gap:5rem;
+}
+
+.gap6{
+	gap:6rem;
+}
+
+.gap7{
+	gap:7rem;
+}
+
+.gap8{
+	gap:8rem;
+}

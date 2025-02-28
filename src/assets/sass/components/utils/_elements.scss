@@ -1,0 +1,48 @@
+@use './variables' as v;
+.col {
+	position: relative;
+	flex : 1 0 100%;
+	@media screen and (min-width : v.$lg-breakpoint ) {
+		flex: 1 1 0%;
+	}
+}
+.input_default {
+	border: var(--border_color01);
+	border-radius: var(--size_rem_05);
+	height: var(--size_rem_35);
+	font-size: var(--size_rem_2);
+	width: 100%;
+	outline: none;
+	padding: var(--size_rem_1);
+}
+
+.label_default {
+	display: flex;
+	align-items: center;
+	column-gap: var(--size_rem_05);
+	position: absolute;
+	font-size: var(--size_rem_15);
+	top: 50%;
+	left: 15px;
+	transform: translateY(-50%);
+	pointer-events: none;
+	transition: 0.3s;
+	font-size: var(--text_size01);
+}
+
+.input_default:focus ~ label {
+	opacity: 0;
+	top: 0;
+	left: 15px;
+	background: transparent;
+	font-size: var(--size_rem_05);
+}
+
+
+.btn {
+	border: var(--border_color01);
+	background-color: var(--bg_color02);
+	color: var(--text_color03);
+	border-radius: 0.5rem;
+	padding: 1rem;
+}

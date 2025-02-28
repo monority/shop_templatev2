@@ -1,0 +1,63 @@
+@use "reset";
+@use "./components/utils/variables" as v;
+@use "./components/utils/mixins" as mixins;
+@use "./components/utils/classes";
+@use "./components/utils/elements";
+@use "./components/utils/variables";
+@use "./components/ui/header";
+
+.app_container {
+	display: flex;
+	flex-direction: column;
+	gap: 4rem;
+	padding: 0;
+	margin: 0 auto;
+	max-width: 80vw;
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	gap: 8rem;
+}
+
+
+
+.container_responsive {
+	@include mixins.flex_res(initial, center, column, row)
+}
+
+.container, .wrapper, .element {
+	display: flex;
+}
+
+.wrapper_row,
+.container_row,
+.element_row {
+	@include mixins.flex(center, center, row)
+}
+
+.container_center,
+.element_center,
+.wrapper_center {
+	@include mixins.flex(center, center, row);
+}
+
+.container_between,
+.element_between,
+.wrapper_between {
+	@include mixins.flex(center, space-between, row);
+}
+
+.container_betweencolumn,
+.element_betweencolumn,
+.wrapper_betweencolumn {
+	@include mixins.flex(flex-start, space-between, column);
+}
+
+.wrapper_column,
+.container_column,
+.element_column {
+	@include mixins.flex(flex-start, flex-start, column);
+
+}
