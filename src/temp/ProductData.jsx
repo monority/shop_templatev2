@@ -13,7 +13,7 @@ export const data = [
 		brand: "Adidas",
 		availableSizes: [40, 41, 42, 43, 44],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-123456"
+		codeProduct: "SKU-789012"
 	},
 	{
 		id: 2,
@@ -27,7 +27,8 @@ export const data = [
 		description: "Stylish sneakers with excellent cushioning for everyday wear.",
 		category: "Lifestyle",
 		brand: "Nike",
-		availableSizes: [38, 39, 40, 41, 42]
+		availableSizes: [38, 39, 40, 41, 42],
+		codeProduct: "SKU-345678"
 	},
 	{
 		id: 3,
@@ -41,7 +42,8 @@ export const data = [
 		description: "Lightweight and breathable, perfect for active lifestyles.",
 		category: "Training",
 		brand: "Puma",
-		availableSizes: [39, 40, 41, 42, 43]
+		availableSizes: [39, 40, 41, 42, 43],
+		codeProduct: "SKU-901234"
 	},
 	{
 		id: 4,
@@ -55,7 +57,8 @@ export const data = [
 		description: "Innovative design with energy-returning soles for optimal performance.",
 		category: "Running",
 		brand: "Reebok",
-		availableSizes: [40, 41, 42, 43, 44]
+		availableSizes: [40, 41, 42, 43, 44],
+		codeProduct: "SKU-567890"
 	},
 	{
 		id: 5,
@@ -69,7 +72,8 @@ export const data = [
 		description: "A timeless classic that never goes out of style.",
 		category: "Casual",
 		brand: "Converse",
-		availableSizes: [36, 37, 38, 39, 40]
+		availableSizes: [36, 37, 38, 39, 40],
+		codeProduct: "SKU-234567"
 	},
 	{
 		id: 6,
@@ -83,7 +87,8 @@ export const data = [
 		description: "Perfect for skateboarding and casual outings.",
 		category: "Skateboarding",
 		brand: "Vans",
-		availableSizes: [37, 38, 39, 40, 41]
+		availableSizes: [37, 38, 39, 40, 41],
+		codeProduct: "SKU-890123"
 	},
 	{
 		id: 7,
@@ -97,7 +102,8 @@ export const data = [
 		description: "Premium quality sneakers with exceptional arch support.",
 		category: "Walking",
 		brand: "New Balance",
-		availableSizes: [41, 42, 43, 44, 45]
+		availableSizes: [41, 42, 43, 44, 45],
+		codeProduct: "SKU-456789"
 	},
 	{
 		id: 8,
@@ -111,7 +117,8 @@ export const data = [
 		description: "Advanced cushioning for high-impact activities.",
 		category: "Training",
 		brand: "Under Armour",
-		availableSizes: [39, 40, 41, 42, 43]
+		availableSizes: [39, 40, 41, 42, 43],
+		codeProduct: "SKU-678901"
 	},
 	{
 		id: 9,
@@ -125,7 +132,8 @@ export const data = [
 		description: "Iconic basketball sneakers with a bold design.",
 		category: "Basketball",
 		brand: "Jordan",
-		availableSizes: [42, 43, 44, 45, 46]
+		availableSizes: [42, 43, 44, 45, 46],
+		codeProduct: "SKU-345012"
 	},
 	{
 		id: 10,
@@ -139,7 +147,8 @@ export const data = [
 		description: "Designed for long-distance runners with excellent support.",
 		category: "Running",
 		brand: "Asics",
-		availableSizes: [40, 41, 42, 43, 44]
+		availableSizes: [40, 41, 42, 43, 44],
+		codeProduct: "SKU-901567"
 	},
 	{
 		id: 11,
@@ -153,7 +162,8 @@ export const data = [
 		description: "Engineered for speed and responsiveness on the track.",
 		category: "Track",
 		brand: "Saucony",
-		availableSizes: [38, 39, 40, 41, 42]
+		availableSizes: [38, 39, 40, 41, 42],
+		codeProduct: "SKU-234890"
 	},
 	{
 		id: 12,
@@ -167,7 +177,8 @@ export const data = [
 		description: "Maximalist cushioning for unparalleled comfort during runs.",
 		category: "Running",
 		brand: "Hoka One One",
-		availableSizes: [41, 42, 43, 44, 45]
+		availableSizes: [41, 42, 43, 44, 45],
+		codeProduct: "SKU-567123"
 	},
 	{
 		id: 13,
@@ -181,7 +192,8 @@ export const data = [
 		description: "A sleek design blending modern aesthetics and comfort.",
 		category: "Lifestyle",
 		brand: "Adidas",
-		availableSizes: [39, 40, 41, 42, 43]
+		availableSizes: [39, 40, 41, 42, 43],
+		codeProduct: "SKU-890456"
 	},
 	{
 		id: 14,
@@ -195,7 +207,8 @@ export const data = [
 		description: "Built for stability and long-lasting performance.",
 		category: "Running",
 		brand: "Nike",
-		availableSizes: [40, 41, 42, 43, 44]
+		availableSizes: [40, 41, 42, 43, 44],
+		codeProduct: "SKU-123890"
 	},
 	{
 		id: 15,
@@ -209,7 +222,8 @@ export const data = [
 		description: "Retro-inspired sneakers with a playful touch.",
 		category: "Casual",
 		brand: "Puma",
-		availableSizes: [38, 39, 40, 41, 42]
+		availableSizes: [38, 39, 40, 41, 42],
+		codeProduct: "SKU-456012"
 	},
 	{
 		id: 16,
@@ -225,7 +239,7 @@ export const data = [
 		brand: "Brooks",
 		availableSizes: [40, 41, 42, 43, 44],
 		sizeDetail: "US Men",
-		codeProduct: "SKU-654321"
+		codeProduct: "SKU-789345"
 	},
 	{
 		id: 17,
@@ -241,7 +255,7 @@ export const data = [
 		brand: "Skechers",
 		availableSizes: [37, 38, 39, 40, 41],
 		sizeDetail: "US Women",
-		codeProduct: "SKU-987654"
+		codeProduct: "SKU-012678"
 	},
 	{
 		id: 18,
@@ -257,7 +271,7 @@ export const data = [
 		brand: "On",
 		availableSizes: [39, 40, 41, 42, 43],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-112233"
+		codeProduct: "SKU-345901"
 	},
 	{
 		id: 19,
@@ -273,7 +287,7 @@ export const data = [
 		brand: "Salomon",
 		availableSizes: [40, 41, 42, 43, 44],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-445566"
+		codeProduct: "SKU-678234"
 	},
 	{
 		id: 20,
@@ -289,7 +303,7 @@ export const data = [
 		brand: "Mizuno",
 		availableSizes: [41, 42, 43, 44, 45],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-778899"
+		codeProduct: "SKU-901567"
 	},
 	{
 		id: 21,
@@ -305,7 +319,7 @@ export const data = [
 		brand: "Fila",
 		availableSizes: [36, 37, 38, 39, 40],
 		sizeDetail: "US Women",
-		codeProduct: "SKU-990011"
+		codeProduct: "SKU-234678"
 	},
 	{
 		id: 22,
@@ -321,7 +335,7 @@ export const data = [
 		brand: "Diadora",
 		availableSizes: [40, 41, 42, 43, 44],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-223344"
+		codeProduct: "SKU-567901"
 	},
 	{
 		id: 23,
@@ -337,7 +351,7 @@ export const data = [
 		brand: "Lacoste",
 		availableSizes: [38, 39, 40, 41, 42],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-556677"
+		codeProduct: "SKU-890234"
 	},
 	{
 		id: 24,
@@ -353,7 +367,7 @@ export const data = [
 		brand: "Ecco",
 		availableSizes: [39, 40, 41, 42, 43],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-334455"
+		codeProduct: "SKU-123567"
 	},
 	{
 		id: 25,
@@ -369,6 +383,6 @@ export const data = [
 		brand: "Timberland",
 		availableSizes: [41, 42, 43, 44, 45],
 		sizeDetail: "Eu Men",
-		codeProduct: "SKU-667788"
+		codeProduct: "SKU-456890"
 	}
 ];

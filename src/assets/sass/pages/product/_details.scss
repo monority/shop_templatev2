@@ -1,0 +1,57 @@
+@use '../../components/utils/variables' as v;
+#productdetails{
+	.container_content{
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
+		@media screen and (min-width: v.$lg_breakpoint){
+			flex-direction: row;
+			
+		}
+	}
+	.container_display{
+		display: flex;
+		flex-basis: 40%;
+		img{
+			width: 100%;
+			padding: 2rem;
+		}
+	}
+	.container_details{
+		display: flex;
+		flex-basis: 60%;
+		flex-direction: column;
+	}
+	.defaultColor{
+		border: var(--border_color01);
+		padding: 1rem;
+		border-radius: 0.5rem;
+		transition: all 0.2s ease-in-out;
+		&:hover{
+			transform: translateY(-0.2rem);
+		}
+
+	}
+	.defaultSize{
+		border: var(--border_color01);
+		padding: 1rem 2rem;
+		border-radius: 0.5rem;
+		transition: all 0.2s ease-in-out;
+		&:hover{
+			transform: translateY(-0.2rem);
+		}
+	}
+	.activeColor,.activeSize{
+		background-color: var(--text_color01);
+		color: var(--text_color02);
+	}
+	.wrapper_btn{
+		display: flex;
+		gap:0.2rem;
+		width: 60%;
+		@media screen and (max-width: v.$lg_breakpoint){
+			width: 100%;
+			
+		}
+	}
+}

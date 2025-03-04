@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-const ProductCard = ({ img, title, colors, price, type, description, id }) => {
+const ProductCard = ({ img, title, colors, price, type, description, id, action }) => {
 	const [hover, SetHover] = useState(false);
 	const [state, setCoords] = useState({ x: 0, y: 0 })
 	const navigate = useNavigate();
@@ -11,7 +11,7 @@ const ProductCard = ({ img, title, colors, price, type, description, id }) => {
 		setCoords({ x, y });
 	};
 	return (
-		<div id="product_card">
+		<div id="product_card" onClick={action}>
 			<div className="wrapper_column gap2 relative" onClick={() => navigate(`/product/${id}`)}>
 				<div className='hover_fg' style={{
 					left: `${state.x + 15}px`,

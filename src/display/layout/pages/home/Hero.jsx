@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import ReviewCard from '../../components/ui/ReviewCard';
-import { renderStars } from "./../../components/ui/Stars"
-import { reviews } from '../../../temp/Reviews_web'
-import { ArrowLeft, ArrowRight } from '../../components/ui/SvgStack';
+import ReviewCard from '../../../components/ui/ReviewCard'
+import { renderStars } from "../../../components/ui/Stars"
+import { reviews } from '../../../../temp/Reviews_web'
+import { ArrowLeft, ArrowRight } from '../../../components/ui/SvgStack';
 const Hero = () => {
 	const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 	const currentReview = reviews[currentReviewIndex];

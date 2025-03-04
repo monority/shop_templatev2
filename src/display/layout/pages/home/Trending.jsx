@@ -1,7 +1,7 @@
 import React from 'react'
-import ProductCard from '../../components/ui/ProductCard'
+import ProductCard from '../../../components/ui/ProductCard'
 import { useNavigate } from 'react-router'
-import { data } from '../../../temp/ProductData'
+import { data } from '../../../../temp/ProductData'
 const Trending = () => {
 
 	const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Trending = () => {
 				type={sneaker.category}
 				price={sneaker.price}
 				stars={sneaker.stars}
-				link_to={() => navigation(sneaker.id)}
+				action={() => navigation(sneaker.id)}
 				hover={sneaker.title}
 			/>)
 	})
