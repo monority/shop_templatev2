@@ -1,0 +1,29 @@
+@use "../../../components/utils/variables" as v;
+
+#hero {
+	#reviewcard {
+		width: calc(30rem + 5vw);
+	}
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.container {
+		display: flex;
+		flex-direction: column;
+
+		@media screen and (min-width: v.$lg-breakpoint) {
+			flex-direction: row;
+		}
+	}
+
+	.arrow_btn {
+		padding: 1rem;
+		border-radius:1rem;
+		display: flex;
+		height: 100%;
+		background-color: var(--bg_color03);
+	}
+}

@@ -19,8 +19,8 @@ body {
 	font-size: 1.6rem;
 	font-style: normal;
 	font-optical-sizing: auto;
-	line-height: 3rem;
-	letter-spacing: -0.05rem;
+	line-height: 1.6;
+	letter-spacing: -0.1rem;
 	font-weight: 400;
 	word-spacing: 0.35rem;
 	tab-size: 4;
@@ -87,22 +87,17 @@ p {
 	--title_size08: calc(6.5rem + 0.2vw);
 	--title_size09: calc(7rem + 0.2vw);
 	--title_size10: calc(7.5rem + 0.2vw);
+	--title_size15: calc(10rem + 0.2vw);
 	--transition01: all .2s ease-in-out;
 	--scrollbar_color: #8e8e8e #ffffff;
 	--transition_default: all 0.2s ease-in-out;
-}
-
-[data-theme="dark"] {
-	--text_color01: #eeeeee;
-	--bg_color01: rgb(13, 12, 15);
-	--border_color01: solid 0.2px #78797ad7;
-	--box_shadow01: 0 10px 15px -3px #aaaaaa13, 0 4px 6px -4px #e0e0e010;
-}
-
-[data-theme="light"] {
-	--text_color01: #2b2b2b;
+	--text_color01: #3b3b3b;
+	--text_color02 : #ffffff;
+	--text_color03 : #6e6e6e;
 	--bg_color01: rgb(255, 255, 255);
+	--bg_color02: #252525;	
+	--bg_color03: #ececec;	
 	--border_color01: solid 0.2px #2d2f3862;
 	--box_shadow01: 0 10px 15px -3px #aaaaaa13, 0 4px 6px -4px #e0e0e010;
-
 }
+

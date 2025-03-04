@@ -40,9 +40,22 @@
 
 
 .btn {
-	border: var(--border_color01);
-	background-color: var(--bg_color02);
-	color: var(--text_color03);
 	border-radius: 0.5rem;
-	padding: 1rem;
+	padding: 1rem;	
+	font-size:var(--text_size01);
+	font-weight: bold;
+	cursor: pointer;
+	flex : 1 1 100%;
+}
+
+.btn_base_highlight {
+	border: var(--border_color01);
+	background-color: var(--text_color02);
+	color: var(--text_color01);
+}
+
+.btn_base {
+	border: var(--border_color01);
+	background-color: var(--text_color01);
+	color: var(--text_color02);
 }
