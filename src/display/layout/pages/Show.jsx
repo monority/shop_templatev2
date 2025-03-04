@@ -4,7 +4,7 @@ const Show = () => {
 	return (
 		<>
 			<section id="show">
-				<div className="container_responsive">
+				<div className="container_responsive gap8">
 					<div className="wrapper_center f_basis50">
 						<img src="./img/heroshow.png" alt="" />
 					</div>

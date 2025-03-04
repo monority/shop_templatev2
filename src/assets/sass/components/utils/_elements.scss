@@ -59,3 +59,11 @@
 	background-color: var(--text_color01);
 	color: var(--text_color02);
 }
+.break_word {
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-clamp: 1;
+}

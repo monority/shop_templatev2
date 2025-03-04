@@ -16,9 +16,18 @@
 
 	img {
 		width: min(35rem, 100%);
-		padding: 4rem;
+		padding: calc(5rem + 0.5vw);
 
 		object-fit: cover;
 		height: 100%;
+	}
+	.hover_fg {
+		position: absolute;
+		background-color: var(--bg_color01);
+		padding: 1rem;
+		width: 7rem;
+		border-radius: 0.5rem;
+		border: var(--border_color02);
+		font-size: var(--text_size01);
 	}
 }

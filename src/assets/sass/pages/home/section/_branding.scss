@@ -1,0 +1,28 @@
+#branding {
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: var(--size_rem_05);
+
+	}
+
+	.element {
+		max-height: 59rem;
+	}
+
+	.element_caption {
+		position: absolute;
+		bottom: 2rem;
+		left: 2rem;
+	}
+
+	.element_caption_top {
+		position: absolute;
+		top: 2rem;
+		left: 2rem;
+		background-color: var(--bg_color02);
+		padding: 2rem;
+		border-radius: 0.5rem;
+	}
+}

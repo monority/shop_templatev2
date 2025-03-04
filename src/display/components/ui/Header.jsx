@@ -21,7 +21,7 @@ const Header = () => {
 	return (
 		<>
 			<header>
-				<div className="container_between">
+				<div className="container_between lyt_container">
 					<div className="element">
 						<h1>sneak<strong>ara</strong>.</h1>
 					</div>

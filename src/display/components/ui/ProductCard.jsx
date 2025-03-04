@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-const ProductCard = ({ img, title, colors, price, stars, type, link_to, description, id }) => {
+const ProductCard = ({ img, title, colors, price, type, description, id }) => {
 	const [hover, SetHover] = useState(false);
 	const [state, setCoords] = useState({ x: 0, y: 0 })
 	const navigate = useNavigate();
@@ -12,17 +12,15 @@ const ProductCard = ({ img, title, colors, price, stars, type, link_to, descript
 	};
 	return (
 		<div id="product_card">
-			<div className="wrapper_column gap2" onClick={() => navigate(`/product/${id}`)} onMouseMove={onMouseMove} onMouseEnter={() => SetHover(true)} onMouseLeave={() => SetHover(false)}>
+			<div className="wrapper_column gap2 relative" onClick={() => navigate(`/product/${id}`)}>
 				<div className='hover_fg' style={{
-
 					left: `${state.x + 15}px`,
 					top: `${state.y}px`,
 					display: hover ? 'block' : 'none',
 				}}><p>Shop it </p> <p>{price} €</p></div>
 			</div>
-			<div className="element bg_color03">
+			<div className="element_center bg_color03" onMouseMove={onMouseMove} onMouseEnter={() => SetHover(true)} onMouseLeave={() => SetHover(false)}>
 				<img src={img} className='image_card' alt={title} />
-
 			</div>
 			<div className="wrapper_column gap2">
 				<div className="element_between">
@@ -34,7 +32,6 @@ const ProductCard = ({ img, title, colors, price, stars, type, link_to, descript
 					</div>
 				</div>
 				<div className="element">
-
 					{colors.map((color, index) => (
 						<svg
 							key={index}
@@ -50,12 +47,10 @@ const ProductCard = ({ img, title, colors, price, stars, type, link_to, descript
 							/>
 						</svg>
 					))}
-
 				</div>
 				<div className="element">
 					<p className="text_color05 text_size02 break_word">{description}</p>
 				</div>
-
 			</div>
 		</div>
 	);
