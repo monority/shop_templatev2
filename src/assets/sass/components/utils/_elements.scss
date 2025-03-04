@@ -8,13 +8,14 @@
 }
 .input_default {
 	border: var(--border_color01);
-	border-radius: var(--size_rem_05);
-	height: var(--size_rem_35);
-	font-size: var(--size_rem_2);
+	border-radius: 0.5rem;
+	font-size: var(--text_size01);
 	width: 100%;
 	outline: none;
-	padding: var(--size_rem_1);
+	padding: 1rem;
+	font-family: var(--font_family_inter);
 }
+
 
 .label_default {
 	display: flex;

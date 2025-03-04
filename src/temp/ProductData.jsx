@@ -1,7 +1,7 @@
 export const data = [
 	{
 		id: 1,
-		image: "img/img_trending/trending01.png",
+		image: "img/trending/trending01.webp",
 		title: "Adidas Ultra Boost",
 		text: "Yes",
 		price: "180",
@@ -17,7 +17,7 @@ export const data = [
 	},
 	{
 		id: 2,
-		image: "img/img_trending/trending02.png",
+		image: "img/trending/trending02.webp",
 		title: "Nike Air Max 270",
 		text: "No",
 		price: "150",
@@ -31,7 +31,7 @@ export const data = [
 	},
 	{
 		id: 3,
-		image: "img/img_trending/trending03.png",
+		image: "img/trending/trending03.webp",
 		title: "Puma Ignite",
 		text: "Yes",
 		price: "130",
@@ -45,7 +45,7 @@ export const data = [
 	},
 	{
 		id: 4,
-		image: "img/img_trending/trending04.png",
+		image: "img/trending/trending04.webp",
 		title: "Reebok Zig Kinetica",
 		text: "No",
 		price: "120",
@@ -59,7 +59,7 @@ export const data = [
 	},
 	{
 		id: 5,
-		image: "img/img_trending/trending05.png",
+		image: "img/trending/trending05.webp",
 		title: "Converse All Star",
 		text: "Yes",
 		price: "110",
@@ -73,7 +73,7 @@ export const data = [
 	},
 	{
 		id: 6,
-		image: "img/img_trending/trending06.png",
+		image: "img/trending/trending06.webp",
 		title: "Vans Classic",
 		text: "No",
 		price: "90",
@@ -87,7 +87,7 @@ export const data = [
 	},
 	{
 		id: 7,
-		image: "img/img_trending/trending07.png",
+		image: "img/trending/trending07.webp",
 		title: "New Balance 990",
 		text: "Yes",
 		price: "170",
@@ -101,7 +101,7 @@ export const data = [
 	},
 	{
 		id: 8,
-		image: "img/img_trending/trending08.png",
+		image: "img/trending/trending08.webp",
 		title: "Under Armour HOVR Phantom",
 		text: "Yes",
 		price: "160",
@@ -115,7 +115,7 @@ export const data = [
 	},
 	{
 		id: 9,
-		image: "img/img_trending/trending9.png",
+		image: "img/trending/trending9.webp",
 		title: "Jordan Retro 4",
 		text: "No",
 		price: "200",
@@ -129,7 +129,7 @@ export const data = [
 	},
 	{
 		id: 10,
-		image: "img/img_trending/trending10.png",
+		image: "img/trending/trending10.webp",
 		title: "Asics Gel Kayano",
 		text: "Yes",
 		price: "140",
@@ -143,7 +143,7 @@ export const data = [
 	},
 	{
 		id: 11,
-		image: "img/img_trending/trending11.png",
+		image: "img/trending/trending11.webp",
 		title: "Saucony Endorphin",
 		text: "Yes",
 		price: "130",
@@ -157,7 +157,7 @@ export const data = [
 	},
 	{
 		id: 12,
-		image: "img/img_trending/trending12.png",
+		image: "img/trending/trending12.webp",
 		title: "Hoka One One Clifton",
 		text: "No",
 		price: "150",
@@ -171,7 +171,7 @@ export const data = [
 	},
 	{
 		id: 13,
-		image: "img/img_trending/trending13.png",
+		image: "img/trending/trending13.webp",
 		title: "Adidas NMD",
 		text: "Yes",
 		price: "180",
@@ -185,7 +185,7 @@ export const data = [
 	},
 	{
 		id: 14,
-		image: "img/img_trending/trending14.png",
+		image: "img/trending/trending14.webp",
 		title: "Nike React Infinity",
 		text: "No",
 		price: "160",
@@ -199,7 +199,7 @@ export const data = [
 	},
 	{
 		id: 15,
-		image: "img/img_trending/trending15.png",
+		image: "img/trending/trending15.webp",
 		title: "Puma Future Rider",
 		text: "Yes",
 		price: "100",
@@ -213,7 +213,7 @@ export const data = [
 	},
 	{
 		id: 16,
-		image: "img/img_trending/trending16.png",
+		image: "img/trending/trending16.webp",
 		title: "Brooks Ghost 14",
 		text: "Yes",
 		price: "130",
@@ -229,7 +229,7 @@ export const data = [
 	},
 	{
 		id: 17,
-		image: "img/img_trending/trending17.png",
+		image: "img/trending/trending17.webp",
 		title: "Skechers Go Walk 6",
 		text: "No",
 		price: "75",
@@ -245,7 +245,7 @@ export const data = [
 	},
 	{
 		id: 18,
-		image: "img/img_trending/trending18.png",
+		image: "img/trending/trending18.webp",
 		title: "On Cloudswift",
 		text: "Yes",
 		price: "140",
@@ -261,7 +261,7 @@ export const data = [
 	},
 	{
 		id: 19,
-		image: "img/img_trending/trending19.png",
+		image: "img/trending/trending19.webp",
 		title: "Salomon Speedcross 5",
 		text: "Yes",
 		price: "120",
@@ -277,7 +277,7 @@ export const data = [
 	},
 	{
 		id: 20,
-		image: "img/img_trending/trending20.png",
+		image: "img/trending/trending20.webp",
 		title: "Mizuno Wave Rider 25",
 		text: "No",
 		price: "135",
@@ -293,7 +293,7 @@ export const data = [
 	},
 	{
 		id: 21,
-		image: "img/img_trending/trending21.png",
+		image: "img/trending/trending21.webp",
 		title: "Fila Disruptor 2",
 		text: "Yes",
 		price: "85",
@@ -309,7 +309,7 @@ export const data = [
 	},
 	{
 		id: 22,
-		image: "img/img_trending/trending22.png",
+		image: "img/trending/trending22.webp",
 		title: "Diadora Game L Low",
 		text: "No",
 		price: "95",
@@ -325,7 +325,7 @@ export const data = [
 	},
 	{
 		id: 23,
-		image: "img/img_trending/trending23.png",
+		image: "img/trending/trending23.webp",
 		title: "Lacoste Carnaby Evo",
 		text: "Yes",
 		price: "110",
@@ -341,7 +341,7 @@ export const data = [
 	},
 	{
 		id: 24,
-		image: "img/img_trending/trending24.png",
+		image: "img/trending/trending24.webp",
 		title: "Ecco Soft 7",
 		text: "Yes",
 		price: "150",
@@ -357,7 +357,7 @@ export const data = [
 	},
 	{
 		id: 25,
-		image: "img/img_trending/trending25.png",
+		image: "img/trending/trending25.webp",
 		title: "Timberland Euro Hiker",
 		text: "No",
 		price: "170",

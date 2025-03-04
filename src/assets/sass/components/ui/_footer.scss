@@ -2,4 +2,9 @@
 
 #footer {
 	z-index: 1;
+	background-color: var(--bg_color02);
+
+	li {
+		color: var(--text_color02);
+	}
 }
