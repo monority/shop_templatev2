@@ -23,7 +23,7 @@ const Header = () => {
 			<header>
 				<div className="container_between lyt_container">
 					<div className="element">
-						<h1>sneak<strong>ara</strong>.</h1>
+						<h1 className='cursor_pointer' onClick={() => navigate("/")}>sneak<strong>ara</strong>.</h1>
 					</div>
 
 					<ul className="wrapper_row gap1">

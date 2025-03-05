@@ -6,6 +6,7 @@ import { reviews } from '../../../../temp/Reviews';
 import ReviewsTemplate from './../../../components/ui/ReviewsTemplate';
 import { calculateDate } from '../../../components/utils/calculateDate';
 import { renderStars } from '../../../components/ui/Stars';
+import RatingChart from './../../../components/utils/RatingChart';
 
 const ProductDetails = () => {
 	const { id } = useParams();
@@ -45,13 +46,13 @@ const ProductDetails = () => {
 	});
 	const totalMarks = filteredReviews?.reduce((acc, review) => {
 		const matchingRating = review?.rating?.find((rate) => rate.ref === product?.codeProduct);
-		const mark = Number(matchingRating?.mark) || 0; 
+		const mark = Number(matchingRating?.mark) || 0;
 		return acc + mark;
 	}, 0);
-	
+
 	const averageRating = filteredReviews?.length ? totalMarks / filteredReviews.length : 0;
-	const clampedRating = Math.min(averageRating, 5); 
-	
+	const clampedRating = Math.min(averageRating, 5);
+
 	return (
 		<section id="productdetails">
 			<div className="lyt_container gap4">
@@ -60,7 +61,7 @@ const ProductDetails = () => {
 				</div>
 				<div className="container_content">
 					<div className="container_display">
-						<div className="wrapper_center border_radius05 bg_color03 border_color02">
+						<div className="wrapper_center border_radius05 bg_color03 border_color02 w_100">
 							<img src={`/${product?.image}`} className='product_image' alt="product image" />
 						</div>
 					</div>
@@ -131,13 +132,13 @@ const ProductDetails = () => {
 						</div>
 					</div>
 					<div className="container_details">
-						<div className="wrapper">
-						{renderStars(clampedRating)}
+						<div className="wrapper_end">
+							{renderStars(clampedRating)}
 						</div>
 					</div>
 				</div>
 			</div>
-	</section>
+		</section>
 	);
 };
 
