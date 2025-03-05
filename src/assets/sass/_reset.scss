@@ -89,16 +89,16 @@ p {
 	--title_size10: calc(7.5rem + 0.2vw);
 	--title_size15: calc(10rem + 0.2vw);
 	--transition01: all .2s ease-in-out;
-	--scrollbar_color: #8e8e8e #ffffff;
+	--scrollbar_color: lch(63.5% 0 0) lch(100% 0 0);
 	--transition_default: all 0.2s ease-in-out;
-	--text_color01: #3b3b3b;
-	--text_color02 : #ffffff;
-	--text_color03 : #6e6e6e;
-	--bg_color01: rgb(255, 255, 255);
-	--bg_color02: #252525;	
-	--bg_color03: #ececec;	
-	--border_color01: solid 0.2px #2d2f3862;
-	--border_color02: solid 0.2px #2d2f3825;
-	--box_shadow01: 0 10px 15px -3px #aaaaaa13, 0 4px 6px -4px #e0e0e010;
+	--text_color01: lch(25% 0 0);
+	--text_color02: lch(100% 0 0);
+	--text_color03: lch(50% 0 0);
+	--bg_color01: lch(100% 0 0);
+	--bg_color02: lch(15% 0 0);
+	--bg_color03: lch(97% 0 0);
+	--border_color01: solid 0.2px lch(20% 5 250);
+	--border_color02: solid 0.2px lch(94% 5 250);
+	--box_shadow01: 0 10px 15px -3px lch(70% 0 0), 0 4px 6px -4px lch(88% 0 0);
 }
 

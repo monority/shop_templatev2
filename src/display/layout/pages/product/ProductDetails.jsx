@@ -59,7 +59,7 @@ const ProductDetails = () => {
 				<div className="container_content">
 					<div className="container_display">
 						<div className="wrapper_center border_radius05 bg_color03 border_color02">
-							<img src={`/${product?.image}`} alt="" />
+							<img src={`/${product?.image}`} className='product_image' alt="product image" />
 						</div>
 					</div>
 					<div className="container_details">

@@ -6,19 +6,20 @@ const ReviewsTemplate = ({ message, gender, mark, date, name }) => {
 		<>
 			<div id="review">
 				<div className="wrapper">
-					<div className="element_between">
-						<div className="element">
+					<div className="wrapper_column gap05">
+						<div className="element_row gap1">
 							{gender ? (
-								"male" && <img src="\img\icons\maleicon.png" className='img_user_icon' alt="" />
+								"male" && <img src="/img/icons/maleicon.png" className='usericon_image' alt="" />
 							) : (
-								"female" && <img src="/img/icons/femaleicon.png" className='img_user_icon' alt="" />
+								"female" && <img src="/img/icons/femaleicon.png" className='usericon_image' alt="" />
 							)}
 
 							<p>{name}</p>
+							<p className='text_color03 text_size01'>{date}</p>
 						</div>
 						<div className="element">
 							<div className='element_star'>{mark}</div>
-							<p className='text_color04'>{date}</p>
+							
 						</div>
 					</div>
 					<div className="element">
