@@ -7,17 +7,21 @@ export const renderStars = (stars) => {
 
 	return (
 		<>
-			{Array(fullStars)
-				.fill(<FullStar />)
-				.map((star, index) => (
-					<span key={`full-${index}`} className="star_icon full-star">{star}</span>
-				))}
-			{hasHalfStar && <span className="star_icon half-star"><HalfStar /></span>}
-			{Array(emptyStars)
-				.fill(<EmptyStar />)
-				.map((star, index) => (
-					<span key={`empty-${index}`} className="star_icon empty-star">{star}</span>
-				))}
+			{Array.from({ length: fullStars }, (_, index) => (
+				<span key={`full-${index}`} className="star_icon full-star">
+					<FullStar />
+				</span>
+			))}
+			{hasHalfStar && (
+				<span className="star_icon half-star">
+					<HalfStar />
+				</span>
+			)}
+			{Array.from({ length: emptyStars }, (_, index) => (
+				<span key={`empty-${index}`} className="star_icon empty-star">
+					<EmptyStar />
+				</span>
+			))}
 		</>
 	);
 };

@@ -72,7 +72,8 @@ export const reviews = [
 		priority: "Medium",
 		rating: [
 			{ ref: "SKU-345012", mark: "4" }, // Jordan Retro 4
-			{ ref: "SKU-901567", mark: "3" }, // Asics Gel Kayano
+			{ ref: "SKU-901567", mark: "3" },
+			{ ref: "SKU-456789", mark: "3" },
 		],
 	},
 	{

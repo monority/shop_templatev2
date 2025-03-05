@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { data } from '../../../../temp/ProductData';
 import { Favorite } from '../../../components/ui/SvgStack';
@@ -6,33 +6,28 @@ import { reviews } from '../../../../temp/Reviews';
 import ReviewsTemplate from './../../../components/ui/ReviewsTemplate';
 import { calculateDate } from '../../../components/utils/calculateDate';
 import { renderStars } from '../../../components/ui/Stars';
+
 const ProductDetails = () => {
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
 	const [activeColor, setActiveColor] = useState();
+	const [average, setAverage] = useState(0);
 	const product = data.find(item => item.id == id);
-	const sizes = product?.availableSizes?.map((size, index) => {
-		return (
-			<>
-				<li key={index} className={`${activeSize === size ? 'activeSize' : ''} defaultSize`}
-					onClick={() => setActiveSize(size)}>{size}</li>
-			</>
-		)
-	})
-	const colors = product?.colors.map((color, index) => {
-		return (
-			<>
-				<li key={index} className={`${activeColor === color ? 'activeColor' : ''} defaultColor`}
-					onClick={() => setActiveColor(color)}>{color}</li>
-			</>
-		)
 
-	})
+	const sizes = product?.availableSizes?.map((size, index) => (
+		<li key={index} className={`${activeSize === size ? 'activeSize' : ''} defaultSize`}
+			onClick={() => setActiveSize(size)}>{size}</li>
+	));
+
+	const colors = product?.colors.map((color, index) => (
+		<li key={index} className={`${activeColor === color ? 'activeColor' : ''} defaultColor`}
+			onClick={() => setActiveColor(color)}>{color}</li>
+	));
+
 	const filteredReviews = reviews.filter((review) =>
 		review.rating.some((rating) => rating?.ref === product?.codeProduct)
 	);
 
-	console.log(filteredReviews)
 	const reviews_display = filteredReviews?.map((review) => {
 		const matchingRating = review.rating.find((rate) => rate.ref === product?.codeProduct);
 
@@ -48,8 +43,15 @@ const ProductDetails = () => {
 			/>
 		);
 	});
-
-
+	const totalMarks = filteredReviews?.reduce((acc, review) => {
+		const matchingRating = review?.rating?.find((rate) => rate.ref === product?.codeProduct);
+		const mark = Number(matchingRating?.mark) || 0; 
+		return acc + mark;
+	}, 0);
+	
+	const averageRating = filteredReviews?.length ? totalMarks / filteredReviews.length : 0;
+	const clampedRating = Math.min(averageRating, 5); 
+	
 	return (
 		<section id="productdetails">
 			<div className="lyt_container gap4">
@@ -87,7 +89,6 @@ const ProductDetails = () => {
 							<div className="wrapper_row gap4">
 								<div className="element">
 									<h2>Sizes</h2>
-
 								</div>
 								<div className="element">
 									<p>{product?.sizeDetail}</p>
@@ -117,25 +118,27 @@ const ProductDetails = () => {
 								<li>Details</li>
 								<li>Details</li>
 							</ul>
-							<div className="wrapper_column">
+							<div className="wrapper_column gap2">
 								<div className="element">
 									<select name="" id="">
 										<option value="new">Newest</option>
 									</select>
 								</div>
-								<div className="element">
+								<div className="wrapper_column gap2">
 									{reviews_display}
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className="container_details">
-
+						<div className="wrapper">
+						{renderStars(clampedRating)}
+						</div>
 					</div>
 				</div>
 			</div>
-		</section>
-	)
-}
+	</section>
+	);
+};
 
-export default ProductDetails
+export default ProductDetails;

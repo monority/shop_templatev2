@@ -1,5 +1,13 @@
 @use '../../components/utils/variables' as v;
 #productdetails{
+	#review{
+		.wrapper{
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+			
+		}
+	}
 	.container_content{
 		display: flex;
 		flex-direction: column;
@@ -58,5 +66,10 @@
 			width: 100%;
 			
 		}
+	}
+	.hr{
+		width: 100%;
+		display: flex;
+		border: 0.1px solid var(--bg_color03);
 	}
 }

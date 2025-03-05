@@ -19,13 +19,13 @@ const ReviewsTemplate = ({ message, gender, mark, date, name }) => {
 						</div>
 						<div className="element">
 							<div className='element_star'>{mark}</div>
-							
+
 						</div>
 					</div>
 					<div className="element">
 						{message}
 					</div>
-					<hr />
+					<span className='hr'></span>
 				</div>
 			</div>
 		</>
