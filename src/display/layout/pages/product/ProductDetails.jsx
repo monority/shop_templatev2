@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { data } from '../../../../temp/ProductData';
 import { Favorite } from '../../../components/ui/SvgStack';
-
+import { reviews } from '../../../../temp/Reviews';
+import ReviewsTemplate from './../../../components/ui/ReviewsTemplate';
+import { calculateDate } from '../../../components/utils/calculateDate';
+import { renderStars } from '../../../components/ui/Stars';
 const ProductDetails = () => {
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
@@ -25,6 +28,26 @@ const ProductDetails = () => {
 		)
 
 	})
+	const filteredReviews = reviews.filter((review) =>
+		review.rating.some((rating) => rating?.ref === product?.codeProduct)
+	);
+
+	console.log(filteredReviews)
+	const reviews_display = filteredReviews?.map((review) => {
+		const matchingRating = review.rating.find((rate) => rate.ref === product?.codeProduct);
+
+		return (
+			<ReviewsTemplate
+				key={review.id}
+				id={review.id}
+				message={review.message}
+				name={review.name}
+				date={calculateDate(review?.date)}
+				mark={renderStars(matchingRating?.mark)}
+				gender={review?.gender}
+			/>
+		);
+	});
 
 
 	return (
@@ -35,7 +58,7 @@ const ProductDetails = () => {
 				</div>
 				<div className="container_content">
 					<div className="container_display">
-						<div className="wrapper_center border_radius05 bg_color03">
+						<div className="wrapper_center border_radius05 bg_color03 border_color02">
 							<img src={`/${product?.image}`} alt="" />
 						</div>
 					</div>
@@ -63,7 +86,7 @@ const ProductDetails = () => {
 							</ul>
 							<div className="wrapper_row gap4">
 								<div className="element">
-								<h2>Sizes</h2>
+									<h2>Sizes</h2>
 
 								</div>
 								<div className="element">
@@ -78,9 +101,36 @@ const ProductDetails = () => {
 							</div>
 							<div className="wrapper_btn">
 								<button className='btn btn_base'>Add to cart</button>
-								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem"/></button>
+								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" /></button>
+							</div>
+							<div className="element">
+								<p>Free delivery over $30.00</p>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div className="container_content">
+					<div className="container_display">
+						<div className="container_column gap2">
+							<ul className='wrapper_row gap2'>
+								<li>Details</li>
+								<li>Details</li>
+								<li>Details</li>
+							</ul>
+							<div className="wrapper_column">
+								<div className="element">
+									<select name="" id="">
+										<option value="new">Newest</option>
+									</select>
+								</div>
+								<div className="element">
+									{reviews_display}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="container_details">
+
 					</div>
 				</div>
 			</div>

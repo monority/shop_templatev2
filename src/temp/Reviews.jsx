@@ -11,8 +11,8 @@ export const reviews = [
 		priority: "High",
 		linkedto: "HQ4540",
 		rating: [
-			{ ref: "CT8012-104", mark: "3" },
-			{ ref: "HQ1002", mark: "4" },
+			{ ref: "SKU-789012", mark: "4" }, // Adidas Ultra Boost
+			{ ref: "SKU-345678", mark: "5" }, // Nike Air Max 270
 		],
 	},
 	{
@@ -26,8 +26,8 @@ export const reviews = [
 		status: "Pending",
 		priority: "Medium",
 		rating: [
-			{ ref: "DN3707-010", mark: "4" },
-			{ ref: "EM2002", mark: "3" },
+			{ ref: "SKU-901234", mark: "3" }, // Puma Ignite
+			{ ref: "SKU-567890", mark: "4" }, // Reebok Zig Kinetica
 		],
 	},
 	{
@@ -41,8 +41,8 @@ export const reviews = [
 		status: "Resolved",
 		priority: "Low",
 		rating: [
-			{ ref: "MB3001", mark: "3" },
-			{ ref: "MB3002", mark: "2" },
+			{ ref: "SKU-234567", mark: "4" }, // Converse All Star
+			{ ref: "SKU-890123", mark: "3" }, // Vans Classic
 		],
 	},
 	{
@@ -56,8 +56,8 @@ export const reviews = [
 		status: "Active",
 		priority: "High",
 		rating: [
-			{ ref: "DN3707-010", mark: "5" },
-			{ ref: "SL4002", mark: "4" },
+			{ ref: "SKU-456789", mark: "5" }, // New Balance 990
+			{ ref: "SKU-678901", mark: "4" }, // Under Armour HOVR Phantom
 		],
 	},
 	{
@@ -71,8 +71,8 @@ export const reviews = [
 		status: "Pending",
 		priority: "Medium",
 		rating: [
-			{ ref: "JW5001", mark: "4" },
-			{ ref: "JW5002", mark: "3" },
+			{ ref: "SKU-345012", mark: "4" }, // Jordan Retro 4
+			{ ref: "SKU-901567", mark: "3" }, // Asics Gel Kayano
 		],
 	},
 	{
@@ -86,8 +86,8 @@ export const reviews = [
 		status: "Resolved",
 		priority: "Low",
 		rating: [
-			{ ref: "OP6001", mark: "3" },
-			{ ref: "OP6002", mark: "2" },
+			{ ref: "SKU-234890", mark: "3" }, // Saucony Endorphin
+			{ ref: "SKU-567123", mark: "2" }, // Hoka One One Clifton
 		],
 	},
 	{
@@ -101,8 +101,8 @@ export const reviews = [
 		status: "Active",
 		priority: "High",
 		rating: [
-			{ ref: "LT7001", mark: "5" },
-			{ ref: "LT7002", mark: "4" },
+			{ ref: "SKU-890456", mark: "5" }, // Adidas NMD
+			{ ref: "SKU-123890", mark: "4" }, // Nike React Infinity
 		],
 	},
 	{
@@ -116,8 +116,8 @@ export const reviews = [
 		status: "Pending",
 		priority: "Medium",
 		rating: [
-			{ ref: "EK8001", mark: "4" },
-			{ ref: "EK8002", mark: "3" },
+			{ ref: "SKU-456012", mark: "4" }, // Puma Future Rider
+			{ ref: "SKU-789345", mark: "3" }, // Brooks Ghost 14
 		],
 	},
 	{
@@ -131,8 +131,8 @@ export const reviews = [
 		status: "Resolved",
 		priority: "Low",
 		rating: [
-			{ ref: "CM9001", mark: "3" },
-			{ ref: "CM9002", mark: "2" },
+			{ ref: "SKU-012678", mark: "3" }, // Skechers Go Walk 6
+			{ ref: "SKU-345901", mark: "2" }, // On Cloudswift
 		],
 	},
 	{
@@ -146,8 +146,8 @@ export const reviews = [
 		status: "Active",
 		priority: "High",
 		rating: [
-			{ ref: "EH10001", mark: "5" },
-			{ ref: "EH10002", mark: "4" },
+			{ ref: "SKU-678234", mark: "5" }, // Salomon Speedcross 5
+			{ ref: "SKU-901567", mark: "4" }, // Mizuno Wave Rider 25
 		],
 	},
 	{
@@ -161,8 +161,8 @@ export const reviews = [
 		status: "Pending",
 		priority: "Medium",
 		rating: [
-			{ ref: "IF11001", mark: "4" },
-			{ ref: "IF11002", mark: "3" },
+			{ ref: "SKU-234678", mark: "4" }, // Fila Disruptor 2
+			{ ref: "SKU-567901", mark: "3" }, // Diadora Game L Low
 		],
 	},
 	{
@@ -176,8 +176,8 @@ export const reviews = [
 		status: "Resolved",
 		priority: "Low",
 		rating: [
-			{ ref: "DN3707-010", mark: "4" },
-			{ ref: "CT8012-104", mark: "5" },
+			{ ref: "SKU-890234", mark: "4" }, // Lacoste Carnaby Evo
+			{ ref: "SKU-123567", mark: "5" }, // Ecco Soft 7
 		],
 	},
 ];
