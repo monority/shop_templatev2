@@ -3,9 +3,9 @@ import React from 'react'
 const AppContainer = ({ children }) => {
 	return (
 		<>
-			<div className="app_container">
+			<main className="app_container">
 				{children}
-			</div>
+			</main>
 		</>
 	)
 }

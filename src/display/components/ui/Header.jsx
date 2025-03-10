@@ -31,7 +31,7 @@ const Header = () => {
 							</div>
 
 							<ul className="wrapper_row gap2">
-								<li className="element text_size01">
+								<li className="element text_size01 cursor_pointer">
 									<div className="element_center">
 										<User width="2rem" height="2rem" />
 									</div>
@@ -40,7 +40,7 @@ const Header = () => {
 									</div>
 
 								</li>
-								<li className="element text_size01">
+								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
 									<div className="element_center">
 										<Cart width="2rem" height="2rem" />
 									</div>
@@ -48,7 +48,7 @@ const Header = () => {
 										<p className='text_size02'>Cart</p>
 									</div>
 								</li>
-								<li className="element text_size01">
+								<li className="element text_size01 cursor_pointer">
 									<div className="element_center">
 										<Favorite width="2rem" height="2rem" />
 									</div>

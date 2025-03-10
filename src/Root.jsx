@@ -5,6 +5,8 @@ import Footer from './display/components/ui/Footer';
 import Header from './display/components/ui/Header';
 import Home from './Home';
 import ProductDetails from './display/layout/pages/product/ProductDetails';
+import Error from './display/layout/pages/Error';
+import Cart from './display/layout/pages/payment/Cart';
 const Root = () => {
 	return (
 		<BrowserRouter>
@@ -12,10 +14,12 @@ const Root = () => {
 				<Header />
 				<Routes>
 					<Route exact path="/" element={<Home />} />
-				<Route path="/product/:id" element={<ProductDetails />} />
+					<Route path="/product/:id" element={<ProductDetails />} />
+					<Route path="*" element={<Error />} />
+					<Route exact path="/cart" element={<Cart />} />
 				</Routes>
+				<Footer />
 			</AppContainer>
-			<Footer/>
 		</BrowserRouter>
 	)
 }

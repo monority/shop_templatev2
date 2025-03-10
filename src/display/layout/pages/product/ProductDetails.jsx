@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { data } from '../../../../temp/ProductData';
 import { Favorite } from '../../../components/ui/SvgStack';
@@ -14,6 +14,17 @@ const ProductDetails = () => {
 	const [activeColor, setActiveColor] = useState();
 	const [average, setAverage] = useState(0);
 	const product = data.find(item => item.id == id);
+
+	useEffect(() => {
+		if (product) {
+			if (product.availableSizes && product.availableSizes.length > 0) {
+				setActiveSize(product.availableSizes[0]);
+			}
+			if (product.colors && product.colors.length > 0) {
+				setActiveColor(product.colors[0]);
+			}
+		}
+	}, [product]);
 
 	const sizes = product?.availableSizes?.map((size, index) => (
 		<li key={index} className={`${activeSize === size ? 'activeSize' : ''} defaultSize`}
@@ -123,6 +134,9 @@ const ProductDetails = () => {
 								<div className="element">
 									<select name="" id="">
 										<option value="new">Newest</option>
+										<option value="new">Oldest</option>
+										<option value="new">Top</option>
+										<option value="new">Worst</option>
 									</select>
 								</div>
 								<div className="wrapper_column gap2">
