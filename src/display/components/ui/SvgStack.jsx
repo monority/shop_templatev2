@@ -32,6 +32,14 @@ export const thumbDown = ({ width, height }) => {
 	return (
 		<svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thumbs-down"><path d="M17 14V2" /><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z" /></svg>)
 }
+export const Cart = ({ width, height }) => {
+	return (
+		<svg viewBox="0 0 24 24" width={width} height={height} fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21 10L15 4M21 10H3M21 10L19.6431 16.7845C19.2692 18.6542 17.6275 20 15.7208 20H8.27922C6.37249 20 4.73083 18.6542 4.35689 16.7845L3 10M3 10L9 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>)
+}
+export const User = ({ width, height }) => {
+	return (
+		<svg viewBox="-5 0 32 32" version="1.1" width={width} height={height} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>user</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-365.000000, -307.000000)" fill="#000000"> <path d="M385,332.5 C385,334.985 382.802,337 380.091,337 L371.909,337 C369.198,337 367,334.985 367,332.5 L367,329.5 C367,327.374 368.613,325.604 370.775,325.133 C372.25,326.304 374.05,327 376,327 C377.95,327 379.75,326.304 381.225,325.133 C383.387,325.604 385,327.374 385,329.5 L385,332.5 L385,332.5 Z M369,317 C369,312.582 372.134,309 376,309 C379.866,309 383,312.582 383,317 C383,321.418 379.866,325 376,325 C372.134,325 369,321.418 369,317 L369,317 Z M382.951,323.353 C384.23,321.625 385,319.412 385,317 C385,311.478 380.971,307 376,307 C371.029,307 367,311.478 367,317 C367,319.412 367.77,321.625 369.049,323.353 C366.699,324.165 365,326.373 365,329 L365,333 C365,336.313 367.687,339 371,339 L381,339 C384.313,339 387,336.313 387,333 L387,329 C387,326.373 385.301,324.165 382.951,323.353 L382.951,323.353 Z" id="user" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>)
+}
 
 export const FullStar = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24" fill="currentColor   ">

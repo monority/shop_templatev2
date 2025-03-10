@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { Cart, Favorite, User } from './SvgStack';
 const Header = () => {
 	const navigate = useNavigate();
 
 	const [active, setActive] = useState(true);
 	const [scroll, setScrolled] = useState(false);
+	const [user, setUser] = useState({ name: "Guest" });
 	useEffect(() => {
 		const headerChange = () => {
 			setActive(window.scrollY < 200);
@@ -27,13 +28,35 @@ const Header = () => {
 					</div>
 
 					<ul className="wrapper_row gap1">
-						<li className="element text_size01">Newsletter</li>
-						<li className="element text_size01">Help</li>
-						<li className="element text_size01">Order Status</li>
+						<li className="element text_size01">
+							<div className="element">
+								User
+							</div>
+							<div className="element">
+								<User width="2rem" height="2rem" />
+							</div>
+						</li>
+						<li className="element text_size01">
+
+							<div className="element">
+								Cart
+							</div>
+							<div className="element">
+								<Cart width="2rem" height="2rem" />
+							</div>
+						</li>
+						<li className="element text_size01">
+							<div className="element">
+								Favorites
+							</div>
+							<div className="element">
+								<Favorite width="2rem" height="2rem" />
+							</div>
+						</li>
 					</ul>
 
 				</div>
-			</header>
+			</header >
 		</>
 	);
 };

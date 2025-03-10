@@ -70,3 +70,8 @@
 	text-overflow: ellipsis;
 	line-clamp: 1;
 }
+h1 {
+	text-transform: uppercase;
+	font-family: "Geist", serif;
+	font-size: var(--title_size01);
+}
