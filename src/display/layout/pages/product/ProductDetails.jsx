@@ -56,8 +56,8 @@ const ProductDetails = () => {
 	return (
 		<section id="productdetails">
 			<div className="lyt_container gap4">
-				<div className="wrapper">
-					<p>{product?.category} {">"} {product?.brand}</p>
+				<div className="element_start gap1">
+					<p className='text_color03'>{product?.category}</p><p> {">"} {product?.brand}</p>
 				</div>
 				<div className="container_content">
 					<div className="container_display">
@@ -71,7 +71,7 @@ const ProductDetails = () => {
 								<p>{product?.brand}</p>
 							</div>
 							<div className="element">
-								<p>{product?.codeProduct}</p>
+								<p className='text_color03'>{product?.codeProduct}</p>
 							</div>
 						</div>
 						<div className="wrapper_column gap2">
@@ -106,7 +106,7 @@ const ProductDetails = () => {
 								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" /></button>
 							</div>
 							<div className="element">
-								<p>Free delivery over $30.00</p>
+								<p>Free delivery over <strong>$30.00</strong></p>
 							</div>
 						</div>
 					</div>

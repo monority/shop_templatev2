@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Cart, Favorite, User } from './SvgStack';
+import Nav from './Nav';
 const Header = () => {
 	const navigate = useNavigate();
 
@@ -22,39 +23,44 @@ const Header = () => {
 	return (
 		<>
 			<header>
-				<div className="container_between lyt_container">
-					<div className="element">
-						<h1 className='cursor_pointer' onClick={() => navigate("/")}>sneak<strong>ara</strong>.</h1>
+				<div className="lyt_container h_100">
+					<div className="container_column gap2 h_100">
+						<div className="container_between w_100">
+							<div className="element">
+								<h1 className='cursor_pointer lower' onClick={() => navigate("/")}>sneak<strong className='text_color03'>ara</strong>.</h1>
+							</div>
+
+							<ul className="wrapper_row gap2">
+								<li className="element text_size01">
+									<div className="element_center">
+										<User width="2rem" height="2rem" />
+									</div>
+									<div className="element_center">
+										<p className='text_size02'	>User</p>
+									</div>
+
+								</li>
+								<li className="element text_size01">
+									<div className="element_center">
+										<Cart width="2rem" height="2rem" />
+									</div>
+									<div className="element_center">
+										<p className='text_size02'>Cart</p>
+									</div>
+								</li>
+								<li className="element text_size01">
+									<div className="element_center">
+										<Favorite width="2rem" height="2rem" />
+									</div>
+									<div className="element_center">
+										<p className='text_size02'>Favorites</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<Nav />
 					</div>
-
-					<ul className="wrapper_row gap1">
-						<li className="element text_size01">
-							<div className="element">
-								User
-							</div>
-							<div className="element">
-								<User width="2rem" height="2rem" />
-							</div>
-						</li>
-						<li className="element text_size01">
-
-							<div className="element">
-								Cart
-							</div>
-							<div className="element">
-								<Cart width="2rem" height="2rem" />
-							</div>
-						</li>
-						<li className="element text_size01">
-							<div className="element">
-								Favorites
-							</div>
-							<div className="element">
-								<Favorite width="2rem" height="2rem" />
-							</div>
-						</li>
-					</ul>
-
+					<hr />
 				</div>
 			</header >
 		</>

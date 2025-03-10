@@ -14,10 +14,12 @@ const Home = () => {
 				<Show />
 				<Trending />
 			</div>
+
+			<Branding />
+			<About />
+			<Newsletter />
 		</div>
-		<Branding />
-		<About/>
-		<Newsletter/>
+
 	</>
 	)
 }

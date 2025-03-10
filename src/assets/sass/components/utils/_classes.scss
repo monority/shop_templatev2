@@ -1,4 +1,7 @@
 // * Color Variables
+.text_red {
+	color: var(--text_red)
+}
 
 .text_color01 {
 	color: var(--text_color01);
@@ -55,10 +58,12 @@
 .border_radius05 {
 	border-radius: 0.5rem;
 }
-.border_radius1{
+
+.border_radius1 {
 	border-radius: 1rem;
 }
-.border_radius2{
+
+.border_radius2 {
 	border-radius: 2rem;
 }
 
@@ -210,6 +215,10 @@
 	text-transform: uppercase;
 }
 
+.lower {
+	text-transform: lowercase;
+}
+
 .flex_column {
 	flex-direction: column;
 }
@@ -313,4 +322,8 @@
 
 .pad6 {
 	padding: 6rem;
+}
+
+.cursor_pointer {
+	cursor: pointer;
 }

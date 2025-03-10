@@ -11,7 +11,7 @@ const ProductCard = ({ img, title, colors, price, type, description, id, action 
 		setCoords({ x, y });
 	};
 	return (
-		<div id="product_card" onClick={action}>
+		<div id="product_card" className='cursor_pointer' onClick={action}>
 			<div className="wrapper_column gap2 relative" onClick={() => navigate(`/product/${id}`)}>
 				<div className='hover_fg' style={{
 					left: `${state.x + 15}px`,
