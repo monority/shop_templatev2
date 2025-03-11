@@ -7,18 +7,21 @@ import Home from './Home';
 import ProductDetails from './display/layout/pages/product/ProductDetails';
 import Error from './display/layout/pages/Error';
 import Cart from './display/layout/pages/payment/Cart';
+import Check from './display/layout/pages/auth/Check';
 const Root = () => {
 	return (
 		<BrowserRouter>
 			<AppContainer>
-				<Header />
+				{window.location.pathname === "check" ? <Header /> : null}
 				<Routes>
 					<Route exact path="/" element={<Home />} />
 					<Route path="/product/:id" element={<ProductDetails />} />
 					<Route path="*" element={<Error />} />
 					<Route exact path="/cart" element={<Cart />} />
+					<Route exact path="/check" element={<Check />} />
 				</Routes>
-				<Footer />
+				{window.location.pathname === "check" ? <Footer /> : null}
+
 			</AppContainer>
 		</BrowserRouter>
 	)
