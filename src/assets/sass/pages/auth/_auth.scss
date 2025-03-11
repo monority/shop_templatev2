@@ -1,4 +1,29 @@
+@use "../../components/utils/variables" as v;
 #check{
 	width: 100%;
-	height: 100%;
+	height: 100vh;
+	img{
+		width: 100%;
+		object-fit: cover;
+		height: 100%;
+	}
+	.container{
+		display: flex;
+		height: 100%;
+		@media screen and (max-width: v.$lg_breakpoint){
+			flex-direction: column;
+			
+		}
+		.container_content, .container_check{
+			display: flex;
+			flex-basis: 50%;
+		}
+	}
+	.container_check{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+	}
+
 }

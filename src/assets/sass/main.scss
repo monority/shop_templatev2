@@ -12,6 +12,7 @@
 @use "./pages/home/section/branding";
 @use "./pages/home/section/newsletter";
 @use "./pages/product/details";
+@use "./pages/auth/auth";
 
 .app_container {
 	display: flex;

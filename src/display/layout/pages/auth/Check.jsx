@@ -6,10 +6,13 @@ const Check = () => {
 		<>
 			<div id="check">
 				<div className="container">
-					<div className="container_image">
-						<img src="" alt="" />
-					</div>
 					<div className="container_content">
+						<img src="/img/checkbg.jpg" alt="" />
+					</div>
+					<div className="container_check">
+						<div className="wrapper">
+							<h1>Check</h1>
+						</div>
 						<Form inputCount={2} inputTypes={['text', 'password']} inputName={['email', 'password']} />
 					</div>
 				</div>
