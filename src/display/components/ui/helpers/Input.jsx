@@ -9,9 +9,9 @@ const Input = ({ type, initialValue, name, val }) => {
 	};
 
 	return (
-		<div className="form_element">
-			<input type={type} value={val} name={name} id={name} onChange={handleChange} />
-			<label htmlFor={name}></label>
+		<div className="form_element relative">
+			<input type={type} value={val} name={name} id={name} onChange={handleChange} className='input_default' />
+			<label htmlFor={name} className='label_default'>{name}</label>
 		</div>
 	);
 };

@@ -33,7 +33,7 @@ const Header = () => {
 								</div>
 
 								<ul className="wrapper_row gap2">
-									<li className="element text_size01 cursor_pointer" onClick={() => navigate("/check")}>
+									<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
 										<div className="element_center">
 											<User width="2.8rem" height="2.8rem" />
 										</div>

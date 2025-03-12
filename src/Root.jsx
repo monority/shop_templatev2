@@ -14,15 +14,18 @@ const Root = () => {
 
 	return (
 		<AppContainer>
-			{location.pathname !== "/check" && <Header />}
+			{!location.pathname.startsWith("/auth")  && <Header />}
 			<Routes>
 				<Route exact path="/" element={<Home />} />
 				<Route path="/product/:id" element={<ProductDetails />} />
 				<Route path="*" element={<Error />} />
 				<Route exact path="/cart" element={<Cart />} />
-				<Route exact path="/check" element={<Check />} />
+				<Route exact path="/auth/check" element={<Check />} />
+				<Route exact path="/auth/login" element={<Check />} />
+				<Route exact path="/auth/register" element={<Check />} />
+
 			</Routes>
-			{location.pathname !== "/check" && <Footer />}
+			{!location.pathname.startsWith("/auth") && <Footer />}
 		</AppContainer>
 	)
 }
