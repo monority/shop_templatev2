@@ -12,6 +12,7 @@
 @use "./pages/home/section/branding";
 @use "./pages/home/section/newsletter";
 @use "./pages/product/details";
+@use "./pages/auth/auth";
 
 .app_container {
 	display: flex;
@@ -24,6 +25,7 @@
 	margin: 0 auto;
 }
 
+
 #home {
 	display: flex;
 	flex-direction: column;
@@ -33,6 +35,8 @@
 #error{
 	flex:1 0 100%;
 }
+
+
 
 
 .container_responsive {

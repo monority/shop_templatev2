@@ -28,15 +28,13 @@
 	transform: translateY(-50%);
 	pointer-events: none;
 	transition: 0.3s;
-	font-size: var(--text_size01);
+	font-size: var(--text_size03 );
+
 }
 
 .input_default:focus ~ label {
 	opacity: 0;
-	top: 0;
-	left: 15px;
 	background: transparent;
-	font-size: var(--size_rem_05);
 }
 
 
@@ -82,4 +80,9 @@ hr{
 	height: 1px;
 
 	background-color: #33333325;  
+}
+.form_group{
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
 }

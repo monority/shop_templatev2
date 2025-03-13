@@ -219,7 +219,7 @@
 	text-transform: lowercase;
 }
 
-.flex_column {
+.column {
 	flex-direction: column;
 }
 
@@ -326,4 +326,7 @@
 
 .cursor_pointer {
 	cursor: pointer;
+}
+.geist{
+	font-family: "Geist", serif;
 }
