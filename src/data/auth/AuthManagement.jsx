@@ -7,11 +7,12 @@ import { useStore } from '../../cfg/Store'; // Correct import
 
 const AuthManagement = () => {
     const setUser = useStore((state) => state.setUser); // Correct usage
-    const errorPop = useStore((state) => state.showPopUp);
+    const errorPop = useStore((state) => state.errorPop);
     const checkUser = async (data) => {
+		console.log(data)
         const userList = collection(db, "users");
         try {
-            handleFormData(e, setData, data);
+            handleFormData( );
             const email_check = data.email;
             const user_check = await getDocs(userList);
             const ArrayData = user_check.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -23,7 +24,7 @@ const AuthManagement = () => {
                 navigate("/register", { state: data });
             }
         } catch (err) {
-            errorPop(handleError(err.code))
+            errorPop(err.code)
             console.error(err);
         }
     };
@@ -42,7 +43,7 @@ const AuthManagement = () => {
                 errorPop('User data not found in database');
             }
         } catch (error) {
-            errorPop(handleError(error.code));
+            errorPop((error.code));
             console.error('Login Error:', error);
         }
     };

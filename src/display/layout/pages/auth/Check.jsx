@@ -94,7 +94,7 @@ const Check = () => {
 						</div>
 					</div>
 					<div className="container_content">
-						<Image path="/img/checkbg.jpg" alt="Sneakers foot" title="Someone with sneakers on his foot" loading="lazy" />
+						<Image path="/img/checkbg03.jpg" alt="Sneakers foot" title="Someone with sneakers on his foot" loading="lazy" />
 					</div>
 
 				</div>

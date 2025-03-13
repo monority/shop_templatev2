@@ -3,7 +3,7 @@ import Input from '../ui/helpers/Input';
 const Form = ({ formAction, inputName, inputCount, inputTypes, buttonName, btnClass }) => {
 
 	const inputs = Array.from({ length: inputCount }, (_, index) => (
-		<Input key={index} type={inputTypes[index]} name={inputName[index]} />
+		<Input key={index} type={inputTypes[index]} name={inputName[index]} value={inputName} />
 	));
 
 	return (
