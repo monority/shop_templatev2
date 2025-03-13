@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Form from '../../../components/utils/Form'
 import Image from '../../../components/ui/helpers/Image'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Apple, Facebook, Google } from '../../../components/ui/SvgStack'
+import AuthManagement from '../../../../data/auth/AuthManagement'
+
 const Check = () => {
+	const { checkUser } = AuthManagement();
+	const navigate = useNavigate();
 	const [text, setText] = useState({
 		title: 'Hello',
 		subtitle: 'Enter your email adress to verify if we have an account registered for you.'
@@ -43,8 +47,8 @@ const Check = () => {
 				<div className="container">
 					<div className="container_check pad2">
 						<div className="flex">
-							<div className="element_center w_100">
-								<h2 className='cursor_pointer lower title_size03' onClick={() => navigate("/")}>Sneak<strong className='text_color03'>ara</strong>.</h2>
+							<div className="element_center w_100" onClick={() => navigate("/")}>
+								<h2 className='cursor_pointer title_size03'>Sneak<strong className='text_color03'>ara</strong>.</h2>
 
 							</div>
 						</div>
@@ -59,7 +63,7 @@ const Check = () => {
 										{<p className='text_size02'>{text.subtitle}</p>}
 									</div>
 								</div>
-								{pathCheck && <Form inputCount={1} inputTypes={['text']} inputName={['email']} buttonName="Next step" btnClass="btn btn_base" />}
+								{pathCheck && <Form formAction={() => checkUser()} inputCount={1} inputTypes={['text']} inputName={['email']} buttonName="Next step" btnClass="btn btn_base" />}
 								{pathLogin && <Form inputCount={2} inputTypes={['text', 'password']} inputName={['email', 'password']} buttonName="Next step" btnClass="btn btn_base" />}
 								{pathRegister && <Form inputCount={4} inputTypes={['text', 'text', 'password', 'password']} inputName={['email', 'username', 'password', 'confirm password']} buttonName="Next step" btnClass="btn btn_base" />}
 								<div className="wrapper_column gap4">
