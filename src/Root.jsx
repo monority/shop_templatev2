@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import AppContainer from './display/layout/AppContainer'
-import Footer from './display/components/ui/Footer';
-import Header from './display/components/ui/Header';
+import Footer from './display/components/ui/layout/Footer';
+import Header from './display/components/ui/layout/Header';
 import Home from './Home';
 import ProductDetails from './display/layout/pages/product/ProductDetails';
 import Error from './display/layout/pages/Error';

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Form from '../../../components/utils/Form'
 import Image from '../../../components/ui/helpers/Image'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Apple, Facebook, Google } from '../../../components/ui/SvgStack'
+import { Apple, ArrowLeft, Facebook, Google } from '../../../components/ui/SvgStack'
 import AuthManagement from '../../../../data/auth/AuthManagement'
-
+import FormHelpers from '../../../components/utils/auth/FormHelpers'
+import Button from '../../../components/ui/helpers/Button'
 const Check = () => {
-	const { checkUser } = AuthManagement();
+	const { checkUser, registerUser, loginUser } = AuthManagement();
 	const navigate = useNavigate();
 	const [text, setText] = useState({
 		title: 'Hello',
@@ -63,9 +64,9 @@ const Check = () => {
 										{<p className='text_size02'>{text.subtitle}</p>}
 									</div>
 								</div>
-								{pathCheck && <Form formAction={() => checkUser()} inputCount={1} inputTypes={['text']} inputName={['email']} buttonName="Next step" btnClass="btn btn_base" />}
-								{pathLogin && <Form inputCount={2} inputTypes={['text', 'password']} inputName={['email', 'password']} buttonName="Next step" btnClass="btn btn_base" />}
-								{pathRegister && <Form inputCount={4} inputTypes={['text', 'text', 'password', 'password']} inputName={['email', 'username', 'password', 'confirm password']} buttonName="Next step" btnClass="btn btn_base" />}
+								{pathCheck && <Form formAction={checkUser} inputCount={1} inputTypes={['text']} inputName={['email']} buttonName="Next step" btnClass="btn btn_base" />}
+								{pathLogin && <Form formAction={loginUser} inputCount={2} inputTypes={['text', 'password']} inputName={['email', 'password']} buttonName="Login" btnClass="btn btn_base" />}
+								{pathRegister && <Form formAction={registerUser} inputCount={4} inputTypes={['text', 'text', 'password', 'password']} inputName={['email', 'username', 'password', 'confirm password']} buttonName="Register" btnClass="btn btn_base" />}
 								<div className="wrapper_column gap4">
 									<div className="element_row gap2 w_100">
 										<hr />
@@ -83,7 +84,9 @@ const Check = () => {
 											<Google width="2.8rem" height="2.8rem" />
 										</div>
 									</div>
-
+									<div className="element_center w_100">
+										<Button variant="secondary" size="md" onClick={() => navigate(-1)}><ArrowLeft size="1.4rem" />  </Button>
+									</div>
 								</div>
 
 							</div>

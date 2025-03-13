@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Cart, Favorite, User } from './SvgStack';
+import { Cart, Favorite, User } from '../SvgStack';
 import Nav from './Nav';
 const Header = () => {
 	const navigate = useNavigate();

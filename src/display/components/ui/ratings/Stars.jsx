@@ -1,4 +1,4 @@
-import { HalfStar, FullStar, EmptyStar } from '../ui/SvgStack';
+import { HalfStar, FullStar, EmptyStar } from '../SvgStack';
 
 export const renderStars = (stars) => {
 	const fullStars = Math.floor(stars);

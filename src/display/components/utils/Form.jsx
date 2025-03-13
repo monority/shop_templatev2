@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import Input from '../ui/helpers/Input';
+import Button from '../ui/helpers/Button';
+import { useStore } from '../../../cfg/Store';
 const Form = ({ formAction, inputName, inputCount, inputTypes, buttonName, btnClass }) => {
+	const data = useStore((state) => state.data);
 
 	const inputs = Array.from({ length: inputCount }, (_, index) => (
-		<Input key={index} type={inputTypes[index]} name={inputName[index]} value={inputName} />
+		<Input key={index} type={inputTypes[index]} name={inputName[index]} defValue={data[inputName[index]] || ''}
+		/>
 	));
 
 	return (
@@ -12,7 +16,7 @@ const Form = ({ formAction, inputName, inputCount, inputTypes, buttonName, btnCl
 				<div className="form_group">
 					{inputs}
 					<div className="form_element flex">
-						<button className={btnClass}>{buttonName}</button>
+						<Button type="submit" className={btnClass}>{buttonName}</Button>
 					</div>
 				</div>
 			</form>

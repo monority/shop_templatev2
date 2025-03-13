@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { data } from '../../../../temp/ProductData';
 import { Favorite } from '../../../components/ui/SvgStack';
 import { reviews } from '../../../../temp/Reviews';
-import ReviewsTemplate from './../../../components/ui/ReviewsTemplate';
+import ReviewsTemplate from './../../../components/ui/reviews/ReviewsTemplate';
 import { calculateDate } from '../../../components/utils/calculateDate';
-import { renderStars } from '../../../components/ui/Stars';
+import { renderStars } from '../../../components/ui/ratings/Stars';
 import RatingChart from './../../../components/utils/RatingChart';
 
 const ProductDetails = () => {

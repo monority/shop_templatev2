@@ -7,10 +7,13 @@
 	}
 }
 .input_default {
+
 	border: var(--border_color01);
 	border-radius: 0.5rem;
-	font-size: var(--text_size01);
+	font-size: var(--text_size02);
 	width: 100%;
+	color : var(--text_color01);
+	font-weight: 300;
 	outline: none;
 	padding: 1rem;
 	font-family: var(--font_family_inter);
@@ -20,18 +23,19 @@
 .label_default {
 	display: flex;
 	align-items: center;
-	column-gap: var(--size_rem_05);
+	gap: 1rem;
 	position: absolute;
-	font-size: var(--size_rem_15);
+	font-size: var(--text_size02);
 	top: 50%;
-	left: 15px;
+	left: 1rem;
 	transform: translateY(-50%);
 	pointer-events: none;
 	transition: 0.3s;
-	font-size: var(--text_size03 );
 
 }
-
+.label_disabled{
+	display: none;
+}
 .input_default:focus ~ label {
 	opacity: 0;
 	background: transparent;
@@ -53,7 +57,11 @@
 	color: var(--text_color01);
 	flex : 1 1 100%;
 }
-
+.btn_secondary{
+	border: none;
+	color: var(--text_color01);
+	background-color: var(--bg_color05);
+}
 .btn_base {
 	border: var(--border_color01);
 	background-color: var(--text_color01);
