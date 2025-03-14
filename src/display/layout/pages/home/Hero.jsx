@@ -43,7 +43,7 @@ const Hero = () => {
 							{reviewList()}
 						</div>
 						<div className="element_start gap2">
-							<span className='arrow_btn' onClick={() => setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length)}><ArrowLeft width="2rem" height="2rem" /></span>
+							<span className='arrow_btn' onClick={() => setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length)}><ArrowLeft size="2rem" /></span>
 							<span className='arrow_btn' onClick={() => {
 								if (!currentReview[0]) {
 									setCurrentReviewIndex((prevIndex) => (prevIndex - 1 + reviews.length) % reviews.length);

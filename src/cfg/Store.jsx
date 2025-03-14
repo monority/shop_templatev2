@@ -55,6 +55,6 @@ export const useStore = create((set) => ({
 					type: "",
 				},
 			});
-		}, 3000);
+		}, 4200);
 	},
 }));

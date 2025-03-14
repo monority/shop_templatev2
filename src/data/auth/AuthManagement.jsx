@@ -11,6 +11,20 @@ const AuthManagement = () => {
 	const setData = useStore((state) => state.setData);
     const navigate = useNavigate();
 
+	const handleError = (errorCode) => {
+		const errorMessages = {
+			'auth/email-already-in-use': "The email address is already in use. Please choose another one.",
+			'auth/invalid-email': "The email address entered is invalid.",
+			'auth/weak-password': "The password is too weak. Ensure it has at least 8 characters, an uppercase letter, a number, and a special character.",
+			'auth/missing-password': "The password is required.",
+			'auth/password-does-not-meet-requirements': "The password does not meet the requirements. Ensure it has at least 8 characters, an uppercase letter, a number, and a special character.",
+			'auth/invalid-credential': "Credentials does not match",
+			"auth/network-request-failed": "Network error, please try again later.",
+			"auth/wrong-password": "The password is invalid.",
+		};
+		return errorMessages[errorCode] || "An error occurred. Please try again.";
+	}
+
     const formDataToObject = (formData) => {
         const obj = {};
         formData.forEach((value, key) => {
@@ -37,8 +51,7 @@ const AuthManagement = () => {
                 navigate("/auth/register");
             }
         } catch (err) {
-            errorPop(err.code);
-            console.error(err);
+            errorPop(handleError(err.code));
         }
     };
     const loginUser = async (data) => {
@@ -54,9 +67,8 @@ const AuthManagement = () => {
             } else {
                 errorPop('User data not found in database');
             }
-        } catch (error) {
-            errorPop((error.code));
-            console.error('Login Error:', error);
+        } catch (err) {
+			errorPop(handleError(err.code));
         }
     };
 
@@ -71,6 +83,11 @@ const AuthManagement = () => {
                 errorPop('User already exists');
                 return;
             }
+			console.log(data.username)
+			if (data.username === '') {
+				errorPop('Username is required');
+				return;
+			}
             await setDoc(userRef, {
                 email: user.email,
                 _id: user.uid,
@@ -78,9 +95,8 @@ const AuthManagement = () => {
             });
             setUser({ _id: user.uid, email: user.email, username: formData.username });
             navigate('/');
-        } catch (error) {
-            errorPop(error.code || error.message);
-            console.error('Registration Error:', error);
+        } catch (err) {
+			errorPop(handleError(err.code));
         }
     };
 

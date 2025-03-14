@@ -6,8 +6,11 @@ import { Apple, ArrowLeft, Facebook, Google } from '../../../components/ui/SvgSt
 import AuthManagement from '../../../../data/auth/AuthManagement'
 import FormHelpers from '../../../components/utils/auth/FormHelpers'
 import Button from '../../../components/ui/helpers/Button'
+import { useStore } from '../../../../cfg/Store'
+import Popup from '../../../components/utils/Popup'
 const Check = () => {
 	const { checkUser, registerUser, loginUser } = AuthManagement();
+	const popup = useStore((state) => state.popup);
 	const navigate = useNavigate();
 	const [text, setText] = useState({
 		title: 'Hello',
@@ -99,7 +102,13 @@ const Check = () => {
 					<div className="container_content">
 						<Image path="/img/checkbg03.jpg" alt="Sneakers foot" title="Someone with sneakers on his foot" loading="lazy" />
 					</div>
-
+					{popup.isOpen && (
+						<Popup
+							isOpen={popup.isOpen}
+							message={popup.message}
+							type={popup.type}
+						/>
+					)}
 				</div>
 			</div>
 		</>
