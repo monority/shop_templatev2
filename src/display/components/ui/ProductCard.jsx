@@ -25,7 +25,7 @@ const ProductCard = ({ img, title, colors, price, type, description, id, action 
 			<div className="wrapper_column gap2">
 				<div className="element_between">
 					<div className="element">
-						<h4 className='break_word'>{title}</h4>
+						<h4>{title}</h4>
 					</div>
 					<div className="element">
 						<h5 className='text_color02'>{type}</h5>

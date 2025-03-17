@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Cart, Favorite, User } from '../SvgStack';
-import Nav from './Nav';
-const Header = () => {
-	const navigate = useNavigate();
+<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
+	<div className="element_center">
+		<User width="2.8rem" height="2.8rem" />
+	</div>
+	<UserGuard>
+		{/* Content to show when user is authenticated */}
+		<div className="element_center">
 	const location = useLocation();
 	const checkLocation = location.pathname === "/check";
 	const [active, setActive] = useState(true);
@@ -37,6 +38,9 @@ const Header = () => {
 										<div className="element_center">
 											<User width="2.8rem" height="2.8rem" />
 										</div>
+										<UserGuard>
+											
+										</UserGuard>
 										<div className="element_center">
 											<p className='text_size02'>User</p>
 										</div>
