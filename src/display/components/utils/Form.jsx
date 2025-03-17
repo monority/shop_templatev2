@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Input from '../ui/helpers/Input';
 import Button from '../ui/helpers/Button';
-import { useStore } from '../../../cfg/Store';
+import { useStore } from '../../../cfg/State/Store';
 const Form = ({ formAction, inputName, inputCount, inputTypes, buttonName, btnClass }) => {
 	const data = useStore((state) => state.data);
 

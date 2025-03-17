@@ -4,9 +4,8 @@ import Image from '../../../components/ui/helpers/Image'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Apple, ArrowLeft, Facebook, Google } from '../../../components/ui/SvgStack'
 import AuthManagement from '../../../../data/auth/AuthManagement'
-import FormHelpers from '../../../components/utils/auth/FormHelpers'
 import Button from '../../../components/ui/helpers/Button'
-import { useStore } from '../../../../cfg/Store'
+import { useStore } from '../../../../cfg/State/Store'
 import Popup from '../../../components/utils/Popup'
 const Check = () => {
 	const { checkUser, registerUser, loginUser } = AuthManagement();

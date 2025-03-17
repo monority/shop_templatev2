@@ -8,27 +8,36 @@ import ProductDetails from './display/layout/pages/product/ProductDetails';
 import Error from './display/layout/pages/Error';
 import Cart from './display/layout/pages/payment/Cart';
 import Check from './display/layout/pages/auth/Check';
-import { UserContextProvider } from './cfg/useContext';
-
+import { UserContextProvider } from './cfg/state/useContext';
+import AuthGuard from './cfg/guards/AuthGuard'
+import Profile from './display/layout/pages/user/Profile'
 const Root = () => {
 	const location = useLocation();
 
 	return (
 		<UserContextProvider>
-		<AppContainer>
-			{!location.pathname.startsWith("/auth")  && <Header />}
-			<Routes>
-				<Route exact path="/" element={<Home />} />
-				<Route path="/product/:id" element={<ProductDetails />} />
-				<Route path="*" element={<Error />} />
-				<Route exact path="/cart" element={<Cart />} />
-				<Route exact path="/auth/check" element={<Check />} />
-				<Route exact path="/auth/login" element={<Check />} />
-				<Route exact path="/auth/register" element={<Check />} />
-
-			</Routes>
-			{!location.pathname.startsWith("/auth") && <Footer />}
-		</AppContainer>
+			<AppContainer>
+				{!location.pathname.startsWith("/auth") && <Header />}
+				<Routes>
+					<Route exact path="/" element={<Home />} />
+					<Route path="/product/:id" element={<ProductDetails />} />
+					<Route path="*" element={<Error />} />
+					<Route exact path="/cart" element={<Cart />} />
+					<Route exact path="/auth/check" element={<Check />} />
+					<Route exact path="/auth/login" element={<Check />} />
+					<Route exact path="/auth/register" element={<Check />} />
+					<Route
+						exact
+						path="/protected-route"
+						element={
+							<AuthGuard>
+								<Profile />
+							</AuthGuard>
+						}
+					/>
+				</Routes>
+				{!location.pathname.startsWith("/auth") && <Footer />}
+			</AppContainer>
 		</UserContextProvider>
 	)
 }
