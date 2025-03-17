@@ -63,7 +63,7 @@ const AuthManagement = () => {
 
             if (userDoc.exists()) {
                 setUser({ uid: user.uid, ...userDoc.data() });
-                navigate('/todo/addtask');
+                navigate('/login');
             } else {
                 errorPop('User data not found in database');
             }
@@ -90,10 +90,10 @@ const AuthManagement = () => {
 			}
             await setDoc(userRef, {
                 email: user.email,
-                _id: user.uid,
+                uid: user.uid,
                 username: formData.username,
             });
-            setUser({ _id: user.uid, email: user.email, username: formData.username });
+            setUser({ uid: user.uid, email: user.email, username: formData.username });
             navigate('/');
         } catch (err) {
 			errorPop(handleError(err.code));

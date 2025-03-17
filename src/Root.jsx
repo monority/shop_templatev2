@@ -8,11 +8,13 @@ import ProductDetails from './display/layout/pages/product/ProductDetails';
 import Error from './display/layout/pages/Error';
 import Cart from './display/layout/pages/payment/Cart';
 import Check from './display/layout/pages/auth/Check';
+import { UserContextProvider } from './cfg/useContext';
 
 const Root = () => {
 	const location = useLocation();
 
 	return (
+		<UserContextProvider>
 		<AppContainer>
 			{!location.pathname.startsWith("/auth")  && <Header />}
 			<Routes>
@@ -27,6 +29,7 @@ const Root = () => {
 			</Routes>
 			{!location.pathname.startsWith("/auth") && <Footer />}
 		</AppContainer>
+		</UserContextProvider>
 	)
 }
 

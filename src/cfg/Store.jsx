@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export const useStore = create((set) => ({
 	user: {
-		_id: '',
+		uid: '',
 		username: '',
 		email: '',
 		phone: '',
@@ -11,7 +11,7 @@ export const useStore = create((set) => ({
 		createdAt: '',
 		products: [
 			{
-				id: '',
+				_id: '',
 				name: '',
 				quantity: '',
 				price: '',

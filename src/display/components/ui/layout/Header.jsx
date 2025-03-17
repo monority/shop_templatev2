@@ -8,7 +8,7 @@ const Header = () => {
 	const checkLocation = location.pathname === "/check";
 	const [active, setActive] = useState(true);
 	const [scroll, setScrolled] = useState(false);
-	const [user, setUser] = useState({ name: "Guest" });
+	
 	useEffect(() => {
 		const headerChange = () => {
 			setActive(window.scrollY < 200);
