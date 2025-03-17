@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useStore } from '../state/Store';
+import { useStore } from '../State/Store';
 const AuthGuard = ({ children }) => {
   const user = useStore((state) => state.user);
 
