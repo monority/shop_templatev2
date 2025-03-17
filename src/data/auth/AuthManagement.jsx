@@ -1,10 +1,9 @@
 import { signInWithEmailAndPassword, fetchSignInMethodsForEmail, createUserWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { auth, db } from '../../cfg/firebaseCfg';
-import { useStore } from '../../cfg/Store';
+import { auth, db } from '../../cfg/firebase/firebaseCfg';
 import { useNavigate } from 'react-router-dom';
-
+import { useStore } from '../../cfg/State/Store';
 const AuthManagement = () => {
     const setUser = useStore((state) => state.setUser);
     const errorPop = useStore((state) => state.errorPop);
@@ -63,7 +62,7 @@ const AuthManagement = () => {
 
             if (userDoc.exists()) {
                 setUser({ uid: user.uid, ...userDoc.data() });
-                navigate('/login');
+                navigate('/');
             } else {
                 errorPop('User data not found in database');
             }
