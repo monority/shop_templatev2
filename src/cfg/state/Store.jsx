@@ -15,6 +15,7 @@ export const useStore = create((set) => ({
 				name: '',
 				quantity: '',
 				price: '',
+				codeProduct: '',
 			}
 		],
 	},
@@ -26,10 +27,14 @@ export const useStore = create((set) => ({
 	data: {
 		email: '',
 	},
-	setData : (data) => set({ data }),
+	setData: (data) => set({ data }),
 	setUser: (user) => set({ user }),
-	addProduct: (product) => set((state) => ({ user: { ...state.user, products: [...state.user.products, product] } })),
-	removeProduct: (productId) => set((state) => ({
+	addProduct: (product) => set((state) => ({
+		user: {
+			...state.user,
+			products: [...(state.user.products || []), product],
+		},
+	})), removeProduct: (productId) => set((state) => ({
 		user: { ...state.user, products: state.user.products.filter((product) => product.id !== productId) },
 	})),
 	updateProduct: (updatedProduct) => set((state) => ({

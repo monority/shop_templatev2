@@ -91,6 +91,19 @@ const AuthManagement = () => {
                 email: user.email,
                 uid: user.uid,
                 username: formData.username,
+				phone: '',
+				address: '',
+				role: '',
+				createdAt: '',
+				products: [
+					{
+						_id: '',
+						name: '',
+						quantity: '',
+						price: '',
+						codeProduct : '',
+					}
+				],
             });
             setUser({ uid: user.uid, email: user.email, username: formData.username });
             navigate('/');

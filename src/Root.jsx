@@ -30,7 +30,7 @@ const Root = () => {
 						<Route exact path="/auth/register" element={<Check />} />
 						<Route
 							exact
-							path="/protected-route"
+							path="/user/profile"
 							element={
 								<AuthGuard>
 									<Profile />

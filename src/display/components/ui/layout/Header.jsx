@@ -1,15 +1,16 @@
-<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
-	<div className="element_center">
-		<User width="2.8rem" height="2.8rem" />
-	</div>
-	<UserGuard>
-		{/* Content to show when user is authenticated */}
-		<div className="element_center">
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Cart, Favorite, User } from '../SvgStack';
+import Nav from './Nav';
+import UserGuard from '../../../../cfg/guards/UserGuard';
+import { useStore } from '../../../../cfg/State/Store';
+const Header = () => {
+	const navigate = useNavigate();
 	const location = useLocation();
 	const checkLocation = location.pathname === "/check";
 	const [active, setActive] = useState(true);
 	const [scroll, setScrolled] = useState(false);
-	
+	const user = useStore(state => state.user);
 	useEffect(() => {
 		const headerChange = () => {
 			setActive(window.scrollY < 200);
@@ -24,52 +25,63 @@
 
 	return (
 		<>
-		
-				<header>
-					<div className="lyt_container h_100">
-						<div className="container_column gap2 h_100">
-							<div className="container_between w_100">
-								<div className="element">
-									<h1 className='cursor_pointer lower' onClick={() => navigate("/")}>sneak<strong className='text_color03'>ara</strong>.</h1>
-								</div>
 
-								<ul className="wrapper_row gap2">
-									<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
+			<header>
+				<div className="lyt_container h_100">
+					<div className="container_column gap2 h_100">
+						<div className="container_between w_100">
+							<div className="element">
+								<h1 className='cursor_pointer lower' onClick={() => navigate("/")}>sneak<strong className='text_color03'>ara</strong>.</h1>
+							</div>
+
+							<ul className="wrapper_row gap2">
+								<UserGuard>
+									<li className="element text_size01 cursor_pointer" onClick={() => navigate("/user/profile")}>
 										<div className="element_center">
 											<User width="2.8rem" height="2.8rem" />
 										</div>
-										<UserGuard>
-											
-										</UserGuard>
 										<div className="element_center">
-											<p className='text_size02'>User</p>
+											<p className='text_size02'>{user?.username}</p>
 										</div>
+									</li>
+								</UserGuard>
+								{!user && (
+									<UserGuard fallback>
+										<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
+											<div className="element_center">
+												<User width="2.8rem" height="2.8rem" />
+											</div>
+											<div className="element_center">
+												<p className='text_size02'>User</p>
+											</div>
+										</li>
+									</UserGuard>
+								)}
 
-									</li>
-									<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
-										<div className="element_center">
-											<Cart width="2.8rem" height="2.8rem" />
-										</div>
-										<div className="element_center">
-											<p className='text_size02'>Cart</p>
-										</div>
-									</li>
-									<li className="element text_size01 cursor_pointer">
-										<div className="element_center">
-											<Favorite width="2.8rem" height="2.8rem" />
-										</div>
-										<div className="element_center">
-											<p className='text_size02'>Favorites</p>
-										</div>
-									</li>
-								</ul>
-							</div>
-							<Nav />
+								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
+									<div className="element_center">
+										<Cart width="2.8rem" height="2.8rem" />
+									</div>
+									<div className="element_center">
+										<p className='text_size02'>Cart</p>
+									</div>
+								</li>
+								<li className="element text_size01 cursor_pointer">
+									<div className="element_center">
+										<Favorite width="2.8rem" height="2.8rem" />
+									</div>
+									<div className="element_center">
+										<p className='text_size02'>Favorites</p>
+									</div>
+								</li>
+							</ul>
 						</div>
-						<hr />
+						<Nav />
 					</div>
-				</header >
-		
+					<hr />
+				</div>
+			</header >
+
 		</>
 	);
 };

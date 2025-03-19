@@ -7,14 +7,33 @@ import ReviewsTemplate from './../../../components/ui/reviews/ReviewsTemplate';
 import { calculateDate } from '../../../components/utils/calculateDate';
 import { renderStars } from '../../../components/ui/ratings/Stars';
 import RatingChart from './../../../components/utils/RatingChart';
+import ProductManagement from '../../../../data/product/ProductManagement';
+import { useStore } from '../../../../cfg/State/Store';
 
 const ProductDetails = () => {
+	const { handleAddProduct } = ProductManagement();
+	const {handleUpdateProduct} = ProductManagement();
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
 	const [activeColor, setActiveColor] = useState();
 	const [average, setAverage] = useState(0);
 	const product = data.find(item => item.id == id);
-
+	const user = useStore(state => state.user);
+	console.log(user)
+	const addProductHandler = () => {
+		if (product){
+			let currentProduct = user?.products?.find(product => user?.product?.id === product.id);
+			console.log(currentProduct)
+			if (currentProduct) {
+				currentProduct.quantity++;
+				const productObject = { name : product.title, price : product.price, codeProduct : product.codeProduct, quantity : currentProduct.quantity };
+				handleUpdateProduct(productObject);
+				return;
+				
+			}
+		}		
+		handleAddProduct({ name : product.title, price : product.price, codeProduct : product.codeProduct });
+	  };
 	useEffect(() => {
 		if (product) {
 			if (product.availableSizes && product.availableSizes.length > 0) {
@@ -113,7 +132,7 @@ const ProductDetails = () => {
 								<p>Size guide</p>
 							</div>
 							<div className="wrapper_btn">
-								<button className='btn btn_base'>Add to cart</button>
+								<button className='btn btn_base' onClick={() => addProductHandler(product.id)}>Add to cart</button>
 								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" /></button>
 							</div>
 							<div className="element">

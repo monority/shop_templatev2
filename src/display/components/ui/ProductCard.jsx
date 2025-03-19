@@ -20,7 +20,7 @@ const ProductCard = ({ img, title, colors, price, type, description, id, action 
 				}}><p>Shop it </p> <p>{price} €</p></div>
 			</div>
 			<div className="element_center bg_color03" onMouseMove={onMouseMove} onMouseEnter={() => SetHover(true)} onMouseLeave={() => SetHover(false)}>
-				<img src={img} className='image_card' alt={title} />
+				<img src={img} className='image_card' alt={title}  loading='lazy'/>
 			</div>
 			<div className="wrapper_column gap2">
 				<div className="element_between">
