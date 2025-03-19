@@ -12,7 +12,7 @@ import { useStore } from '../../../../cfg/State/Store';
 
 const ProductDetails = () => {
 	const { handleAddProduct } = ProductManagement();
-	const {handleUpdateProduct} = ProductManagement();
+	const { handleUpdateProduct } = ProductManagement();
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
 	const [activeColor, setActiveColor] = useState();
@@ -21,19 +21,19 @@ const ProductDetails = () => {
 	const user = useStore(state => state.user);
 	console.log(user)
 	const addProductHandler = () => {
-		if (product){
+		if (product) {
 			let currentProduct = user?.products?.find(product => user?.product?.id === product.id);
 			console.log(currentProduct)
 			if (currentProduct) {
 				currentProduct.quantity++;
-				const productObject = { name : product.title, price : product.price, codeProduct : product.codeProduct, quantity : currentProduct.quantity };
+				const productObject = { name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: currentProduct.quantity };
 				handleUpdateProduct(productObject);
 				return;
-				
+
 			}
-		}		
-		handleAddProduct({ name : product.title, price : product.price, codeProduct : product.codeProduct });
-	  };
+		}
+		handleAddProduct({ name: product.title, price: product.price, codeProduct: product.codeProduct });
+	};
 	useEffect(() => {
 		if (product) {
 			if (product.availableSizes && product.availableSizes.length > 0) {
