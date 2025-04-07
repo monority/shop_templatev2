@@ -6,7 +6,6 @@ import { reviews } from '../../../../temp/Reviews';
 import ReviewsTemplate from './../../../components/ui/reviews/ReviewsTemplate';
 import { calculateDate } from '../../../components/utils/calculateDate';
 import { renderStars } from '../../../components/ui/ratings/Stars';
-import RatingChart from './../../../components/utils/RatingChart';
 import ProductManagement from '../../../../data/product/ProductManagement';
 import { useStore } from '../../../../cfg/State/Store';
 
