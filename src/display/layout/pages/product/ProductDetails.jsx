@@ -33,6 +33,20 @@ const ProductDetails = () => {
 		}
 		handleAddProduct({ name: product.title, price: product.price, codeProduct: product.codeProduct });
 	};
+
+	const addProductFavorite = () => {
+		if (product) {
+			let currentProduct = user?.products?.find(product => user?.product?.id === product
+.id);
+			if (currentProduct) {
+				currentProduct.favorite = !currentProduct.favorite;
+				const productObject = { name: product.title, price: product.price, codeProduct: product.codeProduct, favorite: currentProduct.favorite };
+				handleUpdateProduct(productObject);
+				return;
+			}
+		}
+		handleAddProduct({ name: product.title, price: product.price, codeProduct: product.codeProduct, favorite: true });
+	};
 	useEffect(() => {
 		if (product) {
 			if (product.availableSizes && product.availableSizes.length > 0) {
