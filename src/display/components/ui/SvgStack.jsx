@@ -1,4 +1,4 @@
-export const ArrowLeft = ({size}) => {
+export const ArrowLeft = ({ size }) => {
 	return (
 		<svg fill="currentColor" height={size} width={size} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
 			viewBox="0 0 512 512" xmlSpace="preserve">
@@ -55,7 +55,8 @@ export const Apple = ({ width, height, action }) => {
 }
 export const Loader = ({ size, action }) => {
 	return (
-<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} onClick={action}   viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>)}
+		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} onClick={action} viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>)
+}
 
 export const FullStar = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24" fill="currentColor   ">
