@@ -44,6 +44,14 @@ export const useStore = create((set) => ({
 			)
 		},
 	})),
+	favoriteProduct: (productId) => set((state) => ({
+		user: {
+			...state.user,
+			products: state.user.products.map((product) =>
+				product.id === productId ? { ...product, favorite: !product.favorite } : product
+			),
+		},
+	})),
 	errorPop: (message) => {
 		set({
 			popup: {
