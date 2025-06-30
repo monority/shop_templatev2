@@ -6,8 +6,8 @@ import { reviews } from '../../../../temp/Reviews';
 import ReviewsTemplate from './../../../components/ui/reviews/ReviewsTemplate';
 import { calculateDate } from '../../../components/utils/calculateDate';
 import { renderStars } from '../../../components/ui/ratings/Stars';
-import ProductManagement from '../../../../data/product/ProductManagement';
 import { useStore } from '../../../../cfg/State/Store';
+import ProductManagement from '../../../../data/product/ProductManagement';
 
 const ProductDetails = () => {
 	const { handleAddProduct } = ProductManagement();
