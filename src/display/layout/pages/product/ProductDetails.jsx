@@ -10,14 +10,21 @@ import { useStore } from '../../../../cfg/State/Store';
 import ProductManagement from '../../../../data/product/ProductManagement';
 
 const ProductDetails = () => {
-	const { handleAddProduct } = ProductManagement();
-	const { handleUpdateProduct } = ProductManagement();
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
+	const addProduct = useStore((state) => state.addProduct);
+	const updateProduct = useStore((state) => state.updateProduct);
+	const state_AddFavorite = useStore((state) => state.addProductFavorite);
 	const [activeColor, setActiveColor] = useState();
 	const [average, setAverage] = useState(0);
 	const product = data.find(item => item.id == id);
 	const user = useStore(state => state.user);
+	const handleAddProduct = (product) => {
+		addProduct(product);
+	};
+	const handleUpdateProduct = (product) => {
+		updateProduct(product);
+	}
 	console.log(user)
 	const addProductHandler = () => {
 		if (product) {
@@ -37,7 +44,7 @@ const ProductDetails = () => {
 	const addProductFavorite = () => {
 		if (product) {
 			let currentProduct = user?.products?.find(product => user?.product?.id === product
-.id);
+				.id);
 			if (currentProduct) {
 				currentProduct.favorite = !currentProduct.favorite;
 				const productObject = { name: product.title, price: product.price, codeProduct: product.codeProduct, favorite: currentProduct.favorite };
@@ -146,7 +153,7 @@ const ProductDetails = () => {
 							</div>
 							<div className="wrapper_btn">
 								<button className='btn btn_base' onClick={() => addProductHandler(product.id)}>Add to cart</button>
-								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" /></button>
+								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" action={() => addProductFavorite()} /></button>
 							</div>
 							<div className="element">
 								<p>Free delivery over <strong>$30.00</strong></p>

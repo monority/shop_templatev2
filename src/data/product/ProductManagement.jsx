@@ -3,6 +3,7 @@ import { useStore } from '../../cfg/State/Store';
 const ProductManagement = () => {
 	const addProduct = useStore((state) => state.addProduct);
 	const updateProduct = useStore((state) => state.updateProduct);
+	const addProductFavorite = useStore((state) => state.addProductFavorite);
 	const handleAddProduct = (product) => {
 		addProduct(product);
 	};

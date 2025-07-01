@@ -44,7 +44,7 @@ export const useStore = create((set) => ({
 			)
 		},
 	})),
-	favoriteProduct: (productId) => set((state) => ({
+	addProductFavorite: (productId) => set((state) => ({
 		user: {
 			...state.user,
 			products: state.user.products.map((product) =>
