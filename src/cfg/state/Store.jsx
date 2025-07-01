@@ -28,7 +28,18 @@ export const useStore = create((set) => ({
 		email: '',
 	},
 	setData: (data) => set({ data }),
-	setUser: (user) => set({ user }),
+	setUser: (user) => set({
+		user: user || {
+			uid: '',
+			username: '',
+			email: '',
+			phone: '',
+			address: '',
+			role: '',
+			createdAt: '',
+			products: [],
+		}
+	}),
 	addProduct: (product) => set((state) => {
 		if (!state.user) return {};
 		return {
