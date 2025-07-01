@@ -10,6 +10,7 @@ const Header = () => {
 	const checkLocation = location.pathname === "/check";
 	const [active, setActive] = useState(true);
 	const [scroll, setScrolled] = useState(false);
+	const number = useStore(state => state.products);
 	const user = useStore(state => state.user);
 	useEffect(() => {
 		const headerChange = () => {
@@ -61,6 +62,7 @@ const Header = () => {
 								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
 									<div className="element_center">
 										<Cart width="2.8rem" height="2.8rem" />
+										<p>Number : {number}</p>
 									</div>
 									<div className="element_center">
 										<p className='text_size02'>Cart</p>
