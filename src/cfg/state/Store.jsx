@@ -29,29 +29,46 @@ export const useStore = create((set) => ({
 	},
 	setData: (data) => set({ data }),
 	setUser: (user) => set({ user }),
-	addProduct: (product) => set((state) => ({
-		user: {
-			...state.user,
-			products: [...(state.user.products || []), product],
-		},
-	})), removeProduct: (productId) => set((state) => ({
-		user: { ...state.user, products: state.user.products.filter((product) => product.id !== productId) },
-	})),
-	updateProduct: (updatedProduct) => set((state) => ({
-		user: {
-			...state.user, products: state.user.products.map((product) =>
-				product.id === updatedProduct.id ? updatedProduct : product
-			)
-		},
-	})),
-	addProductFavorite: (productId) => set((state) => ({
-		user: {
-			...state.user,
-			products: state.user.products.map((product) =>
-				product.id === productId ? { ...product, favorite: !product.favorite } : product
-			),
-		},
-	})),
+	addProduct: (product) => set((state) => {
+		if (!state.user) return {};
+		return {
+			user: {
+				...state.user,
+				products: [...(state.user.products || []), product],
+			},
+		};
+	}),
+	removeProduct: (productId) => set((state) => {
+		if (!state.user) return {};
+		return {
+			user: {
+				...state.user,
+				products: state.user.products.filter((product) => product.id !== productId),
+			},
+		};
+	}),
+	updateProduct: (updatedProduct) => set((state) => {
+		if (!state.user) return {};
+		return {
+			user: {
+				...state.user,
+				products: state.user.products.map((product) =>
+					product.id === updatedProduct.id ? updatedProduct : product
+				),
+			},
+		};
+	}),
+	addProductFavorite: (productId) => set((state) => {
+		if (!state.user) return {};
+		return {
+			user: {
+				...state.user,
+				products: state.user.products.map((product) =>
+					product.id === productId ? { ...product, favorite: !product.favorite } : product
+				),
+			},
+		};
+	}),
 	errorPop: (message) => {
 		set({
 			popup: {
