@@ -12,21 +12,21 @@ import ProductManagement from '../../../../data/product/ProductManagement';
 const ProductDetails = () => {
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
-	const addProduct = useStore((state) => state.addProduct);
-	const updateProduct = useStore((state) => state.updateProduct);
+	const state_AddProduct = useStore((state) => state.addProduct);
+	const state_UpdateProduct = useStore((state) => state.updateProduct);
 	const state_AddFavorite = useStore((state) => state.addProductFavorite);
 	const [activeColor, setActiveColor] = useState();
 	const [average, setAverage] = useState(0);
 	const product = data.find(item => item.id == id);
 	const user = useStore(state => state.user);
 	const handleAddProduct = (product) => {
-		addProduct(product);
+		state_AddProduct(product);
 	};
 	const handleUpdateProduct = (product) => {
-		updateProduct(product);
+		state_UpdateProduct(product);
 	}
 	console.log(user)
-	const addProductHandler = () => {
+	const state_AddProductHandler = () => {
 		if (product) {
 			let currentProduct = user?.products?.find(product => user?.product?.id === product.id);
 			console.log(currentProduct)
@@ -41,7 +41,7 @@ const ProductDetails = () => {
 		handleAddProduct({ name: product.title, price: product.price, codeProduct: product.codeProduct });
 	};
 
-	const addProductFavorite = () => {
+	const state_AddProductFavorite = () => {
 		if (product) {
 			let currentProduct = user?.products?.find(product => user?.product?.id === product
 				.id);
@@ -152,8 +152,8 @@ const ProductDetails = () => {
 								<p>Size guide</p>
 							</div>
 							<div className="wrapper_btn">
-								<button className='btn btn_base' onClick={() => addProductHandler(product.id)}>Add to cart</button>
-								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" action={() => addProductFavorite()} /></button>
+								<button className='btn btn_base' onClick={() => state_AddProductHandler(product.id)}>Add to cart</button>
+								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" action={() => state_AddProductFavorite()} /></button>
 							</div>
 							<div className="element">
 								<p>Free delivery over <strong>$30.00</strong></p>
