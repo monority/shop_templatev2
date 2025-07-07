@@ -62,7 +62,7 @@ const Header = () => {
 								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
 									<div className="element_center">
 										<Cart width="2.8rem" height="2.8rem" />
-										<p>Number : {number}</p>
+										<p>Number : {user.products.quantity}</p>
 									</div>
 									<div className="element_center">
 										<p className='text_size02'>Cart</p>
