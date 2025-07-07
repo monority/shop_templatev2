@@ -1,4 +1,4 @@
-import { useStore } from '../../cfg/State/Store';
+import { useStore } from '../../cfg/state/Store';
 
 const ProductManagement = () => {
 	const addProduct = useStore((state) => state.addProduct);

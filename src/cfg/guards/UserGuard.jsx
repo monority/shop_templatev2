@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStore } from '../State/Store'
+import { useStore } from '../state/Store'
 
 const UserGuard = ({children}) => {
 	const user = useStore(state => state.user)

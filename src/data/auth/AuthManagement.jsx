@@ -3,7 +3,7 @@ import React from 'react';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../cfg/firebase/firebaseCfg';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../cfg/State/Store';
+import { useStore } from '../../cfg/state/Store';
 const AuthManagement = () => {
     const setUser = useStore((state) => state.setUser);
     const errorPop = useStore((state) => state.errorPop);

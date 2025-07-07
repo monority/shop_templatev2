@@ -6,7 +6,7 @@ import { reviews } from '../../../../temp/Reviews';
 import ReviewsTemplate from './../../../components/ui/reviews/ReviewsTemplate';
 import { calculateDate } from '../../../components/utils/calculateDate';
 import { renderStars } from '../../../components/ui/ratings/Stars';
-import { useStore } from '../../../../cfg/State/Store';
+import { useStore } from '../../../../cfg/state/Store';
 
 const ProductDetails = () => {
 	const { id } = useParams();

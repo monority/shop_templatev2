@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Apple, ArrowLeft, Facebook, Google } from '../../../components/ui/SvgStack'
 import AuthManagement from '../../../../data/auth/AuthManagement'
 import Button from '../../../components/ui/helpers/Button'
-import { useStore } from '../../../../cfg/State/Store'
+import { useStore } from '../../../../cfg/state/Store'
 import Popup from '../../../components/utils/Popup'
 const Check = () => {
 	const { checkUser, registerUser, loginUser } = AuthManagement();

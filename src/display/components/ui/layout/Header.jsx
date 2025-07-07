@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Cart, Favorite, User } from '../SvgStack';
 import Nav from './Nav';
 import UserGuard from '../../../../cfg/guards/UserGuard';
-import { useStore } from '../../../../cfg/State/Store';
+import { useStore } from '../../../../cfg/state/Store';
 const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
