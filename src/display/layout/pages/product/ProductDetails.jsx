@@ -24,7 +24,6 @@ const ProductDetails = () => {
 	const handleUpdateProduct = (product) => {
 		state_UpdateProduct(product);
 	}
-	console.log(user)
 	const state_AddProductHandler = () => {
 		if (product) {
 			let currentProduct = user?.products?.find(product => user?.product?.id === product.id);
