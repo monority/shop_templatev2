@@ -69,6 +69,17 @@ export const useStore = create((set) => ({
 			},
 		};
 	}),
+	updateQuantityProduct: (productId) => set((state) => {
+		if (!state.user) return {};
+		return {
+			user: {
+				...state.user,
+				products: state.user.products.map((product) =>
+					product.id === productId ? { ...product, quantity: product.quantity + 1 } : product
+				),
+			},
+		};
+	}),
 	addProductFavorite: (productId) => set((state) => {
 		if (!state.user) return {};
 		return {

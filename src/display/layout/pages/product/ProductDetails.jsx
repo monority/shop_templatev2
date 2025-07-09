@@ -13,6 +13,7 @@ const ProductDetails = () => {
 	const [activeSize, setActiveSize] = useState();
 	const state_AddProduct = useStore((state) => state.addProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
+	const state_UpdateQuantityProduct = useStore((state) => state.updateQuantityProduct);
 	const state_AddFavorite = useStore((state) => state.addProductFavorite);
 	const [activeColor, setActiveColor] = useState();
 	const [average, setAverage] = useState(0);
@@ -24,14 +25,19 @@ const ProductDetails = () => {
 	const handleUpdateProduct = (product) => {
 		state_UpdateProduct(product);
 	}
+	const handleQuantityUpdate = (product) => {
+		state_UpdateQuantityProduct(product);
+
+	}
+
 	const state_AddProductHandler = () => {
 		if (product) {
 			let currentProduct = user?.products?.find(product => id === product.id);
 			console.log(user?.products)
 			console.log(currentProduct)
 			if (currentProduct) {
-				const productObject = { id: id, name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: currentProduct.quantity++ };
-				handleUpdateProduct(productObject);
+				const productObject = { id: id, name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: currentProduct.quantity + 1 };
+				handleQuantityUpdate(currentProduct.id);
 				return;
 
 			}
