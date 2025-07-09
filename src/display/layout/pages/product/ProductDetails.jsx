@@ -33,16 +33,13 @@ const ProductDetails = () => {
 	const state_AddProductHandler = () => {
 		if (product) {
 			let currentProduct = user?.products?.find(product => id === product.id);
-			console.log(user?.products)
-			console.log(currentProduct)
 			if (currentProduct) {
-				const productObject = { id: id, name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: currentProduct.quantity + 1 };
 				handleQuantityUpdate(currentProduct.id);
 				return;
 
 			}
 		}
-		handleAddProduct({ id: id, name: product.title, price: product.price, codeProduct: product.codeProduct });
+		handleAddProduct({ id: id, name: product.title, price: product.price, codeProduct: product.codeProduct , quantity : 1});
 	};
 
 	const state_AddProductFavorite = () => {
