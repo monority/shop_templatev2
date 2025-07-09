@@ -25,9 +25,10 @@ const Header = () => {
 	}, []);
 	const checkQuantities = () => {
 		if (user && user.products) {
-			return user.products.reduce((acc, product) => acc + (product.quantity || 0), 0);
+			const total = user.products.reduce((acc, product) => acc + (product.quantity || 0), 0);
+			return total > 0 ? total : '';
 		}
-		return 0;
+		return '';
 	};
 	return (
 		<>
@@ -67,11 +68,9 @@ const Header = () => {
 								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
 									<div className="element_center">
 										<Cart width="2.8rem" height="2.8rem" />
-										<p>Number : {checkQuantities()}</p>
+										<p> {checkQuantities()}</p>
 									</div>
-									<div className="element_center">
-										<p className='text_size02'>Cart</p>
-									</div>
+								
 								</li>
 								<li className="element text_size01 cursor_pointer">
 									<div className="element_center">
