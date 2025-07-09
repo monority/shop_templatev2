@@ -11,9 +11,9 @@ export const useStore = create((set) => ({
 		createdAt: '',
 		products: [
 			{
-				_id: '',
+				id: '',
 				name: '',
-				quantity: '',
+				quantity: 0,
 				price: '',
 				codeProduct: '',
 			}

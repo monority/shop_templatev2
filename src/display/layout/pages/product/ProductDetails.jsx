@@ -26,17 +26,17 @@ const ProductDetails = () => {
 	}
 	const state_AddProductHandler = () => {
 		if (product) {
-			let currentProduct = user?.products?.find(product => user?.product?.id === product.id);
+			let currentProduct = user?.products?.find(product => id === product.id);
+			console.log(user?.products)
 			console.log(currentProduct)
 			if (currentProduct) {
-				currentProduct.quantity++;
-				const productObject = { name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: currentProduct.quantity };
+				const productObject = { id: id, name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: currentProduct.quantity++ };
 				handleUpdateProduct(productObject);
 				return;
 
 			}
 		}
-		handleAddProduct({ name: product.title, price: product.price, codeProduct: product.codeProduct });
+		handleAddProduct({ id: id, name: product.title, price: product.price, codeProduct: product.codeProduct });
 	};
 
 	const state_AddProductFavorite = () => {
