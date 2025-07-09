@@ -23,7 +23,12 @@ const Header = () => {
 			window.removeEventListener("scroll", headerChange);
 		};
 	}, []);
-
+	const checkQuantities = () => {
+		if (user && user.products) {
+			return user.products.reduce((acc, product) => acc + (product.quantity || 0), 0);
+		}
+		return 0;
+	};
 	return (
 		<>
 
@@ -62,7 +67,7 @@ const Header = () => {
 								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
 									<div className="element_center">
 										<Cart width="2.8rem" height="2.8rem" />
-										<p>Number : {user?.products?.length}</p>
+										<p>Number : {checkQuantities()}</p>
 									</div>
 									<div className="element_center">
 										<p className='text_size02'>Cart</p>
