@@ -7,7 +7,7 @@ import { useStore } from '../../../../cfg/state/Store';
 const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const checkLocation = location.pathname === "/check";
+	const checkLocation = location.pathname === "/check";	
 	const [active, setActive] = useState(true);
 	const [scroll, setScrolled] = useState(false);
 	const number = useStore(state => state.products);
@@ -30,6 +30,14 @@ const Header = () => {
 		}
 		return '';
 	};
+
+	const checkFavorites = () => {
+		if (user && user.favorites) {
+			const total = user.favorites.length;
+			return total > 0 ? total : '';
+		}
+		return '';
+	}
 	return (
 		<>
 
@@ -77,7 +85,7 @@ const Header = () => {
 										<Favorite width="2.8rem" height="2.8rem" />
 									</div>
 									<div className="element_center">
-										<p className='text_size02'>Favorites</p>
+										<p> {checkFavorites()}</p>
 									</div>
 								</li>
 							</ul>
