@@ -14,11 +14,13 @@ const ProductDetails = () => {
 	const state_AddProduct = useStore((state) => state.addProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
 	const state_UpdateQuantityProduct = useStore((state) => state.updateQuantityProduct);
-	const state_AddFavorite = useStore((state) => state.addProductFavorite);
+	const state_AddFavorite = useStore((state) => state.toggleProductFavorite);
 	const [activeColor, setActiveColor] = useState();
 	const [average, setAverage] = useState(0);
 	const product = data.find(item => item.id == id);
 	const user = useStore(state => state.user);
+	const isFavorite = user?.favorites?.some(fav => fav.id === product?.id);
+
 	const handleAddProduct = (product) => {
 		state_AddProduct(product);
 	};
@@ -29,7 +31,19 @@ const ProductDetails = () => {
 		state_UpdateQuantityProduct(product);
 
 	}
-
+	const handleToggleFavorite = () => {
+		if (product) {
+			state_AddFavorite({
+				id: product.id,
+				name: product.title,
+				price: product.price,
+				codeProduct: product.codeProduct,
+				brand: product.brand,
+				image: product.image,
+				category: product.category
+			});
+		}
+	};
 	const state_AddProductHandler = () => {
 		if (product) {
 			let currentProduct = user?.products?.find(product => id === product.id);
@@ -39,22 +53,10 @@ const ProductDetails = () => {
 
 			}
 		}
-		handleAddProduct({ id: id, name: product.title, price: product.price, codeProduct: product.codeProduct , quantity : 1});
+		handleAddProduct({ id: id, name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: 1 });
 	};
 
-	const state_AddProductFavorite = () => {
-		if (product) {
-			let currentProduct = user?.products?.find(product => user?.product?.id === product
-				.id);
-			if (currentProduct) {
-				currentProduct.favorite = !currentProduct.favorite;
-				const productObject = { name: product.title, price: product.price, codeProduct: product.codeProduct, favorite: currentProduct.favorite };
-				handleUpdateProduct(productObject);
-				return;
-			}
-		}
-		handleAddProduct({ name: product.title, price: product.price, codeProduct: product.codeProduct, favorite: true });
-	};
+	
 	useEffect(() => {
 		if (product) {
 			if (product.availableSizes && product.availableSizes.length > 0) {
@@ -153,8 +155,19 @@ const ProductDetails = () => {
 								<p>Size guide</p>
 							</div>
 							<div className="wrapper_btn">
-								<button className='btn btn_base' onClick={() => state_AddProductHandler(product.id)}>Add to cart</button>
-								<button className='btn bg_color01 text_color01 border_color01'><Favorite width="1.5rem" height="1.5rem" action={() => state_AddProductFavorite()} /></button>
+								<button className='btn btn_base' onClick={state_AddProductHandler}>
+									Add to cart
+								</button>
+								<button
+									className={`btn ${isFavorite ? 'btn_favorite_active' : 'bg_color01 text_color01 border_color01'}`}
+									onClick={handleToggleFavorite}
+								>
+									<Favorite
+										width="1.5rem"
+										height="1.5rem"
+										fill={isFavorite ? 'red' : 'currentColor'}
+									/>
+								</button>
 							</div>
 							<div className="element">
 								<p>Free delivery over <strong>$30.00</strong></p>

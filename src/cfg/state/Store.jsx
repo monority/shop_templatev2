@@ -80,16 +80,28 @@ export const useStore = create((set) => ({
 			},
 		};
 	}),
-	addProductFavorite: (productId) => set((state) => {
+	toggleProductFavorite: (product) => set((state) => {
 		if (!state.user) return {};
-		return {
-			user: {
-				...state.user,
-				products: state.user.products.map((product) =>
-					product.id === productId ? { ...product, favorite: !product.favorite } : product
-				),
-			},
-		};
+
+		const isAlreadyFavorite = state.user.favorites.find(fav => fav.id === product.id);
+
+		if (isAlreadyFavorite) {
+			// Remove from favorites
+			return {
+				user: {
+					...state.user,
+					favorites: state.user.favorites.filter(fav => fav.id !== product.id),
+				},
+			};
+		} else {
+			// Add to favorites
+			return {
+				user: {
+					...state.user,
+					favorites: [...state.user.favorites, product],
+				},
+			};
+		}
 	}),
 	errorPop: (message) => {
 		set({
