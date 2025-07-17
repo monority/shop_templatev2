@@ -18,6 +18,7 @@ export const useStore = create((set) => ({
 				codeProduct: '',
 			}
 		],
+		favorites: [], 
 	},
 	popup: {
 		isOpen: false,
@@ -86,7 +87,6 @@ export const useStore = create((set) => ({
 		const isAlreadyFavorite = state.user.favorites.find(fav => fav.id === product.id);
 
 		if (isAlreadyFavorite) {
-			// Remove from favorites
 			return {
 				user: {
 					...state.user,
