@@ -4,4 +4,24 @@ header {
 	.container_between{
 		height: 100%;
 	}
+	.element_number{
+		position: absolute;
+		top: -.75rem;
+		right: -0.4rem;
+		.background{
+			background: var(--bg_color03);
+			border-radius: 50%;
+			width: 2rem;
+			height: 2rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: -1;
+			p{
+				font-size: var(--text_size01);
+				color: var(--text_color01);
+				font-weight: bold;
+			}
+		}
+	}
 }
