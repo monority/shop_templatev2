@@ -12,6 +12,7 @@ import { UserContextProvider } from './cfg/state/useContext';
 import AuthGuard from './cfg/guards/AuthGuard'
 import Profile from './display/layout/pages/user/Profile'
 import ScrollToTop from './display/components/utils/ScrollToTop';
+import Favorites from './display/layout/pages/user/Favorites';
 const Root = () => {
 	const location = useLocation();
 
@@ -25,6 +26,7 @@ const Root = () => {
 						<Route path="/product/:id" element={<ProductDetails />} />
 						<Route path="*" element={<Error />} />
 						<Route exact path="/cart" element={<Cart />} />
+						<Route exact path="/favorites" element={<Favorites />} />
 						<Route exact path="/auth/check" element={<Check />} />
 						<Route exact path="/auth/login" element={<Check />} />
 						<Route exact path="/auth/register" element={<Check />} />

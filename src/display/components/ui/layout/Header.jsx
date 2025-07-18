@@ -7,7 +7,7 @@ import { useStore } from '../../../../cfg/state/Store';
 const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const checkLocation = location.pathname === "/check";	
+	const checkLocation = location.pathname === "/check";
 	const [active, setActive] = useState(true);
 	const [scroll, setScrolled] = useState(false);
 	const number = useStore(state => state.products);
@@ -78,11 +78,11 @@ const Header = () => {
 										<Cart width="2.8rem" height="2.8rem" />
 										<p> {checkQuantities()}</p>
 									</div>
-								
+
 								</li>
-								<li className="element text_size01 cursor_pointer">
+								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/favorites")}>
 									<div className="element_center">
-										<Favorite width="2.8rem" height="2.8rem" />
+										<Favorite width="2.8rem" height="2.8rem"/>
 									</div>
 									<div className="element_center">
 										<p> {checkFavorites()}</p>
