@@ -85,7 +85,7 @@ export const useStore = create((set) => ({
 	toggleProductFavorite: (product) => set((state) => {
 		if (!state.user) return {};
 
-		const isAlreadyFavorite = state.user.favorites.find(fav => fav.id === product.id);
+		const isAlreadyFavorite = state.user.favorites?.find(fav => fav.id === product.id);
 
 		if (isAlreadyFavorite) {
 			return {
