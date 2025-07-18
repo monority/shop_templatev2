@@ -56,7 +56,7 @@ const ProductDetails = () => {
 		handleAddProduct({ id: id, name: product.title, price: product.price, codeProduct: product.codeProduct, quantity: 1 });
 	};
 
-	
+
 	useEffect(() => {
 		if (product) {
 			if (product.availableSizes && product.availableSizes.length > 0) {
@@ -155,17 +155,17 @@ const ProductDetails = () => {
 								<p>Size guide</p>
 							</div>
 							<div className="wrapper_btn">
-								<button className='btn btn_base' onClick={state_AddProductHandler}>
+								<button className='btn btn_base' onClick={() => state_AddProductHandler()}>
 									Add to cart
 								</button>
 								<button
-									className={`btn ${isFavorite ? 'btn_favorite_active' : 'bg_color01 text_color01 border_color01'}`}
+									className={`btn ${isFavorite ? 'btn btn_favorite_active  ' : ' btn btn_favorite'}`}
 									onClick={handleToggleFavorite}
 								>
 									<Favorite
 										width="1.5rem"
 										height="1.5rem"
-										fill={isFavorite ? 'red' : 'currentColor'}
+										color={isFavorite ? 'white' : 'black'}
 									/>
 								</button>
 							</div>

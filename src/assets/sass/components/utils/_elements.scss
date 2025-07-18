@@ -51,6 +51,17 @@
 
 }
 
+.btn_favorite{
+	border: var(--border_color01);
+	background: var(--bg_color01);
+	color: var(--text_color01);
+
+}
+.btn_favorite_active{
+	border: var(--border_color01);
+	background: var(--text_color01);
+	color: var(--text_color01);
+}
 .btn_base_highlight {
 	border: var(--border_color01);
 	background-color: var(--text_color02);

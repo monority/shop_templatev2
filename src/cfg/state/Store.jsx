@@ -18,7 +18,7 @@ export const useStore = create((set) => ({
 				codeProduct: '',
 			}
 		],
-		favorites: [], 
+		favorites: [],
 	},
 	popup: {
 		isOpen: false,
@@ -39,6 +39,7 @@ export const useStore = create((set) => ({
 			role: '',
 			createdAt: '',
 			products: [],
+			favorites: [],
 		}
 	}),
 	addProduct: (product) => set((state) => {

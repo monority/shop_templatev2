@@ -82,7 +82,7 @@ const Header = () => {
 								</li>
 								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/favorites")}>
 									<div className="element_center">
-										<Favorite width="2.8rem" height="2.8rem"/>
+										<Favorite width="2.8rem" height="2.8rem" color="currentColor"/>
 									</div>
 									<div className="element_center">
 										<p> {checkFavorites()}</p>
