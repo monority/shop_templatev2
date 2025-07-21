@@ -73,12 +73,17 @@ const Header = () => {
 									</UserGuard>
 								)}
 
-								<li className="element text_size01 cursor_pointer" onClick={() => navigate("/cart")}>
+								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/cart")}>
 									<div className="element_center">
 										<Cart width="2.8rem" height="2.8rem" />
-										<p> {checkQuantities()}</p>
+									
 									</div>
+									<div className="element_number">
+										<div className={user?.favorites && user.favorites.length > 0 ? 'background' : ''}>
+											<p> {checkQuantities()}</p>
 
+										</div>
+									</div>
 								</li>
 								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/favorites")}>
 									<div className="element_center">
