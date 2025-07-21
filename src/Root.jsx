@@ -8,7 +8,6 @@ import ProductDetails from './display/layout/pages/product/ProductDetails';
 import Error from './display/layout/pages/Error';
 import Cart from './display/layout/pages/payment/Cart';
 import Check from './display/layout/pages/auth/Check';
-import { UserContextProvider } from './cfg/state/useContext';
 import AuthGuard from './cfg/guards/AuthGuard'
 import Profile from './display/layout/pages/user/Profile'
 import ScrollToTop from './display/components/utils/ScrollToTop';
@@ -17,7 +16,6 @@ const Root = () => {
 	const location = useLocation();
 
 	return (
-		<UserContextProvider>
 			<AppContainer>
 				{!location.pathname.startsWith("/auth") && <Header />}
 				<ScrollToTop>
@@ -43,7 +41,6 @@ const Root = () => {
 				</ScrollToTop>
 				{!location.pathname.startsWith("/auth") && <Footer />}
 			</AppContainer>
-		</UserContextProvider>
 	)
 }
 

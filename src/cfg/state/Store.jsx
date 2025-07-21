@@ -20,6 +20,8 @@ export const useStore = create((set) => ({
 		],
 		favorites: [],
 	},
+	loading: true,
+	isAuthenticated: false,
 	popup: {
 		isOpen: false,
 		message: "",
@@ -40,8 +42,31 @@ export const useStore = create((set) => ({
 			createdAt: '',
 			products: [],
 			favorites: [],
-		}
+		},
+		isAuthenticated: !!userData,
+		loading: false,
 	}),
+	initializeAuth: () => {
+		const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+			if (currentUser) {
+				try {
+					const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+					if (userDoc.exists()) {
+						get().setUser({ uid: currentUser.uid, ...userDoc.data() });
+					} else {
+						console.warn('No user data found in Firestore');
+						get().setUser({ uid: currentUser.uid, email: currentUser.email });
+					}
+				} catch (error) {
+					console.error('Error fetching user data:', error);
+					get().setUser(null);
+				}
+			} else {
+				get().setUser(null);
+			}
+		});
+		return unsubscribe;
+	},
 	addProduct: (product) => set((state) => {
 		if (!state.user) return {};
 		return {
