@@ -85,7 +85,7 @@ const Header = () => {
 										<Favorite width="2.8rem" height="2.8rem" color="currentColor" />
 									</div>
 									<div className="element_number">
-										<div className={user?.favorites && user.favorites.length > 0 && "background"}>
+										<div className={user?.favorites && user.favorites.length > 0 ? 'background' : ''}>
 											<p> {checkFavorites()}</p>
 
 										</div>
