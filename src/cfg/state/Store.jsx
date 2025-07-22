@@ -10,13 +10,7 @@ export const useStore = create((set) => ({
 		role: '',
 		createdAt: '',
 		products: [
-			{
-				id: '',
-				name: '',
-				quantity: 0,
-				price: '',
-				codeProduct: '',
-			}
+	
 		],
 		favorites: [],
 	},

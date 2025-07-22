@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Basket, Cart, Favorite, Favorite2, User } from '../SvgStack';
+import { Account, Basket, Cart, Favorite, Favorite2, User } from '../SvgStack';
 import Nav from './Nav';
 import UserGuard from '../../../../cfg/guards/UserGuard';
 import { useStore } from '../../../../cfg/state/Store';
@@ -64,7 +64,7 @@ const Header = () => {
 									<UserGuard fallback>
 										<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
 											<div className="element_center">
-												<User width="2.8rem" height="2.8rem" />
+												<Account width="2.8rem" height="2.8rem" />
 											</div>
 											<div className="element_center">
 												<p className='text_size02'>User</p>
