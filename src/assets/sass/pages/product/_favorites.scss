@@ -1,0 +1,13 @@
+@use "../../components/utils/variables" as v;
+#favorites{
+	.favorite-item{
+		display: flex;
+		@media (max-width: v.$sm_breakpoint) {
+			flex-direction: column;
+		}
+		img{
+			width: 100%;
+			max-width: 35rem;
+		}
+	}
+}
