@@ -16,7 +16,6 @@ const ProductDetails = () => {
 	const state_UpdateQuantityProduct = useStore((state) => state.updateQuantityProduct);
 	const state_AddFavorite = useStore((state) => state.toggleProductFavorite);
 	const [activeColor, setActiveColor] = useState();
-	const [average, setAverage] = useState(0);
 	const product = data.find(item => item.id == id);
 	const user = useStore(state => state.user);
 	const isFavorite = user?.favorites?.some(fav => fav.id === product?.id);
