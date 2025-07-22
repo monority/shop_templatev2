@@ -2,8 +2,9 @@ import React from 'react'
 import { useStore } from '../../../../cfg/state/Store';
 const Favorites = () => {
 	const state_favorites = useStore(state => state.user.favorites);
+	const state_AddFavorite = useStore((state) => state.toggleProductFavorite);
 	const showFavorites = () => {
-		console.log(state_favorites);
+
 		if (state_favorites && state_favorites.length > 0) {
 			return state_favorites.map((favorite, index) => (
 				<div key={index} className="favorite-item">
@@ -14,12 +15,18 @@ const Favorites = () => {
 						<h2>{favorite.name}</h2>
 						<p>{favorite.description}</p>
 						<p className="price">${parseFloat(favorite.price).toFixed(2)}</p>
+						<button onClick={() => removeFavorite(index)} className="btn btn-danger">Remove from Favorites</button>
 					</div>
 				</div>
 			));
 		} else {
 			return <p>No favorites found.</p>;
 		}
+	}
+
+	const removeFavorite = (index) => {
+		const findProduct = state_favorites[index];
+		state_AddFavorite(findProduct);
 	}
 	return (
 		<>
