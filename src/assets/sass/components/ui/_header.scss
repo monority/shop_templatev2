@@ -1,15 +1,18 @@
 @use "../utils/variables" as v;
+
 header {
 	height: 14rem;
-	.container_between{
+
+	.container_between {
 		height: 100%;
 	}
-	.element_number{
+
+	.element_number {
 		position: absolute;
 		top: -.9rem;
 		right: -.9rem;
-		.background{
-			background: rgba(201, 35, 35, 0.658);
+
+		.background {
 			border-radius: 50%;
 			width: 2rem;
 			height: 2rem;
@@ -17,11 +20,23 @@ header {
 			align-items: center;
 			justify-content: center;
 			z-index: -1;
-			p{
+
+			p {
 				font-size: var(--text_size01);
 				color: var(--text_color01);
 				font-weight: bold;
 			}
 		}
+
+
+	}
+
+	.favorite_bg {
+		background: rgba(201, 35, 35, 0.658);
+
+	}
+
+	.cart_bg {
+		background: rgba(240, 170, 41, 0.658);
 	}
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Cart, Favorite, User } from '../SvgStack';
+import { Basket, Cart, Favorite, Favorite2, User } from '../SvgStack';
 import Nav from './Nav';
 import UserGuard from '../../../../cfg/guards/UserGuard';
 import { useStore } from '../../../../cfg/state/Store';
@@ -75,11 +75,11 @@ const Header = () => {
 
 								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/cart")}>
 									<div className="element_center">
-										<Cart width="2.8rem" height="2.8rem" />
+										<Basket width="2.8rem" height="2.8rem" />
 									
 									</div>
 									<div className="element_number">
-										<div className={user?.favorites && user.favorites.length > 0 ? 'background' : ''}>
+										<div className={user?.products && user?.products?.length > 0 ? 'background cart_bg' : ''}>
 											<p> {checkQuantities()}</p>
 
 										</div>
@@ -87,10 +87,10 @@ const Header = () => {
 								</li>
 								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/favorites")}>
 									<div className="element_center">
-										<Favorite width="2.8rem" height="2.8rem" color="currentColor" />
+										<Favorite2 idth="2.8rem" height="2.8rem" color="currentColor" />
 									</div>
 									<div className="element_number">
-										<div className={user?.favorites && user.favorites.length > 0 ? 'background' : ''}>
+										<div className={user?.favorites && user.favorites.length > 0 ? 'background favorite_bg' : ''}>
 											<p> {checkFavorites()}</p>
 
 										</div>
