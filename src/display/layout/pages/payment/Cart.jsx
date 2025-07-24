@@ -11,11 +11,16 @@ const Cart = () => {
 					<div className="element">
 						<img src={product.image} alt={product.name} className="favorite-image" />
 					</div>
-					<div className="element">
-						<h2>{product.name}</h2>
-						<p>{product.description}</p>
-						<p className="price">${parseFloat(product.price).toFixed(2)}</p>
-						<button onClick={() => removeFavorite(index)} className="btn btn-danger">Remove from Favorites</button>
+					<div className="wrapper_between">
+						<div className="element">
+							<h2>{product.name}</h2>
+							<p>{product.description}</p>
+							<p className="price">${parseFloat(product.price).toFixed(2)}</p>
+						</div>
+						<div className="element">
+							<button onClick={() => removeFavorite(index)} className="btn btn-danger">Favorites</button>
+						</div>
+
 					</div>
 				</div>
 			));
