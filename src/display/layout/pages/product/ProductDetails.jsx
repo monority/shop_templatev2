@@ -52,11 +52,11 @@ const ProductDetails = () => {
 
 			}
 		}
-		handleAddProduct({ 
-			id: id, 
-			name: product.title, 
-			price: product.price, 
-			codeProduct: product.codeProduct, 
+		handleAddProduct({
+			id: id,
+			name: product.title,
+			price: product.price,
+			codeProduct: product.codeProduct,
 			quantity: 1,
 			size: activeSize,
 			color: activeColor
