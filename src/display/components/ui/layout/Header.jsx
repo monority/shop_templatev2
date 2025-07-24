@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Account, Basket, Cart, Favorite, Favorite2, User } from '../SvgStack';
+import { Account, Basket, Cart, Check, Favorite, Favorite2, User } from '../SvgStack';
 import Nav from './Nav';
 import UserGuard from '../../../../cfg/guards/UserGuard';
 import { useStore } from '../../../../cfg/state/Store';
@@ -53,7 +53,7 @@ const Header = () => {
 								<UserGuard>
 									<li className="element text_size01 cursor_pointer" onClick={() => navigate("/user/profile")}>
 										<div className="element_center">
-											<User width="2.8rem" height="2.8rem" />
+											<Account size="2.5rem" />
 										</div>
 										<div className="element_center">
 											<p className='text_size02'>{user?.username}</p>
@@ -64,7 +64,7 @@ const Header = () => {
 									<UserGuard fallback>
 										<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
 											<div className="element_center">
-												<Account width="2.8rem" height="2.8rem" />
+												<Account size="2.8rem" />
 											</div>
 											<div className="element_center">
 												<p className='text_size02'>User</p>
@@ -75,8 +75,8 @@ const Header = () => {
 
 								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/cart")}>
 									<div className="element_center">
-										<Basket width="2.8rem" height="2.8rem" />
-									
+										<Basket size="2.8rem" />
+
 									</div>
 									<div className="element_number">
 										<div className={user?.products && user?.products?.length > 0 ? 'background cart_bg' : ''}>
@@ -87,7 +87,7 @@ const Header = () => {
 								</li>
 								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/favorites")}>
 									<div className="element_center">
-										<Favorite2 idth="2.8rem" height="2.8rem" color="currentColor" />
+										<Favorite2 size="2.8rem" color="currentColor" />
 									</div>
 									<div className="element_number">
 										<div className={user?.favorites && user.favorites.length > 0 ? 'background favorite_bg' : ''}>

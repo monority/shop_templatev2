@@ -35,8 +35,7 @@ const ProductCard = ({ img, title, colors, price, type, description, id, action 
 					{colors.map((color, index) => (
 						<svg
 							key={index}
-							width="2rem"
-							height="2rem"
+							size="2rem"
 							viewBox="0 0 16 16"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"

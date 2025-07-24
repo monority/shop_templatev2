@@ -18,7 +18,7 @@ const Cart = () => {
 							<p className="price">${parseFloat(product.price).toFixed(2)}</p>
 						</div>
 						<div className="element">
-							<button onClick={() => removeFavorite(index)} className="btn btn-danger">Favorites</button>
+							<button onClick={() => removeFavorite(index)} className="btn btn-danger">X</button>
 						</div>
 
 					</div>

@@ -50,7 +50,7 @@ const Hero = () => {
 								} else {
 									setCurrentReviewIndex(reviews.length - 1);
 								}
-							}}><ArrowRight width="2rem" height="2rem" /></span>
+							}}><ArrowRight size="2rem"  /></span>
 						</div>
 					</div>
 				</div>

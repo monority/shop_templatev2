@@ -20,8 +20,7 @@ const DisplayMode = () => {
 		<>
 			<div id="display_mode">
 				<svg
-					width="24"
-					height="24"
+					size="24"
 					viewBox="0 0 22 22"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"

@@ -170,8 +170,8 @@ const ProductDetails = () => {
 									onClick={handleToggleFavorite}
 								>
 									<Favorite
-										width="1.5rem"
-										height="1.5rem"
+										size="1.5rem"
+										
 										color={isFavorite ? 'white' : 'black'}
 									/>
 								</button>
