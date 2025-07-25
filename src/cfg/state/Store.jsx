@@ -1,6 +1,9 @@
 import { create } from "zustand";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebaseCfg";
 
-export const useStore = create((set) => ({
+export const useStore = create((set, get) => ({
 	user: {
 		uid: '',
 		username: '',
@@ -37,7 +40,7 @@ export const useStore = create((set) => ({
 			products: [],
 			favorites: [],
 		},
-		isAuthenticated: !!userData,
+		isAuthenticated: !!user,
 		loading: false,
 	}),
 	initializeAuth: () => {

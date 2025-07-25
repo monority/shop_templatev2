@@ -60,18 +60,14 @@ const Header = () => {
 										</div>
 									</li>
 								</UserGuard>
-								{!user && (
-									<UserGuard fallback>
-										<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
-											<div className="element_center">
-												<Account size="2.8rem" />
-											</div>
-											<div className="element_center">
-												<p className='text_size02'>User</p>
-											</div>
-										</li>
-									</UserGuard>
-								)}
+								<UserGuard fallback={true}>
+									<li className="element text_size01 cursor_pointer" onClick={() => navigate("/auth/check")}>
+										<div className="element_center">
+											<Account size="2.5rem" />
+										</div>
+									
+									</li>
+								</UserGuard>
 
 								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/cart")}>
 									<div className="element_center">

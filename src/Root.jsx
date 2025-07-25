@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import AppContainer from './display/layout/AppContainer'
 import Footer from './display/components/ui/layout/Footer';
@@ -12,8 +12,15 @@ import AuthGuard from './cfg/guards/AuthGuard'
 import Profile from './display/layout/pages/user/Profile'
 import ScrollToTop from './display/components/utils/ScrollToTop';
 import Favorites from './display/layout/pages/user/Favorites';
+import { useStore } from './cfg/state/Store';
 const Root = () => {
 	const location = useLocation();
+	const initializeAuth = useStore(state => state.initializeAuth);
+
+	useEffect(() => {
+		const unsubscribe = initializeAuth();
+		return () => unsubscribe();
+	}, [initializeAuth]);
 
 	return (
 			<AppContainer>
