@@ -14,51 +14,72 @@ const Cart = () => {
         return 0;
     }
 
-    const handleQuantityChange = (productId, newQuantity) => {
-        const quantity = Math.max(1, parseInt(newQuantity) || 1);
-        const product = state_products.find(p => p.id === productId);
-        if (product) {
-            state_UpdateProduct({
-                ...product,
-                quantity: quantity
-            });
-        }
+   const handleQuantityChange = (productId, newQuantity) => {
+    const quantity = Math.max(1, parseInt(newQuantity) || 1);
+    const product = state_products.find(p => p.id === productId);
+    if (product) {
+        state_UpdateProduct({
+            ...product,
+            quantity: quantity
+        });
     }
+}
 
-    const showCart = () => {
-        if (state_products && state_products.length > 0) {
-            return state_products.map((product, index) => (
-                <div key={index} className="favorite-item">
+const incrementQuantity = (productId) => {
+    const product = state_products.find(p => p.id === productId);
+    if (product) {
+        handleQuantityChange(productId, product.quantity + 1);
+    }
+}
+
+const decrementQuantity = (productId) => {
+    const product = state_products.find(p => p.id === productId);
+    if (product && product.quantity > 1) {
+        handleQuantityChange(productId, product.quantity - 1);
+    }
+}
+
+const showCart = () => {
+    if (state_products && state_products.length > 0) {
+        return state_products.map((product, index) => (
+            <div key={index} className="favorite-item">
+                <div className="element">
+                    <img src={product.image} alt={product.name} className="favorite-image" />
+                </div>
+                <div className="wrapper_between">
                     <div className="element">
-                        <img src={product.image} alt={product.name} className="favorite-image" />
+                        <h2>{product.name}</h2>
+                        <p>{product.description}</p>
+                        <p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
                     </div>
-                    <div className="wrapper_between">
-                        <div className="element">
-                            <h2>{product.name}</h2>
-                            <p>{product.description}</p>
-                            <p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
+                    <div className="element">
+                        <div className="quantity-controls">
+                            <button 
+                                className="btn btn-quantity" 
+                                onClick={() => decrementQuantity(product.id)}
+                                disabled={product.quantity <= 1}
+                            >
+                                -
+                            </button>
+                            <span className="quantity-display">{product.quantity}</span>
+                            <button 
+                                className="btn btn-quantity" 
+                                onClick={() => incrementQuantity(product.id)}
+                            >
+                                +
+                            </button>
                         </div>
-                        <div className="element">
-                            <p>Edit Quantity : 
-                                <input 
-                                    type="number" 
-									className='input_default'
-                                    min="1" 
-                                    value={product.quantity}
-                                    onChange={(e) => handleQuantityChange(product.id, e.target.value)}
-                                />
-                            </p>
-                        </div>
-                        <div className="element">
-                            <Cancel size="2rem" action={() => removeProduct(product.id)} />
-                        </div>
+                    </div>
+                    <div className="element">
+                        <Cancel size="2rem" action={() => removeProduct(product.id)} />
                     </div>
                 </div>
-            ));
-        } else {
-            return <p>No products found.</p>;
-        }
+            </div>
+        ));
+    } else {
+        return <p>No products found.</p>;
     }
+}
 
     const removeProduct = (id) => {
         state_RemoveProduct(id);
