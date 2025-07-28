@@ -3,6 +3,13 @@ import { useStore } from '../../../../cfg/state/Store';
 
 const Cart = () => {
 	const state_products = useStore(state => state.user.products);
+	const state_RemoveProduct = useStore((state) => state.removeProduct);
+	const productPrice = () => {
+		if (state_products && state_products.length > 0) {
+			return state_products.reduce((total, product) => total + (product.price * product.quantity), 0);
+		}
+		return 0;
+	}
 	const showCart = () => {
 
 		if (state_products && state_products.length > 0) {
@@ -15,10 +22,13 @@ const Cart = () => {
 						<div className="element">
 							<h2>{product.name}</h2>
 							<p>{product.description}</p>
-							<p className="price">${parseFloat(product.price).toFixed(2)}</p>
+							<p className="price">${productPrice()}</p>
 						</div>
 						<div className="element">
-							<button onClick={() => removeFavorite(index)} className="btn btn-danger">X</button>
+							<p>Edit Quantity : <input type="number" min="1" defaultValue={product.quantity} /></p>
+						</div>
+						<div className="element">
+							<button onClick={() => removeProduct(product.id)} className="btn btn-danger">X</button>
 						</div>
 
 					</div>
@@ -29,6 +39,9 @@ const Cart = () => {
 		}
 	}
 
+const removeProduct = (id) => {
+    state_RemoveProduct(id);
+}
 	return (
 		<>
 			<section id="products">

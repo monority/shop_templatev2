@@ -117,7 +117,6 @@ export const useStore = create((set, get) => ({
 				},
 			};
 		} else {
-			// Add to favorites
 			return {
 				user: {
 					...state.user,
