@@ -1,5 +1,6 @@
 import React from 'react'
 import { useStore } from '../../../../cfg/state/Store';
+import { Cancel } from '../../../components/ui/SvgStack';
 
 const Cart = () => {
     const state_products = useStore(state => state.user.products);
@@ -41,6 +42,7 @@ const Cart = () => {
                             <p>Edit Quantity : 
                                 <input 
                                     type="number" 
+									className='input_default'
                                     min="1" 
                                     value={product.quantity}
                                     onChange={(e) => handleQuantityChange(product.id, e.target.value)}
@@ -48,7 +50,7 @@ const Cart = () => {
                             </p>
                         </div>
                         <div className="element">
-                            <button onClick={() => removeProduct(product.id)} className="btn btn-danger">X</button>
+                            <Cancel size="2rem" action={() => removeProduct(product.id)} />
                         </div>
                     </div>
                 </div>
