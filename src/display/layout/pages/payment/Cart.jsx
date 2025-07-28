@@ -2,61 +2,83 @@ import React from 'react'
 import { useStore } from '../../../../cfg/state/Store';
 
 const Cart = () => {
-	const state_products = useStore(state => state.user.products);
-	const state_RemoveProduct = useStore((state) => state.removeProduct);
-	const productPrice = () => {
-		if (state_products && state_products.length > 0) {
-			return state_products.reduce((total, product) => total + (product.price * product.quantity), 0);
-		}
-		return 0;
-	}
-	const showCart = () => {
+    const state_products = useStore(state => state.user.products);
+    const state_RemoveProduct = useStore((state) => state.removeProduct);
+    const state_UpdateProduct = useStore((state) => state.updateProduct);
+    
+    const productPrice = () => {
+        if (state_products && state_products.length > 0) {
+            return state_products.reduce((total, product) => total + (parseFloat(product.price) * product.quantity), 0);
+        }
+        return 0;
+    }
 
-		if (state_products && state_products.length > 0) {
-			return state_products.map((product, index) => (
-				<div key={index} className="favorite-item">
-					<div className="element">
-						<img src={product.image} alt={product.name} className="favorite-image" />
-					</div>
-					<div className="wrapper_between">
-						<div className="element">
-							<h2>{product.name}</h2>
-							<p>{product.description}</p>
-							<p className="price">${productPrice()}</p>
-						</div>
-						<div className="element">
-							<p>Edit Quantity : <input type="number" min="1" defaultValue={product.quantity} /></p>
-						</div>
-						<div className="element">
-							<button onClick={() => removeProduct(product.id)} className="btn btn-danger">X</button>
-						</div>
+    const handleQuantityChange = (productId, newQuantity) => {
+        const quantity = Math.max(1, parseInt(newQuantity) || 1);
+        const product = state_products.find(p => p.id === productId);
+        if (product) {
+            state_UpdateProduct({
+                ...product,
+                quantity: quantity
+            });
+        }
+    }
 
-					</div>
-				</div>
-			));
-		} else {
-			return <p>No products found.</p>;
-		}
-	}
+    const showCart = () => {
+        if (state_products && state_products.length > 0) {
+            return state_products.map((product, index) => (
+                <div key={index} className="favorite-item">
+                    <div className="element">
+                        <img src={product.image} alt={product.name} className="favorite-image" />
+                    </div>
+                    <div className="wrapper_between">
+                        <div className="element">
+                            <h2>{product.name}</h2>
+                            <p>{product.description}</p>
+                            <p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
+                        </div>
+                        <div className="element">
+                            <p>Edit Quantity : 
+                                <input 
+                                    type="number" 
+                                    min="1" 
+                                    value={product.quantity}
+                                    onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                                />
+                            </p>
+                        </div>
+                        <div className="element">
+                            <button onClick={() => removeProduct(product.id)} className="btn btn-danger">X</button>
+                        </div>
+                    </div>
+                </div>
+            ));
+        } else {
+            return <p>No products found.</p>;
+        }
+    }
 
-const removeProduct = (id) => {
-    state_RemoveProduct(id);
-}
-	return (
-		<>
-			<section id="products">
-				<div className="lyt_container gap4">
-					<div className="wrapper">
-						<div className="element">
-							<h1>Products</h1>
-						</div>
-					</div>
-					{showCart()}
+    const removeProduct = (id) => {
+        state_RemoveProduct(id);
+    }
 
-				</div>
-			</section>
-		</>
-	)
+    return (
+        <>
+            <section id="products">
+                <div className="lyt_container gap4">
+                    <div className="wrapper">
+                        <div className="element">
+                            <h1>Products</h1>
+                        </div>
+                        <div className="element">
+                            <h2>Total: ${productPrice().toFixed(2)}</h2>
+                        </div>
+                    </div>
+                    {showCart()}
+                </div>
+            </section>
+        </>
+    )
 }
 
 export default Cart
