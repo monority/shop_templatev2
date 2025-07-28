@@ -53,9 +53,9 @@ const showCart = () => {
                         <p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
                     </div>
                     <div className="element">
-                        <div className="quantity-controls">
+                        <div className="quantity_controls">
                             <button 
-                                className="btn btn-quantity" 
+                                className=" btn_quantity" 
                                 onClick={() => decrementQuantity(product.id)}
                                 disabled={product.quantity <= 1}
                             >
@@ -63,7 +63,7 @@ const showCart = () => {
                             </button>
                             <span className="quantity-display">{product.quantity}</span>
                             <button 
-                                className="btn btn-quantity" 
+                                className=" btn_quantity" 
                                 onClick={() => incrementQuantity(product.id)}
                             >
                                 +
@@ -87,7 +87,7 @@ const showCart = () => {
 
     return (
         <>
-            <section id="products">
+            <section id="cart">
                 <div className="lyt_container gap4">
                     <div className="wrapper">
                         <div className="element">
