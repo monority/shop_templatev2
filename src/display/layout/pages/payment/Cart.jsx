@@ -89,17 +89,27 @@ const Cart = () => {
 		<>
 			<section id="cart">
 				<div className="lyt_container gap4">
+					<div className="wrapper_center">
+
+						<div className="breadcrumb">
+							<span className="active">Cart</span>
+							<span className="separator"> → </span>
+							<span className="inactive">Location</span>
+							<span className="separator"> → </span>
+							<span className="inactive">Payment</span>
+						</div>
+
+					</div>
 					<div className="container_global">
 						<div className="wrapper_cart">
 							{showCart()}
-
 						</div>
 						<div className="wrapper">
 							<div className="element">
-								<h1>Cart</h1>
+								<h4>Price details</h4>
 							</div>
 							<div className="element">
-								<p>{productPrice().toFixed(2)}</p>
+								<p>${productPrice().toFixed(2)}</p>
 							</div>
 						</div>
 					</div>
