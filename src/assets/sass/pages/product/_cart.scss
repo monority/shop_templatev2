@@ -1,7 +1,30 @@
-#cart{
-	.quantity_controls{
+#cart {
+	.quantity_controls {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+	}
+
+	.product_item {
+		padding: 1rem;
+
+	}
+
+	.container_global {
+		display: flex;
+		gap: 2rem;
+
+	}
+
+	.wrapper_cart {
+		flex-basis: 70%;
+		border: var(--border_color02);
+		border-radius: 0.5rem;
+	}
+
+	.wrapper {
+		border: var(--border_color02);
+		flex-basis: 30%;
+		border-radius: 0.5rem;
 	}
 }
