@@ -51,13 +51,16 @@ const Cart = () => {
 							<div className="element">
 								<h4>{product.name}</h4>
 								<p>{product.description}</p>
-								<p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
+
 							</div>
 							<div className="element">
 								<Cancel size="2rem" action={() => removeProduct(product.id)} />
 							</div>
 						</div>
-						<div className="element">
+						<div className="wrapper_top">
+							<div className="element_center">
+								<p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
+							</div>
 							<div className="quantity_controls">
 								<button
 									className=" btn_quantity"
@@ -76,7 +79,6 @@ const Cart = () => {
 							</div>
 						</div>
 					</div>
-
 				</div>
 			));
 		} else {
