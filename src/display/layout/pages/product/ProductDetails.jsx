@@ -54,6 +54,7 @@ const ProductDetails = () => {
 		}
 		handleAddProduct({
 			id: id,
+			image: product.image,
 			name: product.title,
 			price: product.price,
 			codeProduct: product.codeProduct,

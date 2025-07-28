@@ -7,9 +7,20 @@
 
 	.product_item {
 		padding: 1rem;
+		display: flex;
+		img{
+			max-width: 15rem;
+		}
 
 	}
-
+	.container_item{
+		width: 100%;
+	}
+	.wrapper_top{
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
 	.container_global {
 		display: flex;
 		gap: 2rem;

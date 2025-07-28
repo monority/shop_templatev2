@@ -46,11 +46,16 @@ const Cart = () => {
 					<div className="element">
 						<img src={product.image} alt={product.name} className="favorite-image" />
 					</div>
-					<div className="wrapper_between">
-						<div className="element">
-							<h2>{product.name}</h2>
-							<p>{product.description}</p>
-							<p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
+					<div className="container_item">
+						<div className="wrapper_top">
+							<div className="element">
+								<h4>{product.name}</h4>
+								<p>{product.description}</p>
+								<p className="price">${(parseFloat(product.price) * product.quantity).toFixed(2)}</p>
+							</div>
+							<div className="element">
+								<Cancel size="2rem" action={() => removeProduct(product.id)} />
+							</div>
 						</div>
 						<div className="element">
 							<div className="quantity_controls">
@@ -70,10 +75,8 @@ const Cart = () => {
 								</button>
 							</div>
 						</div>
-						<div className="element">
-							<Cancel size="2rem" action={() => removeProduct(product.id)} />
-						</div>
 					</div>
+
 				</div>
 			));
 		} else {
