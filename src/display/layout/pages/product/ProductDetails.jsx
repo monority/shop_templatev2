@@ -12,6 +12,7 @@ const ProductDetails = () => {
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
 	const state_AddProduct = useStore((state) => state.addProduct);
+	const state_RemoveProduct = useStore((state) => state.removeProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
 	const state_UpdateQuantityProduct = useStore((state) => state.updateQuantityProduct);
 	const state_AddFavorite = useStore((state) => state.toggleProductFavorite);
@@ -165,7 +166,7 @@ const ProductDetails = () => {
 							<div className="wrapper_btn">
 								{findProduct ? (
 									<>
-										<button className='btn btn_base' onClick={() => removeFromCart(id)}>
+										<button className='btn btn_base' onClick={() => state_RemoveProduct(id)}>
 											Remove from cart
 										</button>
 									</>

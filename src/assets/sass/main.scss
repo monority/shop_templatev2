@@ -20,6 +20,7 @@
 .app_container {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 .lyt_container{
 	max-width: 80vw;
@@ -38,8 +39,6 @@
 #error{
 	flex:1 0 100%;
 }
-
-
 
 
 .container_responsive {
