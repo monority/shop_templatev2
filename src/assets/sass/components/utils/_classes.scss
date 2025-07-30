@@ -157,6 +157,9 @@
 	font-size: var(--title_size15);
 }
 
+.underline {
+	text-decoration: underline;
+}
 
 // * Flex 
 .f_basis10 {
@@ -324,9 +327,10 @@
 	padding: 6rem;
 }
 
-.cursor_pointer {
+.pointer {
 	cursor: pointer;
 }
-.geist{
+
+.geist {
 	font-family: "Geist", serif;
 }

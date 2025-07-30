@@ -63,7 +63,7 @@ const ProductDetails = () => {
 			color: activeColor
 		});
 	};
-
+	const findProduct = user?.products?.find(cartProduct => cartProduct.id == id);
 
 	useEffect(() => {
 		if (product) {
@@ -163,16 +163,25 @@ const ProductDetails = () => {
 								<p>Size guide</p>
 							</div>
 							<div className="wrapper_btn">
-								<button className='btn btn_base' onClick={() => state_AddProductHandler()}>
-									Add to cart
-								</button>
+								{findProduct ? (
+									<>
+										<button className='btn btn_base' onClick={() => removeFromCart(id)}>
+											Remove from cart
+										</button>
+									</>
+								) : (
+									<>
+										<button className='btn btn_base' onClick={() => state_AddProductHandler()}>
+											Add to cart
+										</button>
+									</>
+								)}
 								<button
-									className={`btn ${isFavorite ? 'btn btn_favorite_active  ' : ' btn btn_favorite'}`}
+									className={`btn ${isFavorite ? 'btn btn_favorite_active' : 'btn btn_favorite'}`}
 									onClick={handleToggleFavorite}
 								>
 									<Favorite
 										size="1.5rem"
-										
 										color={isFavorite ? 'white' : 'black'}
 									/>
 								</button>
