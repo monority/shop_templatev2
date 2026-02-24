@@ -1,29 +1,50 @@
 .popup_overlay {
 	position: fixed;
-	top: 12rem;
+	top: 2rem;
 	left: 0;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
 	animation: fadeIn 0.3s ease-in-out;
-	z-index: 0;
+	z-index: 2;
+	pointer-events: none;
 
 	.popup_content {
+		pointer-events: all;
 		background-color: var(--bg_color01);
 		border: var(--border_color01);
-		padding: 2rem;
+		padding: 1.2rem 2rem;
 		border-radius: 0.5rem;
-		text-align: center;
-		min-width: 250px;
+		text-align: left;
+		min-width: 280px;
+		max-width: 420px;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+
+		&.popup_error {
+			border-left: 3px solid #e74c3c;
+
+			h3 {
+				color: #e74c3c;
+			}
+		}
+
+		&.popup_success {
+			border-left: 3px solid #2ecc71;
+
+			h3 {
+				color: #2ecc71;
+			}
+		}
 
 		p {
 			font-size: var(--text_size03);
-
 			color: var(--text_color01);
 		}
 	}
-
 }
 
 @keyframes fadeIn {

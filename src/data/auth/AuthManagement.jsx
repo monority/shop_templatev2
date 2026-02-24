@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword, fetchSignInMethodsForEmail, createUserWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../cfg/firebase/firebaseCfg';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../cfg/state/Store';
@@ -33,26 +33,24 @@ const AuthManagement = () => {
     };
 
     const checkUser = async (data) => {
-        const userList = collection(db, "users");
+        console.log('[checkUser] called', data);
         try {
-            const email = data.get("email")
+            const email = data.get("email");
             const emailSecurity = email.toLowerCase();
-            const userCheck = await getDocs(userList);
-            const dataArray = userCheck.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-            const emailsArray = dataArray.map((doc) => doc.email);
-            const emailCheck = emailsArray.filter((email) => email === emailSecurity);
-            if (emailCheck.length > 0) {
-                setData({ email: emailSecurity });
+            const methods = await fetchSignInMethodsForEmail(auth, emailSecurity);
+            setData({ email: emailSecurity });
+            if (methods.length > 0) {
                 navigate("/auth/login");
             } else {
-                setData({ email: emailSecurity });
                 navigate("/auth/register");
             }
         } catch (err) {
+            console.error('[checkUser]', err.code, err.message, err);
             errorPop(handleError(err.code));
         }
     };
     const loginUser = async (data) => {
+        console.log('[loginUser] called', data);
         try {
             const formData = formDataToObject(data);
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
@@ -66,11 +64,13 @@ const AuthManagement = () => {
                 errorPop('User data not found in database');
             }
         } catch (err) {
+            console.error('[loginUser]', err.code, err.message, err);
             errorPop(handleError(err.code));
         }
     };
 
     const registerUser = async (data) => {
+        console.log('[registerUser] called', data);
         try {
             const formData = formDataToObject(data);
             const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
@@ -81,7 +81,7 @@ const AuthManagement = () => {
                 errorPop('User already exists');
                 return;
             }
-            if (data.username === '') {
+            if (formData.username === '') {
                 errorPop('Username is required');
                 return;
             }
@@ -92,20 +92,14 @@ const AuthManagement = () => {
                 phone: '',
                 address: '',
                 role: '',
-                createdAt: '',
-                products: [
-                    {
-                        _id: '',
-                        name: '',
-                        quantity: '',
-                        price: '',
-                        codeProduct: '',
-                    }
-                ],
+                createdAt: new Date().toISOString(),
+                products: [],
+                favorites: [],
             });
             setUser({ uid: user.uid, email: user.email, username: formData.username });
             navigate('/');
         } catch (err) {
+            console.error('[registerUser]', err.code, err.message, err);
             errorPop(handleError(err.code));
         }
     };

@@ -77,10 +77,10 @@ const Check = () => {
 									</div>
 									<div className="wrapper_row w_100 gap4">
 										<div className="element_svg bg_color02">
-											<Apple size="2.8rem"  />
+											<Apple size="2.8rem" />
 										</div>
 										<div className="element_svg bg_color04">
-											<Facebook size="2.8rem"  />
+											<Facebook size="2.8rem" />
 										</div>
 										<div className="element_svg">
 											<Google size="2.8rem" />
