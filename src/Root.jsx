@@ -46,7 +46,7 @@ const Root = () => {
 						/>
 					</Routes>
 				</ScrollToTop>
-				{!location.pathname.startsWith("/auth") && <Footer />}
+				{/* {!location.pathname.startsWith("/auth") && <Footer />} */}
 			</AppContainer>
 	)
 }

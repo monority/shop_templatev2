@@ -7,7 +7,6 @@ const Cart = () => {
 	const state_products = useStore(state => state.user.products);
 	const state_RemoveProduct = useStore((state) => state.removeProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
-	console.log("Cart products:", state_products);
 	const navigate = useNavigate();
 	const productPrice = () => {
 		if (state_products && state_products.length > 0) {
@@ -51,7 +50,7 @@ const Cart = () => {
 					<div className="container_item">
 						<div className="wrapper_top">
 							<div className="element">
-								<h4 className='underline pointer' onClick={() => navigate(`/product/${product.id}` , {replace: true})}>{product.name}</h4>
+								<h4 className='underline pointer' onClick={() => navigate(`/product/${product.id}`, { replace: true })}>{product.name}</h4>
 								<p>{product.description}</p>
 
 							</div>
