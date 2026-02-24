@@ -23,31 +23,32 @@ const Root = () => {
 	}, [initializeAuth]);
 
 	return (
-			<AppContainer>
-				{!location.pathname.startsWith("/auth") && <Header />}
-				<ScrollToTop>
-					<Routes>
-						<Route exact path="/" element={<Home />} />
-						<Route path="/product/:id" element={<ProductDetails />} />
-						<Route path="*" element={<Error />} />
-						<Route exact path="/cart" element={<Cart />} />
-						<Route exact path="/favorites" element={<Favorites />} />
-						<Route exact path="/auth/check" element={<Check />} />
-						<Route exact path="/auth/login" element={<Check />} />
-						<Route exact path="/auth/register" element={<Check />} />
-						<Route
-							exact
-							path="/user/profile"
-							element={
-								<AuthGuard>
-									<Profile />
-								</AuthGuard>
-							}
-						/>
-					</Routes>
-				</ScrollToTop>
-				{/* {!location.pathname.startsWith("/auth") && <Footer />} */}
-			</AppContainer>
+		<AppContainer>
+			{!location.pathname.startsWith("/auth") && <Header />}
+			<ScrollToTop>
+				<Routes>
+					<Route exact path="/" element={<Home />} />
+					<Route path="/product/:id" element={<ProductDetails />} />
+					<Route path="*" element={<Error />} />
+					<Route exact path="/cart" element={<Cart />} />
+					<Route exact path="/favorites" element={<Favorites />} />
+					<Route exact path="/auth/check" element={<Check />} />
+					<Route exact path="/auth/login" element={<Check />} />
+					<Route exact path="/auth/register" element={<Check />} />
+
+					<Route
+						exact
+						path="/user/profile"
+						element={
+							<AuthGuard>
+								<Profile />
+							</AuthGuard>
+						}
+					/>
+				</Routes>
+			</ScrollToTop>
+			{/* {!location.pathname.startsWith("/auth") && <Footer />} */}
+		</AppContainer>
 	)
 }
 
