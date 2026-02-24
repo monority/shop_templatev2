@@ -12,6 +12,7 @@ const ProductDetails = () => {
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
 	const [added, setAdded] = useState(false);
+	const [sortOrder, setSortOrder] = useState('newest');
 	const state_AddProduct = useStore((state) => state.addProduct);
 	const state_RemoveProduct = useStore((state) => state.removeProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
@@ -117,6 +118,31 @@ const ProductDetails = () => {
 	const averageRating = filteredReviews?.length ? totalMarks / filteredReviews.length : 0;
 	const clampedRating = Math.min(averageRating, 5);
 
+	const sortedReviews = [...filteredReviews].sort((a, b) => {
+		const markA = Number(a.rating.find(r => r.ref === product?.codeProduct)?.mark) || 0;
+		const markB = Number(b.rating.find(r => r.ref === product?.codeProduct)?.mark) || 0;
+		if (sortOrder === 'newest') return new Date(b.date) - new Date(a.date);
+		if (sortOrder === 'oldest') return new Date(a.date) - new Date(b.date);
+		if (sortOrder === 'top') return markB - markA;
+		if (sortOrder === 'worst') return markA - markB;
+		return 0;
+	});
+
+	const reviews_sorted = sortedReviews.map((review) => {
+		const matchingRating = review.rating.find((rate) => rate.ref === product?.codeProduct);
+		return (
+			<ReviewsTemplate
+				key={review.id}
+				id={review.id}
+				message={review.message}
+				name={review.name}
+				date={calculateDate(review?.date)}
+				mark={renderStars(matchingRating?.mark)}
+				gender={review?.gender}
+			/>
+		);
+	});
+
 	return (
 		<section id="productdetails">
 			<div className="lyt_container gap4">
@@ -195,15 +221,15 @@ const ProductDetails = () => {
 							</ul>
 							<div className="wrapper_column gap2">
 								<div className="element">
-									<select name="" id="">
-										<option value="new">Newest</option>
-										<option value="new">Oldest</option>
-										<option value="new">Top</option>
-										<option value="new">Worst</option>
+									<select className="reviews_sort" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+										<option value="newest">Newest</option>
+										<option value="oldest">Oldest</option>
+										<option value="top">Top rated</option>
+										<option value="worst">Worst rated</option>
 									</select>
 								</div>
 								<div className="wrapper_column gap2">
-									{reviews_display}
+									{reviews_sorted}
 								</div>
 							</div>
 						</div>
