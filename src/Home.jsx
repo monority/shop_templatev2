@@ -12,7 +12,6 @@ const Home = () => {
 	return (<>
 		<div id="home">
 			<div className="lyt_container gap16">
-				<FetchEscuelaProducts limit={50} offset={0} />
 				<Hero />
 				<Show />
 				<Trending />
