@@ -15,9 +15,9 @@ const Cart = () => {
 		return 0;
 	}
 
-	const handleQuantityChange = (productId, newQuantity) => {
+	const handleQuantityChange = (cartId, newQuantity) => {
 		const quantity = Math.max(1, parseInt(newQuantity) || 1);
-		const product = state_products.find(p => p.id === productId);
+		const product = state_products.find(p => p.cartId === cartId);
 		if (product) {
 			state_UpdateProduct({
 				...product,
@@ -26,17 +26,17 @@ const Cart = () => {
 		}
 	}
 
-	const incrementQuantity = (productId) => {
-		const product = state_products.find(p => p.id === productId);
+	const incrementQuantity = (cartId) => {
+		const product = state_products.find(p => p.cartId === cartId);
 		if (product) {
-			handleQuantityChange(productId, product.quantity + 1);
+			handleQuantityChange(cartId, product.quantity + 1);
 		}
 	}
 
-	const decrementQuantity = (productId) => {
-		const product = state_products.find(p => p.id === productId);
+	const decrementQuantity = (cartId) => {
+		const product = state_products.find(p => p.cartId === cartId);
 		if (product && product.quantity > 1) {
-			handleQuantityChange(productId, product.quantity - 1);
+			handleQuantityChange(cartId, product.quantity - 1);
 		}
 	}
 
@@ -51,11 +51,14 @@ const Cart = () => {
 						<div className="wrapper_top">
 							<div className="element">
 								<h4 className='underline pointer' onClick={() => navigate(`/product/${product.id}`, { replace: true })}>{product.name}</h4>
-								<p>{product.description}</p>
-
+								<p className='text_color03'>
+									{product.size && <span>Size: {product.size}</span>}
+									{product.size && product.color && <span> · </span>}
+									{product.color && <span>Color: {product.color}</span>}
+								</p>
 							</div>
 							<div className="element">
-								<Cancel size="2rem" action={() => removeProduct(product.id)} />
+								<Cancel size="2rem" action={() => removeProduct(product.cartId)} />
 							</div>
 						</div>
 						<div className="wrapper_top">
@@ -65,7 +68,7 @@ const Cart = () => {
 							<div className="quantity_controls">
 								<button
 									className=" btn_quantity"
-									onClick={() => decrementQuantity(product.id)}
+									onClick={() => decrementQuantity(product.cartId)}
 									disabled={product.quantity <= 1}
 								>
 									-
@@ -73,7 +76,7 @@ const Cart = () => {
 								<span className="quantity-display">{product.quantity}</span>
 								<button
 									className=" btn_quantity"
-									onClick={() => incrementQuantity(product.id)}
+									onClick={() => incrementQuantity(product.cartId)}
 								>
 									+
 								</button>
@@ -87,8 +90,8 @@ const Cart = () => {
 		}
 	}
 
-	const removeProduct = (id) => {
-		state_RemoveProduct(id);
+	const removeProduct = (cartId) => {
+		state_RemoveProduct(cartId);
 	}
 
 	return (

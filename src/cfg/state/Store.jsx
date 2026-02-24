@@ -13,7 +13,7 @@ export const useStore = create((set, get) => ({
 		role: '',
 		createdAt: '',
 		products: [
-	
+
 		],
 		favorites: [],
 	},
@@ -66,19 +66,32 @@ export const useStore = create((set, get) => ({
 	},
 	addProduct: (product) => set((state) => {
 		if (!state.user) return {};
+		const cartId = `${product.id}_${product.size}_${product.color}`;
+		const productWithCartId = { ...product, cartId };
+		const existing = (state.user.products || []).find((p) => p.cartId === cartId);
+		if (existing) {
+			return {
+				user: {
+					...state.user,
+					products: state.user.products.map((p) =>
+						p.cartId === cartId ? { ...p, quantity: p.quantity + 1 } : p
+					),
+				},
+			};
+		}
 		return {
 			user: {
 				...state.user,
-				products: [...(state.user.products || []), product],
+				products: [...(state.user.products || []), productWithCartId],
 			},
 		};
 	}),
-	removeProduct: (productId) => set((state) => {
+	removeProduct: (cartId) => set((state) => {
 		if (!state.user) return {};
 		return {
 			user: {
 				...state.user,
-				products: state.user.products.filter((product) => product.id !== productId),
+				products: state.user.products.filter((product) => product.cartId !== cartId),
 			},
 		};
 	}),
@@ -88,18 +101,18 @@ export const useStore = create((set, get) => ({
 			user: {
 				...state.user,
 				products: state.user.products.map((product) =>
-					product.id === updatedProduct.id ? updatedProduct : product
+					product.cartId === updatedProduct.cartId ? updatedProduct : product
 				),
 			},
 		};
 	}),
-	updateQuantityProduct: (productId) => set((state) => {
+	updateQuantityProduct: (cartId) => set((state) => {
 		if (!state.user) return {};
 		return {
 			user: {
 				...state.user,
 				products: state.user.products.map((product) =>
-					product.id === productId ? { ...product, quantity: product.quantity + 1 } : product
+					product.cartId === cartId ? { ...product, quantity: product.quantity + 1 } : product
 				),
 			},
 		};

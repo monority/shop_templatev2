@@ -11,6 +11,7 @@ import { useStore } from '../../../../cfg/state/Store';
 const ProductDetails = () => {
 	const { id } = useParams();
 	const [activeSize, setActiveSize] = useState();
+	const [added, setAdded] = useState(false);
 	const state_AddProduct = useStore((state) => state.addProduct);
 	const state_RemoveProduct = useStore((state) => state.removeProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
@@ -45,26 +46,27 @@ const ProductDetails = () => {
 		}
 	};
 	const state_AddProductHandler = () => {
-		if (product) {
-			let currentProduct = user?.products?.find(product => id === product.id);
-			if (currentProduct) {
-				handleQuantityUpdate(currentProduct.id);
-				return;
-
-			}
+		const cartId = `${id}_${activeSize}_${activeColor}`;
+		const currentProduct = user?.products?.find(p => p.cartId === cartId);
+		if (currentProduct) {
+			handleQuantityUpdate(cartId);
+		} else {
+			handleAddProduct({
+				id: id,
+				image: product.image,
+				name: product.title,
+				price: product.price,
+				codeProduct: product.codeProduct,
+				quantity: 1,
+				size: activeSize,
+				color: activeColor
+			});
 		}
-		handleAddProduct({
-			id: id,
-			image: product.image,
-			name: product.title,
-			price: product.price,
-			codeProduct: product.codeProduct,
-			quantity: 1,
-			size: activeSize,
-			color: activeColor
-		});
+		setAdded(true);
+		setTimeout(() => setAdded(false), 2000);
 	};
-	const findProduct = user?.products?.find(cartProduct => cartProduct.id == id);
+	const cartId = `${id}_${activeSize}_${activeColor}`;
+	const findProduct = user?.products?.find(p => p.cartId === cartId);
 
 	useEffect(() => {
 		if (product) {
@@ -164,20 +166,10 @@ const ProductDetails = () => {
 								<p>Size guide</p>
 							</div>
 							<div className="wrapper_btn">
-								{findProduct ? (
-									<>
-										<button className='btn btn_base' onClick={() => state_RemoveProduct(id)}>
-											Remove from cart
-										</button>
-									</>
-								) : (
-									<>
-										<button className='btn btn_base' onClick={() => state_AddProductHandler()}>
-											Add to cart
-										</button>
-									</>
-								)}
-								<button
+								<button className='btn btn_base' onClick={() => state_AddProductHandler()}>
+									{findProduct ? 'Add more' : 'Add to cart'}
+								</button>
+								{added && <p className='text_color03 container-add'>✓ Added to cart</p>}								<button
 									className={`btn ${isFavorite ? 'btn btn_favorite_active' : 'btn btn_favorite'}`}
 									onClick={handleToggleFavorite}
 								>
