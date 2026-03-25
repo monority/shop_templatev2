@@ -61,14 +61,14 @@ const WomenShoes = () => {
     <section id="catalog_page">
       <div className="lyt_container gap4">
         {/* Header Section */}
-        <header className="catalog_header">
+        <div className="catalog_header">
           <div className="catalog_intro">
             <p className="catalog_kicker">Collection</p>
             <h1>{currentContent.title}</h1>
             <p>{currentContent.subtitle}</p>
             <p className="catalog_count">{filteredProducts.length} products found</p>
           </div>
-        </header>
+        </div>
 
         {/* Filter Controls */}
         <section className="catalog_controls">
