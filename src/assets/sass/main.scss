@@ -15,6 +15,7 @@
 @use "./pages/product/details";
 @use "./pages/product/cart";
 @use "./pages/product/favorites";
+@use "./pages/catalog/catalog";
 @use "./pages/auth/auth";
 
 .app_container {
@@ -38,6 +39,12 @@
 }
 #error{
 	flex:1 0 100%;
+}
+
+#newsletter_thanks,
+#size_guide {
+	margin-top: 12rem;
+	min-height: 60vh;
 }
 
 
@@ -89,5 +96,55 @@
 .element_column {
 	@include mixins.flex(flex-start, flex-start, column);
 
+}
+
+.route_skeleton {
+	margin-top: 12rem;
+
+	.skeleton_line,
+	.skeleton_card {
+		position: relative;
+		overflow: hidden;
+		background: #e7edf6;
+		border-radius: 1rem;
+	}
+
+	.skeleton_line::after,
+	.skeleton_card::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+		transform: translateX(-100%);
+		animation: shimmer 1.2s infinite;
+	}
+
+	.skeleton_title {
+		height: 4.2rem;
+		width: min(42rem, 80%);
+	}
+
+	.skeleton_text {
+		height: 2rem;
+		width: min(65rem, 95%);
+	}
+
+	.skeleton_grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1.4rem;
+		width: 100%;
+	}
+
+	.skeleton_card {
+		height: 28rem;
+		border: var(--border_color02);
+	}
+}
+
+@keyframes shimmer {
+	100% {
+		transform: translateX(100%);
+	}
 }
 

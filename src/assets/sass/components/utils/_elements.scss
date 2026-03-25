@@ -43,11 +43,13 @@
 
 
 .btn {
-	border-radius: 0.5rem;
-	padding: 1rem;	
+	border-radius: 1.2rem;
+	padding: 1.1rem 1.6rem;
 	font-size:var(--text_size01);
 	font-weight: bold;
 	cursor: pointer;
+	transition: var(--transition_default);
+	font-family: var(--font_family_inter);
 
 }
 
@@ -63,22 +65,26 @@
 	color: var(--text_color01);
 }
 .btn_base_highlight {
-	border: var(--border_color01);
-	background-color: var(--text_color02);
-	color: var(--text_color01);
+	border: 1px solid #0d9488;
+	background-color: #0d9488;
+	color: var(--text_color02);
 	flex : 1 1 100%;
 }
 
 .btn_secondary{
-	border: none;
+	border: var(--border_color01);
 	color: var(--text_color01);
-	background-color: var(--bg_color05);
+	background-color: var(--bg_color03);
 }
 .btn_base {
-	border: var(--border_color01);
-	background-color: var(--text_color01);
+	border: 1px solid var(--bg_color02);
+	background-color: var(--bg_color02);
 	color: var(--text_color02);
 	flex : 1 1 100%;
+}
+.btn:hover {
+	transform: translateY(-1px);
+	box-shadow: var(--box_shadow01);
 }
 .break_word {
 	display: -webkit-box;
@@ -90,7 +96,8 @@
 }
 h1 {
 	text-transform: uppercase;
-	font-family: "Geist", serif;
+	font-family: var(--font_family_title);
+	letter-spacing: 0.07rem;
 	font-size: var(--title_size01);
 }
 

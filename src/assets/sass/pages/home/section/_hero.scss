@@ -1,6 +1,14 @@
 @use "../../../components/utils/variables" as v;
 
 #hero {
+	.container {
+		background: linear-gradient(120deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.95));
+		padding: 3rem;
+		border-radius: 2.4rem;
+		border: var(--border_color02);
+		box-shadow: var(--box_shadow01);
+	}
+
 	#reviewcard {
 		width: calc(30rem + 5vw);
 	}
@@ -21,9 +29,16 @@
 
 	.arrow_btn {
 		padding: 1rem;
-		border-radius:1rem;
+		border-radius: 1rem;
 		display: flex;
 		height: 100%;
 		background-color: var(--bg_color03);
+		border: var(--border_color01);
+		cursor: pointer;
+		transition: var(--transition_default);
+
+		&:hover {
+			transform: translateY(-2px);
+		}
 	}
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from '../../../../cfg/state/Store';
 import { Cancel } from '../../../components/ui/SvgStack';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 	const state_products = useStore(state => state.user.products);
@@ -101,11 +101,11 @@ const Cart = () => {
 					<div className="wrapper_center">
 
 						<div className="breadcrumb">
-							<span className="active">Cart</span>
+							<Link className="active" to="/cart">Cart</Link>
 							<span className="separator"> → </span>
-							<span className="inactive">Location</span>
+							<Link className="inactive" to="/checkout/shipping">Location</Link>
 							<span className="separator"> → </span>
-							<span className="inactive">Payment</span>
+							<Link className="inactive" to="/checkout/payment">Payment</Link>
 						</div>
 
 					</div>

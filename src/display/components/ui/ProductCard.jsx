@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-const ProductCard = ({ img, title, colors, price, type, description, id, action }) => {
+const ProductCard = ({ img, title, colors, price, type, description, id, action, isNew = false, discountRate = 0 }) => {
 	const [hover, SetHover] = useState(false);
 	const [state, setCoords] = useState({ x: 0, y: 0 })
 	const navigate = useNavigate();
+	const discount = Number(discountRate || 0);
+	const hasDiscount = discount > 0;
+	const finalPrice = hasDiscount ? (Number(price) * (1 - discount / 100)).toFixed(2) : Number(price).toFixed(2);
 	const onMouseMove = (e) => {
 		const rect = e.currentTarget.getBoundingClientRect();
 		const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
@@ -13,11 +16,15 @@ const ProductCard = ({ img, title, colors, price, type, description, id, action 
 	return (
 		<div id="product_card" className='cursor_pointer' onClick={action}>
 			<div className="wrapper_column gap2 relative" onClick={() => navigate(`/product/${id}`)}>
+				<div className="card_badges">
+					{isNew && <span className="badge badge_new">New</span>}
+					{hasDiscount && <span className="badge badge_sale">-{discount}%</span>}
+				</div>
 				<div className='hover_fg' style={{
 					left: `${state.x + 15}px`,
 					top: `${state.y}px`,
 					display: hover ? 'block' : 'none',
-				}}><p>Shop it </p> <p>{price} €</p></div>
+				}}><p>Shop it </p> <p>{finalPrice} €</p></div>
 			</div>
 			<div className="element_center bg_color03" onMouseMove={onMouseMove} onMouseEnter={() => SetHover(true)} onMouseLeave={() => SetHover(false)}>
 				<img src={img} className='image_card' alt={title}  loading='lazy'/>
@@ -49,6 +56,10 @@ const ProductCard = ({ img, title, colors, price, type, description, id, action 
 				</div>
 				<div className="element">
 					<p className="text_color05 text_size02 break_word">{description}</p>
+				</div>
+				<div className="element card_price">
+					{hasDiscount && <p className="price_before">{Number(price).toFixed(2)} €</p>}
+					<p className="price_now">{finalPrice} €</p>
 				</div>
 			</div>
 		</div>

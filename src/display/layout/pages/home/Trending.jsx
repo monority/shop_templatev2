@@ -20,6 +20,8 @@ const Trending = () => {
 				img={sneaker.image}
 				type={sneaker.category}
 				price={sneaker.price}
+				isNew={sneaker.isNew}
+				discountRate={sneaker.discountRate}
 				stars={sneaker.stars}
 				action={() => navigation(sneaker.id)}
 				hover={sneaker.title}

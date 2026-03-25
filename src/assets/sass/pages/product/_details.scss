@@ -120,6 +120,19 @@
 			border-color: var(--text_color01);
 		}
 	}
+
+	.product_tabs {
+		li {
+			list-style: none;
+		}
+	}
+
+	.product_tab_content {
+		padding: 1rem;
+		border: var(--border_color02);
+		border-radius: 1rem;
+		background: #ffffff;
+	}
 }
 
 .wrapper_end {

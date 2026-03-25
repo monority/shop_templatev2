@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { data } from '../../../../temp/ProductData';
 import { Favorite } from '../../../components/ui/SvgStack';
 import { reviews } from '../../../../temp/Reviews';
@@ -10,9 +10,11 @@ import { useStore } from '../../../../cfg/state/Store';
 
 const ProductDetails = () => {
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const [activeSize, setActiveSize] = useState();
 	const [added, setAdded] = useState(false);
 	const [sortOrder, setSortOrder] = useState('newest');
+	const [activeInfoTab, setActiveInfoTab] = useState('details');
 	const state_AddProduct = useStore((state) => state.addProduct);
 	const state_RemoveProduct = useStore((state) => state.removeProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
@@ -143,6 +145,18 @@ const ProductDetails = () => {
 		);
 	});
 
+	const infoTabs = [
+		{ id: 'details', label: 'Details' },
+		{ id: 'shipping', label: 'Shipping' },
+		{ id: 'returns', label: 'Returns' },
+	];
+
+	const tabContent = {
+		details: `Category: ${product?.category || 'N/A'} | Brand: ${product?.brand || 'N/A'} | Colors: ${(product?.colors || []).join(', ')}. ${product?.description || ''}`,
+		shipping: 'Free delivery over $30. Standard shipping in 3-5 business days. Express options available at checkout.',
+		returns: 'Return any unworn pair within 30 days. Refunds are processed in 3-5 business days after inspection.',
+	};
+
 	return (
 		<section id="productdetails">
 			<div className="lyt_container gap4">
@@ -189,7 +203,7 @@ const ProductDetails = () => {
 								{sizes}
 							</ul>
 							<div className="element">
-								<p>Size guide</p>
+								<button className='btn btn_secondary' onClick={() => navigate('/size-guide')}>Size guide</button>
 							</div>
 							<div className="wrapper_btn">
 								<button className='btn btn_base' onClick={() => state_AddProductHandler()}>
@@ -214,11 +228,21 @@ const ProductDetails = () => {
 				<div className="container_content">
 					<div className="container_display">
 						<div className="container_column gap2">
-							<ul className='wrapper_row gap2'>
-								<li>Details</li>
-								<li>Details</li>
-								<li>Details</li>
+							<ul className='wrapper_row gap2 product_tabs'>
+								{infoTabs.map((tab) => (
+									<li key={tab.id}>
+										<button
+											className={`btn ${activeInfoTab === tab.id ? 'btn_base' : 'btn_secondary'}`}
+											onClick={() => setActiveInfoTab(tab.id)}
+										>
+											{tab.label}
+										</button>
+									</li>
+								))}
 							</ul>
+							<div className="element product_tab_content">
+								<p>{tabContent[activeInfoTab]}</p>
+							</div>
 							<div className="wrapper_column gap2">
 								<div className="element">
 									<select className="reviews_sort" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>

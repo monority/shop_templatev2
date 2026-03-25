@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import ReviewCard from '../../../components/ui/reviews/ReviewCard'
 import { renderStars } from "../../../components/ui/ratings/Stars"
 import { reviews } from '../../../../temp/Reviews_web'
 import { ArrowLeft, ArrowRight } from '../../../components/ui/SvgStack';
 const Hero = () => {
+	const navigate = useNavigate();
 	const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 	const currentReview = reviews[currentReviewIndex];
 	const averageRating = reviews?.reduce((sum, review) => sum + review.rating, 0) / reviews?.length;
@@ -34,8 +36,8 @@ const Hero = () => {
 							<p>You will find all the sneakers trending now, available in a limited time. We gathering our product from famous brands and independant creators.</p>
 						</div>
 						<div className="element_row gap2 w_100">
-							<button className='btn btn_base'>Collections</button>
-							<button className='btn btn_base_highlight'>All Sale</button>
+							<button className='btn btn_base' onClick={() => navigate('/shop')}>Collections</button>
+							<button className='btn btn_base_highlight' onClick={() => navigate('/shop/sale')}>All Sale</button>
 						</div>
 					</div>
 					<div className="wrapper_column_center f_basis50">

@@ -1,4 +1,23 @@
 #cart {
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+
+		a {
+			text-decoration: none;
+		}
+
+		.active {
+			color: var(--text_color01);
+			font-weight: 700;
+		}
+
+		.inactive {
+			color: var(--text_color03);
+		}
+	}
+
 	.quantity_controls {
 		display: flex;
 		align-items: center;
@@ -60,4 +79,9 @@
 		background-color: transparent;
 
 	}
+}
+
+#checkout_shipping,
+#checkout_payment {
+	margin-top: 12rem;
 }

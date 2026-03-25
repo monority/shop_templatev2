@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700&family=Bebas+Neue&display=swap");
+
 * {
 	box-sizing: border-box;
 	scroll-behavior: smooth;
@@ -11,7 +13,10 @@ html {
 }
 
 body {
-	background-color: var(--bg_color01);
+	background:
+		radial-gradient(circle at 12% 18%, #ffe6c6 0, transparent 35%),
+		radial-gradient(circle at 88% 0%, #d7f2ff 0, transparent 30%),
+		var(--bg_color01);
 	color: var(--text_color01);
 	margin: 0;
 	padding: 0;
@@ -26,6 +31,7 @@ body {
 	tab-size: 4;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
+	min-height: 100vh;
 }
 main{
 	min-height: 100vh	;
@@ -68,7 +74,8 @@ p {
 
 
 :root {
-	--font_family_inter: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	--font_family_inter: Sora, Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+	--font_family_title: "Bebas Neue", Sora, sans-serif;
 	--text_size01: calc(1rem + 0.2vw);
 	--text_size02: calc(1.2rem + 0.2vw);
 	--text_size03: calc(1.4rem + 0.2vw);
@@ -93,17 +100,17 @@ p {
 	--transition01: all .2s ease-in-out;
 	--scrollbar_color: lch(63.5% 0 0) lch(100% 0 0);
 	--transition_default: all 0.2s ease-in-out;
-	--text_color01: lch(25% 0 0);
+	--text_color01: #172133;
 	--text_color02: lch(100% 0 0);
-	--text_color03: lch(50% 0 0);
+	--text_color03: #63718c;
 	--text_red: oklch(57.42% 0.25 12.76);
-	--bg_color01: lch(100% 0 0);
-	--bg_color02: lch(15% 0 0);
-	--bg_color03: lch(97% 0 0);
-	--bg_color04: #3757e2;
-	--bg_color05: #f1f1f1;
-	--border_color01: solid 0.2px lch(80% 0 0 );
-	--border_color02: solid 0.2px lch(94% 5 250);
-	--box_shadow01: 0 10px 15px -3px lch(70% 0 0), 0 4px 6px -4px lch(88% 0 0);
+	--bg_color01: #f8fafc;
+	--bg_color02: #101727;
+	--bg_color03: #ffffff;
+	--bg_color04: #0da3a2;
+	--bg_color05: #eef2f7;
+	--border_color01: solid 1px #d7deeb;
+	--border_color02: solid 1px #e4ebf5;
+	--box_shadow01: 0 15px 45px -25px rgba(16, 23, 39, 0.35);
 }
 

@@ -1,7 +1,24 @@
 @use "../utils/variables" as v;
 
 header {
-	height: 14rem;
+	height: 13rem;
+	position: sticky;
+	top: 0;
+	z-index: 50;
+	backdrop-filter: blur(10px);
+	background: rgba(248, 250, 252, 0.88);
+
+	.container_start li {
+		padding: 0.7rem 1.1rem;
+		border-radius: 99px;
+		border: 1px solid transparent;
+		transition: var(--transition_default);
+
+		&:hover {
+			background: #ffffff;
+			border-color: #d7deeb;
+		}
+	}
 
 	.container_between {
 		height: 100%;
@@ -14,17 +31,18 @@ header {
 
 		.background {
 			border-radius: 50%;
-			width: 2rem;
+			min-width: 2rem;
 			height: 2rem;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			z-index: -1;
+			box-shadow: var(--box_shadow01);
 
 			p {
 				font-size: var(--text_size01);
 				color: var(--text_color01);
 				font-weight: bold;
+				padding: 0 0.5rem;
 			}
 		}
 
