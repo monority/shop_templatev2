@@ -18,6 +18,7 @@
 @use "./pages/product/favorites";
 @use "./pages/catalog/catalog";
 @use "./pages/auth/auth";
+@use "./pages/payment/checkout";
 
 .app_container {
 	display: flex;
