@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../../../../cfg/state/Store';
+import { useToast, ToastContainer } from '../../../components/ui/Toast';
 
 const Shipping = () => {
   const navigate = useNavigate();
   const state_products = useStore(state => state.user.products);
+  const toast = useToast();
   
   // Form state
   const [formData, setFormData] = useState({
@@ -22,7 +24,6 @@ const Shipping = () => {
   // Validation state
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showFormAlert, setShowFormAlert] = useState(false);
 
   // Shipping options
   const shippingOptions = [
@@ -66,11 +67,6 @@ const Shipping = () => {
       [name]: value
     }));
     
-    // Hide form alert when user starts typing
-    if (showFormAlert) {
-      setShowFormAlert(false);
-    }
-    
     // Clear error for this field
     if (errors[name]) {
       setErrors(prev => ({
@@ -102,23 +98,59 @@ const Shipping = () => {
     e.preventDefault();
     
     if (!validateForm()) {
-      // Show form alert if validation fails
-      setShowFormAlert(true);
+      // Show warning toast with specific error details
+      const errorFields = Object.keys(errors);
+      let message = 'Please complete all required fields to proceed to payment.';
       
-      // Auto-hide alert after 5 seconds
-      setTimeout(() => {
-        setShowFormAlert(false);
-      }, 5000);
+      // Add specific error details
+      if (errorFields.length > 0) {
+        const fieldNames = {
+          firstName: 'First name',
+          lastName: 'Last name',
+          email: 'Email address',
+          address: 'Street address',
+          city: 'City',
+          postalCode: 'Postal code',
+          country: 'Country'
+        };
+        
+        const errorList = errorFields.map(field => fieldNames[field] || field).join(', ');
+        message += ` Missing: ${errorList}`;
+      }
+      
+      toast.showWarning(message, {
+        duration: 6000,
+        action: {
+          label: 'Focus First Error',
+          onClick: () => {
+            // Focus on first error field
+            const firstErrorField = document.querySelector('.input_default.error');
+            if (firstErrorField) {
+              firstErrorField.focus();
+              firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+        }
+      });
       
       return;
     }
+    
+    // Show loading toast
+    const loadingToastId = toast.showLoading('Processing shipping information...', { duration: 0 });
     
     setIsSubmitting(true);
     
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
-      navigate('/checkout/payment');
+      toast.removeToast(loadingToastId);
+      toast.showSuccess('Shipping information saved!', { duration: 3000 });
+      
+      // Navigate to payment page after a short delay
+      setTimeout(() => {
+        navigate('/checkout/payment');
+      }, 1500);
     }, 1500);
   };
 
@@ -145,36 +177,6 @@ const Shipping = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="shipping-form">
-              {/* Form Alert */}
-              {showFormAlert && (
-                <div className="form-alert">
-                  <div className="alert-icon">⚠️</div>
-                  <div className="alert-content">
-                    <h3>Please complete all required fields</h3>
-                    <p>
-                      All shipping information fields are required to proceed to payment. Please fill in your contact details and shipping address.
-                    </p>
-                    <div className="alert-fields">
-                      {Object.keys(errors).length > 0 && (
-                        <ul>
-                          {Object.entries(errors).map(([field, error]) => (
-                            <li key={field}>{error}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                  <button 
-                    type="button" 
-                    className="alert-close" 
-                    onClick={() => setShowFormAlert(false)}
-                    aria-label="Close alert"
-                  >
-                    ×
-                  </button>
-                </div>
-              )}
-
               {/* Contact Information */}
               <div className="form-section">
                 <h2>Contact Information</h2>
@@ -391,6 +393,9 @@ const Shipping = () => {
           </div>
         </div>
       </div>
+      
+      {/* Toast Container */}
+      <ToastContainer toasts={toast.toasts} position="top-right" />
     </section>
   );
 };

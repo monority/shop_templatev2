@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStore } from '../../../../cfg/state/Store';
+import { useToast, ToastContainer } from '../../../components/ui/Toast';
 
 const Payment = () => {
   const navigate = useNavigate();
   const state_products = useStore(state => state.user.products);
+  const toast = useToast();
   
   // Form state
   const [formData, setFormData] = useState({
@@ -20,7 +22,6 @@ const Payment = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [paymentMethod, setPaymentMethod] = useState('card');
-  const [showFormAlert, setShowFormAlert] = useState(false);
 
   // Calculate totals
   const calculateTotal = () => {
@@ -35,11 +36,6 @@ const Payment = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    
-    // Hide form alert when user starts typing
-    if (showFormAlert) {
-      setShowFormAlert(false);
-    }
     
     // Clear error for this field
     if (errors[name]) {
@@ -103,23 +99,64 @@ const Payment = () => {
     e.preventDefault();
     
     if (!validateForm()) {
-      // Show form alert if validation fails
-      setShowFormAlert(true);
+      // Show warning toast with specific error details
+      const errorFields = Object.keys(errors);
+      let message = 'Please complete all required fields to proceed with payment.';
       
-      // Auto-hide alert after 5 seconds
-      setTimeout(() => {
-        setShowFormAlert(false);
-      }, 5000);
+      if (paymentMethod === 'card') {
+        message = 'Card number, cardholder name, expiry date, and CVV are required to proceed with payment.';
+        
+        // Add specific error details
+        if (errorFields.length > 0) {
+          const errorList = errorFields.map(field => {
+            const fieldNames = {
+              cardNumber: 'Card number',
+              cardName: 'Cardholder name',
+              expiryDate: 'Expiry date',
+              cvv: 'CVV'
+            };
+            return fieldNames[field] || field;
+          }).join(', ');
+          
+          message += ` Missing: ${errorList}`;
+        }
+      } else {
+        message = 'Please select a payment method to continue.';
+      }
+      
+      toast.showWarning(message, {
+        duration: 6000,
+        action: {
+          label: 'Focus First Error',
+          onClick: () => {
+            // Focus on first error field
+            const firstErrorField = document.querySelector('.input_default.error');
+            if (firstErrorField) {
+              firstErrorField.focus();
+              firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+        }
+      });
       
       return;
     }
+    
+    // Show loading toast
+    const loadingToastId = toast.showLoading('Processing payment...', { duration: 0 });
     
     setIsProcessing(true);
     
     // Simulate payment processing
     setTimeout(() => {
       setIsProcessing(false);
-      navigate('/checkout/success');
+      toast.removeToast(loadingToastId);
+      toast.showSuccess('Payment processed successfully!', { duration: 3000 });
+      
+      // Navigate to success page after a short delay
+      setTimeout(() => {
+        navigate('/checkout/success');
+      }, 1500);
     }, 2000);
   };
 
@@ -146,39 +183,6 @@ const Payment = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="payment-form">
-              {/* Form Alert */}
-              {showFormAlert && (
-                <div className="form-alert">
-                  <div className="alert-icon">⚠️</div>
-                  <div className="alert-content">
-                    <h3>Please complete all required fields</h3>
-                    <p>
-                      {paymentMethod === 'card' 
-                        ? 'Card number, cardholder name, expiry date, and CVV are required to proceed with payment.'
-                        : 'Please select a payment method to continue.'
-                      }
-                    </p>
-                    <div className="alert-fields">
-                      {Object.keys(errors).length > 0 && (
-                        <ul>
-                          {Object.entries(errors).map(([field, error]) => (
-                            <li key={field}>{error}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                  <button 
-                    type="button" 
-                    className="alert-close" 
-                    onClick={() => setShowFormAlert(false)}
-                    aria-label="Close alert"
-                  >
-                    ×
-                  </button>
-                </div>
-              )}
-
               {/* Payment Methods */}
               <div className="form-section">
                 <h2>Payment Method</h2>
@@ -444,6 +448,9 @@ const Payment = () => {
           </div>
         </div>
       </div>
+      
+      {/* Toast Container */}
+      <ToastContainer toasts={toast.toasts} position="top-right" />
     </section>
   );
 };

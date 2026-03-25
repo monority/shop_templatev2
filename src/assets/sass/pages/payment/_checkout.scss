@@ -123,7 +123,7 @@
   }
   
   p {
-    font-size: var(--text-base);
+    font-size: var(--text-lg);
     color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto;
@@ -144,7 +144,7 @@
   gap: var(--space-4);
   
   h2 {
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
     color: var(--text-primary);
     font-weight: 600;
     margin-bottom: var(--space-2);
@@ -173,19 +173,19 @@
   gap: var(--space-2);
   
   label {
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     font-weight: 600;
     color: var(--text-primary);
   }
   
   .error-message {
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     color: var(--color-error);
     font-weight: 500;
   }
   
   .cvv-hint {
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     color: var(--text-muted);
     margin-top: var(--space-1);
   }

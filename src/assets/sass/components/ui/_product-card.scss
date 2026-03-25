@@ -131,7 +131,7 @@
   }
 
   &__type {
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -145,7 +145,7 @@
     gap: var(--space-2);
 
     .colors-label {
-      font-size: var(--text-sm);
+      font-size: var(--text-base);
       color: var(--text-muted);
       font-weight: 500;
     }
@@ -179,7 +179,7 @@
 
   // Description
   &__description {
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     color: var(--text-muted);
     line-height: var(--line-height-normal);
     display: -webkit-box;
@@ -211,20 +211,20 @@
   }
 
   .price-original {
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     color: var(--text-muted);
     text-decoration: line-through;
     opacity: 0.8;
   }
 
   .price-current {
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--text-primary);
   }
 
   .price-savings {
-    font-size: var(--text-xs);
+    font-size: var(--text-base);
     color: var(--color-success);
     font-weight: 600;
     background: color-mix(in oklch, var(--color-success) 10%, transparent);
@@ -239,7 +239,7 @@
     border: none;
     padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-lg);
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-normal);
