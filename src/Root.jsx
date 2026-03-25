@@ -13,6 +13,7 @@ const Error = lazy(() => import('./display/layout/pages/Error'));
 const Cart = lazy(() => import('./display/layout/pages/payment/Cart'));
 const Shipping = lazy(() => import('./display/layout/pages/payment/Shipping'));
 const Payment = lazy(() => import('./display/layout/pages/payment/Payment'));
+const CheckoutSuccess = lazy(() => import('./display/layout/pages/payment/CheckoutSuccess'));
 const WomenShoes = lazy(() => import('./display/layout/pages/catalog/WomenShoes'));
 const Check = lazy(() => import('./display/layout/pages/auth/Check'));
 const Profile = lazy(() => import('./display/layout/pages/user/Profile'));
@@ -57,6 +58,7 @@ const Root = () => {
 						<Route exact path="/cart" element={<Cart />} />
 						<Route exact path="/checkout/shipping" element={<Shipping />} />
 						<Route exact path="/checkout/payment" element={<Payment />} />
+						<Route exact path="/checkout/success" element={<CheckoutSuccess />} />
 						<Route exact path="/favorites" element={<Favorites />} />
 						<Route exact path="/newsletter/thanks" element={<NewsletterThanks />} />
 						<Route exact path="/size-guide" element={<SizeGuide />} />

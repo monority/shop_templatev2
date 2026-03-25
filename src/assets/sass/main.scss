@@ -20,6 +20,7 @@
 @use "./pages/catalog/catalog";
 @use "./pages/auth/auth";
 @use "./pages/payment/checkout";
+@use "./pages/payment/checkout-success";
 
 .app_container {
 	display: flex;
