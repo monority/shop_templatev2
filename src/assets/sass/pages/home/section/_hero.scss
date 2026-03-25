@@ -2,15 +2,27 @@
 
 #hero {
 	.container {
-		background: linear-gradient(120deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.95));
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95));
+		backdrop-filter: blur(10px);
 		padding: 3rem;
 		border-radius: 2.4rem;
 		border: var(--border_color02);
-		box-shadow: var(--box_shadow01);
+		box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+		transition: all 0.3s ease-out;
+		
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 25px 50px rgba(15, 23, 42, 0.15);
+		}
 	}
 
 	#reviewcard {
 		width: calc(30rem + 5vw);
+		transition: transform 0.3s ease-out;
+		
+		&:hover {
+			transform: scale(1.02);
+		}
 	}
 
 	.wrapper {
@@ -32,12 +44,19 @@
 		border-radius: 1rem;
 		display: flex;
 		height: 100%;
-		background-color: var(--bg_color03);
+		background: linear-gradient(135deg, var(--bg_color03), #f8fafc);
 		border: var(--border_color01);
 		cursor: pointer;
-		transition: var(--transition_default);
+		transition: all 0.3s ease-out;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 		&:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+			background: linear-gradient(135deg, #f8fafc, var(--bg_color03));
+		}
+		
+		&:active {
 			transform: translateY(-2px);
 		}
 	}

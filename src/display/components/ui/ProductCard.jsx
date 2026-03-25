@@ -1,69 +1,140 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
-const ProductCard = ({ img, title, colors, price, type, description, id, action, isNew = false, discountRate = 0 }) => {
-	const [hover, SetHover] = useState(false);
-	const [state, setCoords] = useState({ x: 0, y: 0 })
-	const navigate = useNavigate();
-	const discount = Number(discountRate || 0);
-	const hasDiscount = discount > 0;
-	const finalPrice = hasDiscount ? (Number(price) * (1 - discount / 100)).toFixed(2) : Number(price).toFixed(2);
-	const onMouseMove = (e) => {
-		const rect = e.currentTarget.getBoundingClientRect();
-		const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
-		const y = Math.min(Math.max(e.clientY - rect.top, 0), rect.height);
-		setCoords({ x, y });
-	};
-	return (
-		<div id="product_card" className='cursor_pointer' onClick={action}>
-			<div className="wrapper_column gap2 relative" onClick={() => navigate(`/product/${id}`)}>
-				<div className="card_badges">
-					{isNew && <span className="badge badge_new">New</span>}
-					{hasDiscount && <span className="badge badge_sale">-{discount}%</span>}
-				</div>
-				<div className='hover_fg' style={{
-					left: `${state.x + 15}px`,
-					top: `${state.y}px`,
-					display: hover ? 'block' : 'none',
-				}}><p>Shop it </p> <p>{finalPrice} €</p></div>
-			</div>
-			<div className="element_center bg_color03" onMouseMove={onMouseMove} onMouseEnter={() => SetHover(true)} onMouseLeave={() => SetHover(false)}>
-				<img src={img} className='image_card' alt={title}  loading='lazy'/>
-			</div>
-			<div className="wrapper_column gap2">
-				<div className="element_between">
-					<div className="element">
-						<h4>{title}</h4>
-					</div>
-					<div className="element">
-						<h5 className='text_color02'>{type}</h5>
-					</div>
-				</div>
-				<div className="element">
-					{colors.map((color, index) => (
-						<svg
-							key={index}
-							size="2rem"
-							viewBox="0 0 16 16"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-						>
-							<path
-								fill={color} strokeWidth="0.03rem" stroke="#444444"
-								d="M3.25 1A2.25 2.25 0 001 3.25v9.5A2.25 2.25 0 003.25 15h9.5A2.25 2.25 0 0015 12.75v-9.5A2.25 2.25 0 0012.75 1h-9.5z"
-							/>
-						</svg>
-					))}
-				</div>
-				<div className="element">
-					<p className="text_color05 text_size02 break_word">{description}</p>
-				</div>
-				<div className="element card_price">
-					{hasDiscount && <p className="price_before">{Number(price).toFixed(2)} €</p>}
-					<p className="price_now">{finalPrice} €</p>
-				</div>
-			</div>
-		</div>
-	);
+import { useNavigate } from 'react-router-dom';
+
+const ProductCard = ({ 
+  img, 
+  title, 
+  colors = [], 
+  price, 
+  type, 
+  description, 
+  id, 
+  action, 
+  isNew = false, 
+  discountRate = 0 
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
+  
+  // Calculate discount and final price
+  const discount = Number(discountRate || 0);
+  const hasDiscount = discount > 0;
+  const finalPrice = hasDiscount ? (Number(price) * (1 - discount / 100)).toFixed(2) : Number(price).toFixed(2);
+  const originalPrice = Number(price).toFixed(2);
+  
+  // Fallback image for products without images
+  const productImage = img || `https://picsum.photos/seed/${title}-${id}/400/300.jpg`;
+  
+  // Mouse tracking for hover effect
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
+    const y = Math.min(Math.max(e.clientY - rect.top, 0), rect.height);
+    setMousePosition({ x, y });
+  };
+  
+  const handleCardClick = () => {
+    navigate(`/product/${id}`);
+  };
+  
+  const handleQuickView = (e) => {
+    e.stopPropagation();
+    if (action) action();
+  };
+
+  return (
+    <article 
+      className="product-card"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
+    >
+      {/* Card Image Section */}
+      <div className="product-card__image-container" onClick={handleCardClick}>
+        {/* Badges */}
+        <div className="product-card__badges">
+          {isNew && <span className="badge badge--new">New</span>}
+          {hasDiscount && <span className="badge badge--sale">-{discount}%</span>}
+        </div>
+        
+        {/* Product Image */}
+        <img 
+          src={productImage}
+          alt={title}
+          className="product-card__image"
+          loading="lazy"
+        />
+        
+        {/* Quick View Overlay */}
+        <div 
+          className="product-card__quick-view"
+          style={{
+            left: `${mousePosition.x + 20}px`,
+            top: `${mousePosition.y - 40}px`,
+            opacity: isHovered ? 1 : 0,
+            pointerEvents: isHovered ? 'auto' : 'none'
+          }}
+          onClick={handleQuickView}
+        >
+          <span className="quick-view__text">Quick View</span>
+          <span className="quick-view__price">€{finalPrice}</span>
+        </div>
+      </div>
+      
+      {/* Card Content Section */}
+      <div className="product-card__content">
+        {/* Product Title and Type */}
+        <div className="product-card__header">
+          <h3 className="product-card__title">{title}</h3>
+          <span className="product-card__type">{type}</span>
+        </div>
+        
+        {/* Color Options */}
+        {colors.length > 0 && (
+          <div className="product-card__colors">
+            <span className="colors-label">Colors:</span>
+            <div className="color-swatches">
+              {colors.slice(0, 4).map((color, index) => (
+                <button
+                  key={index}
+                  className="color-swatch"
+                  style={{ backgroundColor: color }}
+                  title={color}
+                  aria-label={`Color: ${color}`}
+                />
+              ))}
+              {colors.length > 4 && (
+                <span className="color-more">+{colors.length - 4}</span>
+              )}
+            </div>
+          </div>
+        )}
+        
+        {/* Product Description */}
+        <p className="product-card__description">{description}</p>
+        
+        {/* Price Section */}
+        <div className="product-card__price-section">
+          {hasDiscount && (
+            <span className="price-original">€{originalPrice}</span>
+          )}
+          <span className="price-current">€{finalPrice}</span>
+          {hasDiscount && (
+            <span className="price-savings">Save €{(originalPrice - finalPrice).toFixed(2)}</span>
+          )}
+        </div>
+        
+        {/* Action Button */}
+        <button 
+          className="product-card__action"
+          onClick={handleQuickView}
+        >
+          {isHovered ? 'Quick View' : 'View Details'}
+        </button>
+      </div>
+    </article>
+  );
 };
 
 export default ProductCard;

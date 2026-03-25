@@ -8,6 +8,7 @@ const Cart = () => {
 	const state_RemoveProduct = useStore((state) => state.removeProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
 	const navigate = useNavigate();
+	
 	const productPrice = () => {
 		if (state_products && state_products.length > 0) {
 			return state_products.reduce((total, product) => total + (parseFloat(product.price) * product.quantity), 0);
@@ -40,6 +41,20 @@ const Cart = () => {
 		}
 	}
 
+	const removeProduct = (cartId) => {
+		state_RemoveProduct(cartId);
+	}
+
+	const handleCheckout = () => {
+		if (state_products && state_products.length > 0) {
+			navigate('/checkout/shipping');
+		}
+	}
+
+	const handleContinueShopping = () => {
+		navigate('/shop');
+	}
+
 	const showCart = () => {
 		if (state_products && state_products.length > 0) {
 			return state_products.map((product, index) => (
@@ -67,7 +82,7 @@ const Cart = () => {
 							</div>
 							<div className="quantity_controls">
 								<button
-									className=" btn_quantity"
+									className="btn_quantity"
 									onClick={() => decrementQuantity(product.cartId)}
 									disabled={product.quantity <= 1}
 								>
@@ -75,7 +90,7 @@ const Cart = () => {
 								</button>
 								<span className="quantity-display">{product.quantity}</span>
 								<button
-									className=" btn_quantity"
+									className="btn_quantity"
 									onClick={() => incrementQuantity(product.cartId)}
 								>
 									+
@@ -86,12 +101,16 @@ const Cart = () => {
 				</div>
 			));
 		} else {
-			return <p>No products found.</p>;
+			return (
+				<div className="empty_cart">
+					<h3>Your cart is empty</h3>
+					<p>Looks like you haven't added any products to your cart yet.</p>
+					<button className="btn btn_checkout" onClick={handleContinueShopping}>
+						Continue Shopping
+					</button>
+				</div>
+			);
 		}
-	}
-
-	const removeProduct = (cartId) => {
-		state_RemoveProduct(cartId);
 	}
 
 	return (
@@ -99,7 +118,6 @@ const Cart = () => {
 			<section id="cart">
 				<div className="lyt_container gap4">
 					<div className="wrapper_center">
-
 						<div className="breadcrumb">
 							<Link className="active" to="/cart">Cart</Link>
 							<span className="separator"> → </span>
@@ -107,20 +125,35 @@ const Cart = () => {
 							<span className="separator"> → </span>
 							<Link className="inactive" to="/checkout/payment">Payment</Link>
 						</div>
-
 					</div>
 					<div className="container_global">
 						<div className="wrapper_cart">
 							{showCart()}
 						</div>
-						<div className="wrapper">
-							<div className="element">
-								<h4>Price details</h4>
+						{state_products && state_products.length > 0 && (
+							<div className="wrapper">
+								<div className="element">
+									<h4>Price details</h4>
+								</div>
+								<div className="element">
+									<p className="price">${productPrice().toFixed(2)}</p>
+								</div>
+								<div className="checkout_actions">
+									<button 
+										className="btn btn_checkout" 
+										onClick={handleCheckout}
+									>
+										Proceed to Checkout
+									</button>
+									<button 
+										className="btn btn_continue" 
+										onClick={handleContinueShopping}
+									>
+										Continue Shopping
+									</button>
+								</div>
 							</div>
-							<div className="element">
-								<p>${productPrice().toFixed(2)}</p>
-							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</section>

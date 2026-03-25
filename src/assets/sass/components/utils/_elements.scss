@@ -1,4 +1,5 @@
 @use './variables' as v;
+
 .col {
 	position: relative;
 	flex : 1 0 100%;
@@ -6,8 +7,8 @@
 		flex: 1 1 0%;
 	}
 }
-.input_default {
 
+.input_default {
 	border: var(--border_color01);
 	border-radius: 0.5rem;
 	font-size: var(--text_size02);
@@ -17,8 +18,24 @@
 	outline: none;
 	padding: 1rem;
 	font-family: var(--font_family_inter);
-}
+	transition: all 0.3s ease-out;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
+	&:focus {
+		border-color: #0f766e;
+		box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+		transform: translateY(-1px);
+	}
+
+	&::placeholder {
+		color: var(--text_color03);
+		transition: opacity 0.3s ease-out;
+	}
+
+	&:focus::placeholder {
+		opacity: 0.5;
+	}
+}
 
 .label_default {
 	display: flex;
@@ -30,17 +47,19 @@
 	left: 1rem;
 	transform: translateY(-50%);
 	pointer-events: none;
-	transition: 0.3s;
-
+	transition: all 0.3s ease-out;
+	color: var(--text_color03);
 }
+
 .label_disabled{
 	display: none;
 }
+
 .input_default:focus ~ label {
 	opacity: 0;
 	background: transparent;
+	transform: translateY(-60%) scale(0.8);
 }
-
 
 .btn {
 	border-radius: 1.2rem;
@@ -48,44 +67,105 @@
 	font-size:var(--text_size01);
 	font-weight: bold;
 	cursor: pointer;
-	transition: var(--transition_default);
-	font-family: var(--font_family_inter);
+	transition: all 0.3s ease-out;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+	}
+
+	&:active {
+		transform: translateY(0);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+		transition: left 0.5s ease-out;
+	}
+
+	&:hover::before {
+		left: 100%;
+	}
 }
 
 .btn_favorite{
-	border: var(--border_color01);
-	background: var(--bg_color01);
-	color: var(--text_color01);
+	border: var(--border_primary);
+	background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-muted));
+	color: var(--text-primary);
+	box-shadow: var(--shadow-sm);
 
+	&:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+		transform: translateY(-2px) scale(1.05);
+		box-shadow: var(--shadow-md);
+	}
 }
+
 .btn_favorite_active{
-	border: var(--border_color01);
-	background: var(--text_color01);
-	color: var(--text_color01);
+	border: var(--border_primary);
+	background: linear-gradient(135deg, var(--color-primary), var(--color-primary-600));
+	color: var(--text-secondary);
+	box-shadow: var(--shadow-md);
+
+	&:hover {
+		transform: translateY(-2px) scale(1.05);
+		box-shadow: var(--shadow-lg);
+	}
 }
+
 .btn_base_highlight {
-	border: 1px solid #0d9488;
-	background-color: #0d9488;
-	color: var(--text_color02);
+	border: 1px solid var(--color-primary-600);
+	background-color: var(--color-primary-600);
+	color: var(--text-secondary);
 	flex : 1 1 100%;
+	box-shadow: var(--shadow-md);
+	
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-lg);
+		background-color: var(--color-primary-700);
+	}
 }
 
 .btn_secondary{
-	border: var(--border_color01);
-	color: var(--text_color01);
-	background-color: var(--bg_color03);
+	border: var(--border_primary);
+	color: var(--text-primary);
+	background-color: var(--bg-tertiary);
+	box-shadow: var(--shadow-sm);
+	
+	&:hover {
+		transform: translateY(-1px);
+		box-shadow: var(--shadow-md);
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
 }
+
 .btn_base {
-	border: 1px solid var(--bg_color02);
-	background-color: var(--bg_color02);
-	color: var(--text_color02);
+	border: 1px solid var(--color-neutral-600);
+	background-color: var(--color-neutral-600);
+	color: var(--text-secondary);
 	flex : 1 1 100%;
+	box-shadow: var(--shadow-md);
+	
+	&:hover {
+		transform: translateY(-1px);
+		box-shadow: var(--shadow-lg);
+		background-color: var(--color-neutral-700);
+	}
 }
-.btn:hover {
-	transform: translateY(-1px);
-	box-shadow: var(--box_shadow01);
-}
+
 .break_word {
 	display: -webkit-box;
 	-webkit-line-clamp: 1;
