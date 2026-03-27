@@ -26,7 +26,8 @@
 	flex-direction: column;
 	position: relative;
 }
-.lyt_container{
+
+.lyt_container {
 	max-width: 80vw;
 	display: flex;
 	flex-direction: column;
@@ -40,8 +41,9 @@
 	gap: 12rem;
 	margin-top: 12rem;
 }
-#error{
-	flex:1 0 100%;
+
+#error {
+	flex: 1 0 100%;
 }
 
 #newsletter_thanks,
@@ -55,7 +57,7 @@
 	@include mixins.flex_res(initial, center, column, row)
 }
 
-.wrapper_end{
+.wrapper_end {
 	@include mixins.flex(flex-end, flex-end, row)
 }
 
@@ -64,6 +66,7 @@
 .element_row {
 	@include mixins.flex(center, center, row)
 }
+
 .wrapper_start,
 .container_start,
 .element_start {
@@ -150,4 +153,3 @@
 		transform: translateX(100%);
 	}
 }
-
