@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X } from '../SvgStack';
+import { Menu, X, WomenIcon, MenIcon, TrendingIcon, NewIcon, SaleIcon } from '../SvgStack';
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -9,11 +9,11 @@ const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const collections = [
-    { label: 'Women', path: '/shop/women', icon: '👗' },
-    { label: 'Men', path: '/shop/men', icon: '👔' },
-    { label: 'Trending', path: '/shop/trending', icon: '🔥' },
-    { label: 'New', path: '/shop/new', icon: '✨' },
-    { label: 'Sale', path: '/shop/sale', className: 'nav-sale', icon: '🏷️' },
+    { label: 'Women', path: '/shop/women', icon: <WomenIcon /> },
+    { label: 'Men', path: '/shop/men', icon: <MenIcon /> },
+    { label: 'Trending', path: '/shop/trending', icon: <TrendingIcon /> },
+    { label: 'New', path: '/shop/new', icon: <NewIcon /> },
+    { label: 'Sale', path: '/shop/sale', className: 'nav-sale', icon: <SaleIcon /> },
   ];
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Nav = () => {
   return (
     <>
       {/* Mobile Menu Button */}
-      <button 
+      <button
         className="nav-mobile-toggle"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         aria-label="Toggle menu"
@@ -66,7 +66,7 @@ const Nav = () => {
       <nav className={`nav-mobile ${isMenuOpen ? 'nav-mobile-open' : ''}`}>
         <div className="nav-mobile-header">
           <h3 className="nav-mobile-title">Menu</h3>
-          <button 
+          <button
             className="nav-mobile-close"
             onClick={() => setIsMenuOpen(false)}
             aria-label="Close menu"
@@ -91,7 +91,7 @@ const Nav = () => {
 
       {/* Mobile Overlay */}
       {isMenuOpen && (
-        <div 
+        <div
           className="nav-overlay"
           onClick={() => setIsMenuOpen(false)}
         />
