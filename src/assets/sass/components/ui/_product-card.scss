@@ -2,6 +2,7 @@
 .product-card {
   background: var(--bg-tertiary);
   border-radius: var(--radius-xl);
+  padding: 2rem;
   border: var(--border-primary);
   box-shadow: var(--shadow-md);
   overflow: hidden;
@@ -56,13 +57,13 @@
     transition: all var(--transition-fast);
 
     &--new {
-      background: var(--color-primary);
-      color: var(--text-secondary);
+      background: var(--text);
+      color: var(--text-inverse);
     }
 
     &--sale {
-      background: var(--color-error);
-      color: var(--text-secondary);
+      background: #b42318;
+      color: var(--text-inverse);
     }
 
     &:hover {
@@ -73,9 +74,9 @@
   // Quick View Overlay
   &__quick-view {
     position: absolute;
-    background: var(--color-primary);
-    color: var(--text-secondary);
-    padding: var(--space-2) var(--space-3);
+    background: var(--text);
+    color: var(--text-inverse);
+    padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-lg);
     font-size: var(--text-sm);
     font-weight: 600;
@@ -126,7 +127,7 @@
     transition: color var(--transition-fast);
 
     &:hover {
-      color: var(--color-primary);
+      color: var(--text);
     }
   }
 
@@ -161,13 +162,13 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    border: 2px solid var(--color-neutral-200);
+    border: 2px solid var(--border-color);
     cursor: pointer;
     transition: all var(--transition-fast);
 
     &:hover {
       transform: scale(1.1);
-      border-color: var(--color-neutral-400);
+      border-color: var(--border-color);
     }
   }
 
@@ -224,20 +225,20 @@
   }
 
   .price-savings {
-    font-size: var(--text-base);
-    color: var(--color-success);
+    font-size: var(--text-md);
+    color: #16a34a;
     font-weight: 600;
-    background: color-mix(in oklch, var(--color-success) 10%, transparent);
-    padding: var(--space-1) var(--space-2);
+    background: color-mix(in oklch, #16a34a 10%, transparent);
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-full);
   }
 
   // Action Button
   &__action {
-    background: var(--color-primary);
-    color: var(--text-secondary);
+    background: var(--text);
+    color: var(--text-inverse);
     border: none;
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-md) var(--space-lg);
     border-radius: var(--radius-lg);
     font-size: var(--text-base);
     font-weight: 600;
@@ -248,7 +249,7 @@
     margin-top: var(--space-2);
 
     &:hover {
-      background: var(--color-primary-700);
+      background: #1f2937;
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
     }
@@ -340,7 +341,7 @@
 // Loading State
 .product-card--loading {
   .product-card__image {
-    background: linear-gradient(90deg, var(--color-neutral-200) 25%, var(--color-neutral-100) 50%, var(--color-neutral-200) 75%);
+    background: linear-gradient(90deg, var(--border-color-soft) 25%, var(--surface) 50%, var(--border-color-soft) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
   }
@@ -348,7 +349,7 @@
   .product-card__title,
   .product-card__description,
   .price-current {
-    background: linear-gradient(90deg, var(--color-neutral-200) 25%, var(--color-neutral-100) 50%, var(--color-neutral-200) 75%);
+    background: linear-gradient(90deg, var(--border-color-soft) 25%, var(--surface) 50%, var(--border-color-soft) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     border-radius: var(--radius-sm);
@@ -360,6 +361,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
