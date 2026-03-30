@@ -8,7 +8,7 @@ const Cart = () => {
 	const state_RemoveProduct = useStore((state) => state.removeProduct);
 	const state_UpdateProduct = useStore((state) => state.updateProduct);
 	const navigate = useNavigate();
-	
+
 	const productPrice = () => {
 		if (state_products && state_products.length > 0) {
 			return state_products.reduce((total, product) => total + (parseFloat(product.price) * product.quantity), 0);
@@ -116,7 +116,7 @@ const Cart = () => {
 	return (
 		<>
 			<section id="cart">
-				<div className="lyt_container gap4">
+				<div className="layout-base gap4">
 					<div className="wrapper_center">
 						<div className="breadcrumb">
 							<Link className="active" to="/cart">Cart</Link>
@@ -139,14 +139,14 @@ const Cart = () => {
 									<p className="price">${productPrice().toFixed(2)}</p>
 								</div>
 								<div className="checkout_actions">
-									<button 
-										className="btn btn_checkout" 
+									<button
+										className="btn btn_checkout"
 										onClick={handleCheckout}
 									>
 										Proceed to Checkout
 									</button>
-									<button 
-										className="btn btn_continue" 
+									<button
+										className="btn btn_continue"
 										onClick={handleContinueShopping}
 									>
 										Continue Shopping

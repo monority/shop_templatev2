@@ -5,7 +5,7 @@ const Error = () => {
 	const navigate = useNavigate();
 	return (
 		<section id="error">
-			<div className="lyt_container h_100">
+			<div className="layout-base h_100">
 				<div className="container_center h_100">
 					<div className="wrapper_column gap4">
 						<div className="element_center">

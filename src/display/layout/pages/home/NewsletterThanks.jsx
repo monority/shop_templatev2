@@ -8,7 +8,7 @@ const NewsletterThanks = () => {
 
 	return (
 		<section id="newsletter_thanks">
-			<div className="lyt_container h_100">
+			<div className="layout-base h_100">
 				<div className="container_center h_100">
 					<div className="wrapper_column gap3">
 						<div className="element_center">

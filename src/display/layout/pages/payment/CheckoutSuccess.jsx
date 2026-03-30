@@ -12,7 +12,7 @@ const CheckoutSuccess = () => {
     // Clear cart after successful order
     const clearCart = useStore.getState().removeAllProducts;
     clearCart();
-    
+
     // Show success message
     toast.showSuccess('Order placed successfully! Thank you for your purchase.', {
       duration: 5000
@@ -21,7 +21,7 @@ const CheckoutSuccess = () => {
 
   // Calculate order details
   const calculateTotal = () => {
-    return state_products?.reduce((total, product) => 
+    return state_products?.reduce((total, product) =>
       total + (parseFloat(product.price) * product.quantity), 0) || 0;
   };
 
@@ -50,14 +50,14 @@ const CheckoutSuccess = () => {
 
   return (
     <section id="checkout_success">
-      <div className="lyt_container gap4">
+      <div className="layout-base gap4">
         {/* Success Header */}
         <div className="success-header">
           <div className="success-icon">
             <div className="checkmark">
               <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="26" cy="26" r="25" stroke="currentColor" strokeWidth="2"/>
-                <path d="M16 26L22 32L36 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="26" cy="26" r="25" stroke="currentColor" strokeWidth="2" />
+                <path d="M16 26L22 32L36 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
           </div>
@@ -70,23 +70,23 @@ const CheckoutSuccess = () => {
         {/* Order Details */}
         <div className="order-details">
           <h2>Order Information</h2>
-          
+
           <div className="order-info-grid">
             <div className="info-item">
               <label>Order Number</label>
               <span className="order-number">{orderNumber}</span>
             </div>
-            
+
             <div className="info-item">
               <label>Order Date</label>
               <span>{orderDate}</span>
             </div>
-            
+
             <div className="info-item">
               <label>Total Amount</label>
               <span className="order-total">€{orderTotal.toFixed(2)}</span>
             </div>
-            
+
             <div className="info-item">
               <label>Payment Method</label>
               <span>Credit Card</span>
@@ -97,7 +97,7 @@ const CheckoutSuccess = () => {
         {/* Order Summary */}
         <div className="order-summary">
           <h2>Order Summary</h2>
-          
+
           <div className="summary-items">
             {state_products?.map((product, index) => (
               <div key={index} className="summary-item">
@@ -111,7 +111,7 @@ const CheckoutSuccess = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="summary-totals">
             <div className="total-row">
               <span>Subtotal</span>
@@ -135,7 +135,7 @@ const CheckoutSuccess = () => {
         {/* Next Steps */}
         <div className="next-steps">
           <h2>What's Next?</h2>
-          
+
           <div className="steps-grid">
             <div className="step-item">
               <div className="step-icon">📧</div>
@@ -144,7 +144,7 @@ const CheckoutSuccess = () => {
                 <p>You'll receive an order confirmation email shortly with all the details.</p>
               </div>
             </div>
-            
+
             <div className="step-item">
               <div className="step-icon">📦</div>
               <div className="step-content">
@@ -152,7 +152,7 @@ const CheckoutSuccess = () => {
                 <p>We'll prepare your items for shipment within 1-2 business days.</p>
               </div>
             </div>
-            
+
             <div className="step-item">
               <div className="step-icon">🚚</div>
               <div className="step-content">
@@ -165,21 +165,21 @@ const CheckoutSuccess = () => {
 
         {/* Action Buttons */}
         <div className="success-actions">
-          <button 
-            className="btn btn_secondary" 
+          <button
+            className="btn btn_secondary"
             onClick={handleTrackOrder}
           >
             Track Order
           </button>
-          <button 
-            className="btn btn_base_highlight" 
+          <button
+            className="btn btn_base_highlight"
             onClick={handleContinueShopping}
           >
             Continue Shopping
           </button>
         </div>
       </div>
-      
+
       {/* Toast Container */}
       <ToastContainer toasts={toast.toasts} position="top-right" />
     </section>

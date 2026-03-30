@@ -7,7 +7,7 @@ const Payment = () => {
   const navigate = useNavigate();
   const state_products = useStore(state => state.user.products);
   const toast = useToast();
-  
+
   // Form state
   const [formData, setFormData] = useState({
     cardNumber: '',
@@ -25,7 +25,7 @@ const Payment = () => {
 
   // Calculate totals
   const calculateTotal = () => {
-    return state_products?.reduce((total, product) => 
+    return state_products?.reduce((total, product) =>
       total + (parseFloat(product.price) * product.quantity), 0) || 0;
   };
 
@@ -36,7 +36,7 @@ const Payment = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    
+
     // Clear error for this field
     if (errors[name]) {
       setErrors(prev => ({
@@ -65,31 +65,31 @@ const Payment = () => {
   // Validate form
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (paymentMethod === 'card') {
       if (!formData.cardNumber.replace(/\s/g, '').trim()) {
         newErrors.cardNumber = 'Card number is required';
       } else if (formData.cardNumber.replace(/\s/g, '').length < 13) {
         newErrors.cardNumber = 'Invalid card number';
       }
-      
+
       if (!formData.cardName.trim()) {
         newErrors.cardName = 'Cardholder name is required';
       }
-      
+
       if (!formData.expiryDate.trim()) {
         newErrors.expiryDate = 'Expiry date is required';
       } else if (!/^\d{2}\/\d{2}$/.test(formData.expiryDate)) {
         newErrors.expiryDate = 'Invalid expiry date (MM/YY)';
       }
-      
+
       if (!formData.cvv.trim()) {
         newErrors.cvv = 'CVV is required';
       } else if (!/^\d{3,4}$/.test(formData.cvv)) {
         newErrors.cvv = 'Invalid CVV';
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -97,15 +97,15 @@ const Payment = () => {
   // Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       // Show warning toast with specific error details
       const errorFields = Object.keys(errors);
       let message = 'Please complete all required fields to proceed with payment.';
-      
+
       if (paymentMethod === 'card') {
         message = 'Card number, cardholder name, expiry date, and CVV are required to proceed with payment.';
-        
+
         // Add specific error details
         if (errorFields.length > 0) {
           const errorList = errorFields.map(field => {
@@ -117,13 +117,13 @@ const Payment = () => {
             };
             return fieldNames[field] || field;
           }).join(', ');
-          
+
           message += ` Missing: ${errorList}`;
         }
       } else {
         message = 'Please select a payment method to continue.';
       }
-      
+
       toast.showWarning(message, {
         duration: 6000,
         action: {
@@ -138,21 +138,21 @@ const Payment = () => {
           }
         }
       });
-      
+
       return;
     }
-    
+
     // Show loading toast
     const loadingToastId = toast.showLoading('Processing payment...', { duration: 0 });
-    
+
     setIsProcessing(true);
-    
+
     // Simulate payment processing
     setTimeout(() => {
       setIsProcessing(false);
       toast.removeToast(loadingToastId);
       toast.showSuccess('Payment processed successfully!', { duration: 3000 });
-      
+
       // Navigate to success page after a short delay
       setTimeout(() => {
         navigate('/checkout/success');
@@ -162,7 +162,7 @@ const Payment = () => {
 
   return (
     <section id="checkout_payment">
-      <div className="lyt_container gap4">
+      <div className="layout-base gap4">
         {/* Breadcrumb */}
         <div className="wrapper_center">
           <div className="breadcrumb">
@@ -205,7 +205,7 @@ const Payment = () => {
                       </div>
                     </div>
                   </label>
-                  
+
                   <label className="payment-method">
                     <input
                       type="radio"
@@ -246,7 +246,7 @@ const Payment = () => {
                         />
                         {errors.cardNumber && <span className="error-message">{errors.cardNumber}</span>}
                       </div>
-                      
+
                       <div className="form-group full-width">
                         <label htmlFor="cardName">Cardholder Name *</label>
                         <input
@@ -260,7 +260,7 @@ const Payment = () => {
                         />
                         {errors.cardName && <span className="error-message">{errors.cardName}</span>}
                       </div>
-                      
+
                       <div className="form-group">
                         <label htmlFor="expiryDate">Expiry Date *</label>
                         <input
@@ -278,7 +278,7 @@ const Payment = () => {
                         />
                         {errors.expiryDate && <span className="error-message">{errors.expiryDate}</span>}
                       </div>
-                      
+
                       <div className="form-group">
                         <label htmlFor="cvv">CVV *</label>
                         <input
@@ -312,7 +312,7 @@ const Payment = () => {
                         />
                         <span>Same as shipping address</span>
                       </label>
-                      
+
                       <label className="billing-option">
                         <input
                           type="radio"
@@ -325,7 +325,7 @@ const Payment = () => {
                         <span>Use a different billing address</span>
                       </label>
                     </div>
-                    
+
                     {formData.billingAddress === 'different' && (
                       <div className="different-billing">
                         <p>Billing address form would go here...</p>
@@ -372,15 +372,15 @@ const Payment = () => {
 
               {/* Action Buttons */}
               <div className="form-actions">
-                <button 
-                  type="button" 
-                  className="btn btn_secondary" 
+                <button
+                  type="button"
+                  className="btn btn_secondary"
                   onClick={() => navigate('/checkout/shipping')}
                 >
                   Back to Shipping
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn btn_base_highlight"
                   disabled={isProcessing}
                 >
@@ -401,7 +401,7 @@ const Payment = () => {
           <div className="checkout-sidebar">
             <div className="order-summary">
               <h2>Order Summary</h2>
-              
+
               <div className="summary-items">
                 {state_products?.map((product, index) => (
                   <div key={index} className="summary-item">
@@ -415,7 +415,7 @@ const Payment = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="summary-totals">
                 <div className="total-row">
                   <span>Subtotal</span>
@@ -434,7 +434,7 @@ const Payment = () => {
                   <span>€{calculateTotal().toFixed(2)}</span>
                 </div>
               </div>
-              
+
               <div className="accepted-cards">
                 <p>We accept:</p>
                 <div className="card-logos">
@@ -448,7 +448,7 @@ const Payment = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Toast Container */}
       <ToastContainer toasts={toast.toasts} position="top-right" />
     </section>

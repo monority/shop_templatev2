@@ -11,7 +11,7 @@ const Home = () => {
 	const user = useStore(state => state.user);
 	return (<>
 		<div id="home">
-			<div className="lyt_container gap16">
+			<div className="layout-base gap16">
 				<Hero />
 				<Show />
 				<Trending />

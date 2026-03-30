@@ -159,7 +159,7 @@ const ProductDetails = () => {
 
 	return (
 		<section id="productdetails">
-			<div className="lyt_container gap4">
+			<div className="layout-base gap4">
 				<div className="element_start gap1">
 					<p className='text_color03'>{product?.category}</p><p> {">"} {product?.brand}</p>
 				</div>

@@ -31,7 +31,7 @@ const Favorites = () => {
 	return (
 		<>
 			<section id="favorites">
-				<div className="lyt_container gap4">
+				<div className="layout-base gap4">
 					<div className="wrapper">
 						<div className="element">
 							<h1>Favorites</h1>
