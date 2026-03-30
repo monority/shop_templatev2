@@ -7,7 +7,7 @@ const Shipping = () => {
   const navigate = useNavigate();
   const state_products = useStore(state => state.user.products);
   const toast = useToast();
-  
+
   // Form state
   const [formData, setFormData] = useState({
     firstName: '',
@@ -52,7 +52,7 @@ const Shipping = () => {
 
   // Calculate total
   const calculateTotal = () => {
-    const productsTotal = state_products?.reduce((total, product) => 
+    const productsTotal = state_products?.reduce((total, product) =>
       total + (parseFloat(product.price) * product.quantity), 0) || 0;
     const selectedShipping = shippingOptions.find(option => option.id === formData.shippingMethod);
     const shippingCost = selectedShipping?.price || 0;
@@ -66,7 +66,7 @@ const Shipping = () => {
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error for this field
     if (errors[name]) {
       setErrors(prev => ({
@@ -79,7 +79,7 @@ const Shipping = () => {
   // Validate form
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
@@ -88,7 +88,7 @@ const Shipping = () => {
     if (!formData.city.trim()) newErrors.city = 'City is required';
     if (!formData.postalCode.trim()) newErrors.postalCode = 'Postal code is required';
     if (!formData.country.trim()) newErrors.country = 'Country is required';
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -96,12 +96,12 @@ const Shipping = () => {
   // Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       // Show warning toast with specific error details
       const errorFields = Object.keys(errors);
       let message = 'Please complete all required fields to proceed to payment.';
-      
+
       // Add specific error details
       if (errorFields.length > 0) {
         const fieldNames = {
@@ -113,11 +113,11 @@ const Shipping = () => {
           postalCode: 'Postal code',
           country: 'Country'
         };
-        
+
         const errorList = errorFields.map(field => fieldNames[field] || field).join(', ');
         message += ` Missing: ${errorList}`;
       }
-      
+
       toast.showWarning(message, {
         duration: 6000,
         action: {
@@ -132,21 +132,21 @@ const Shipping = () => {
           }
         }
       });
-      
+
       return;
     }
-    
+
     // Show loading toast
     const loadingToastId = toast.showLoading('Processing shipping information...', { duration: 0 });
-    
+
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       toast.removeToast(loadingToastId);
       toast.showSuccess('Shipping information saved!', { duration: 3000 });
-      
+
       // Navigate to payment page after a short delay
       setTimeout(() => {
         navigate('/checkout/payment');
@@ -156,7 +156,7 @@ const Shipping = () => {
 
   return (
     <section id="checkout_shipping">
-      <div className="lyt_container gap4">
+      <div className="layout-base gap4">
         {/* Breadcrumb */}
         <div className="wrapper_center">
           <div className="breadcrumb">
@@ -193,7 +193,7 @@ const Shipping = () => {
                     />
                     {errors.firstName && <span className="error-message">{errors.firstName}</span>}
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="lastName">Last Name *</label>
                     <input
@@ -206,7 +206,7 @@ const Shipping = () => {
                     />
                     {errors.lastName && <span className="error-message">{errors.lastName}</span>}
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="email">Email Address *</label>
                     <input
@@ -219,7 +219,7 @@ const Shipping = () => {
                     />
                     {errors.email && <span className="error-message">{errors.email}</span>}
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="phone">Phone Number</label>
                     <input
@@ -252,7 +252,7 @@ const Shipping = () => {
                     />
                     {errors.address && <span className="error-message">{errors.address}</span>}
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="city">City *</label>
                     <input
@@ -265,7 +265,7 @@ const Shipping = () => {
                     />
                     {errors.city && <span className="error-message">{errors.city}</span>}
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="postalCode">Postal Code *</label>
                     <input
@@ -279,7 +279,7 @@ const Shipping = () => {
                     />
                     {errors.postalCode && <span className="error-message">{errors.postalCode}</span>}
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="country">Country *</label>
                     <select
@@ -333,15 +333,15 @@ const Shipping = () => {
 
               {/* Action Buttons */}
               <div className="form-actions">
-                <button 
-                  type="button" 
-                  className="btn btn_secondary" 
+                <button
+                  type="button"
+                  className="btn btn_secondary"
                   onClick={() => navigate('/cart')}
                 >
                   Back to Cart
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn btn_base_highlight"
                   disabled={isSubmitting}
                 >
@@ -355,7 +355,7 @@ const Shipping = () => {
           <div className="checkout-sidebar">
             <div className="order-summary">
               <h2>Order Summary</h2>
-              
+
               <div className="summary-items">
                 {state_products?.map((product, index) => (
                   <div key={index} className="summary-item">
@@ -369,18 +369,18 @@ const Shipping = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="summary-totals">
                 <div className="total-row">
                   <span>Subtotal</span>
-                  <span>€{(state_products?.reduce((total, product) => 
+                  <span>€{(state_products?.reduce((total, product) =>
                     total + (parseFloat(product.price) * product.quantity), 0) || 0).toFixed(2)}</span>
                 </div>
                 <div className="total-row">
                   <span>Shipping</span>
                   <span>
-                    {shippingOptions.find(option => option.id === formData.shippingMethod)?.price === 0 
-                      ? 'FREE' 
+                    {shippingOptions.find(option => option.id === formData.shippingMethod)?.price === 0
+                      ? 'FREE'
                       : `€${shippingOptions.find(option => option.id === formData.shippingMethod)?.price || 0}`}
                   </span>
                 </div>
@@ -393,7 +393,7 @@ const Shipping = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Toast Container */}
       <ToastContainer toasts={toast.toasts} position="top-right" />
     </section>

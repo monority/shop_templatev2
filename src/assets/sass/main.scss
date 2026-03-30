@@ -6,6 +6,7 @@
 @use "./components/utils/variables";
 @use "./components/utils/popup";
 @use "./components/ui/header";
+@use "./components/ui/nav";
 @use "./components/ui/footer";
 @use "./components/ui/product-card";
 @use "./pages/home/section/hero";
@@ -27,7 +28,7 @@
 	position: relative;
 }
 
-.lyt_container {
+.layout-base {
 	max-width: 80vw;
 	display: flex;
 	flex-direction: column;

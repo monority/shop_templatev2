@@ -13,7 +13,7 @@ const Header = () => {
 	const [scroll, setScrolled] = useState(false);
 	const number = useStore(state => state.products);
 	const user = useStore(state => state.user);
-	
+
 	useEffect(() => {
 		const headerChange = () => {
 			setActive(window.scrollY < 200);
@@ -25,7 +25,7 @@ const Header = () => {
 			window.removeEventListener("scroll", headerChange);
 		};
 	}, []);
-	
+
 	const checkQuantities = () => {
 		if (user && user.products) {
 			const total = user.products.reduce((acc, product) => acc + (product.quantity || 0), 0);
@@ -41,11 +41,11 @@ const Header = () => {
 		}
 		return '';
 	}
-	
+
 	return (
 		<>
 			<header>
-				<div className="lyt-container h_100">
+				<div className="layout-base h_100">
 					<div className="container_column gap2 h_100">
 						<div className="container_between w_100">
 							<div className="element">
@@ -68,7 +68,7 @@ const Header = () => {
 										<div className="element_center">
 											<Account size="2.5rem" />
 										</div>
-										
+
 									</li>
 								</UserGuard>
 

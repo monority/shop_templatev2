@@ -14,16 +14,20 @@ const WomenShoes = () => {
   // Collection filters configuration
   const collectionFilters = {
     all: { label: 'All Products', filter: () => true },
-    women: { label: 'Women', filter: (product, index) => {
-      if (product.gender) return product.gender.toLowerCase() === 'women';
-      if (product.sizeDetail?.toLowerCase().includes('women')) return true;
-      return index % 2 === 0;
-    }},
-    men: { label: 'Men', filter: (product, index) => {
-      if (product.gender) return product.gender.toLowerCase() === 'men';
-      if (product.sizeDetail?.toLowerCase().includes('men')) return true;
-      return index % 2 === 1;
-    }},
+    women: {
+      label: 'Women', filter: (product, index) => {
+        if (product.gender) return product.gender.toLowerCase() === 'women';
+        if (product.sizeDetail?.toLowerCase().includes('women')) return true;
+        return index % 2 === 0;
+      }
+    },
+    men: {
+      label: 'Men', filter: (product, index) => {
+        if (product.gender) return product.gender.toLowerCase() === 'men';
+        if (product.sizeDetail?.toLowerCase().includes('men')) return true;
+        return index % 2 === 1;
+      }
+    },
     trending: { label: 'Trending', filter: (product) => product.isTrending },
     new: { label: 'New Arrivals', filter: (product) => product.isNew },
     sale: { label: 'Sale', filter: (product) => Number(product.discountRate || 0) > 0 }
@@ -59,7 +63,7 @@ const WomenShoes = () => {
 
   return (
     <section id="catalog_page">
-      <div className="lyt_container gap4">
+      <div className="layout-base gap4">
         {/* Header Section */}
         <div className="catalog_header">
           <div className="catalog_intro">

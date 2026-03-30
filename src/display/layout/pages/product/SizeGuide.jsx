@@ -6,7 +6,7 @@ const SizeGuide = () => {
 
 	return (
 		<section id="size_guide">
-			<div className="lyt_container gap3">
+			<div className="layout-base gap3">
 				<div className="wrapper_column gap2">
 					<div className="element">
 						<button className='btn btn_secondary' onClick={() => navigate(-1)}>Back</button>

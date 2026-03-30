@@ -23,7 +23,7 @@ const SizeGuide = lazy(() => import('./display/layout/pages/product/SizeGuide'))
 
 const RouteSkeleton = () => (
 	<section className="route_skeleton">
-		<div className="lyt_container gap2">
+		<div className="layout-base gap2">
 			<div className="skeleton_line skeleton_title" />
 			<div className="skeleton_line skeleton_text" />
 			<div className="skeleton_grid">

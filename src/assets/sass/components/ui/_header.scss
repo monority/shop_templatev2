@@ -1,11 +1,11 @@
 /* Header Component */
-.header {
+header {
 	height: 13rem;
 	position: sticky;
 	top: 0;
 	z-index: var(--z-overlay);
 	backdrop-filter: blur(10px);
-	background: rgba(248, 250, 252, 0.88);
+	background: rgba(248, 250, 252, 0.731);
 
 	&__nav-item {
 		padding: 0.7rem 1.1rem;
