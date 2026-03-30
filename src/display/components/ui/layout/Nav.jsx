@@ -1,103 +1,119 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, WomenIcon, MenIcon, TrendingIcon, NewIcon, SaleIcon } from '../SvgStack';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const NAV_ITEMS = [
+	{ label: "Women", path: "/shop/women" },
+	{ label: "Men", path: "/shop/men" },
+	{ label: "Trending", path: "/shop/trending" },
+	{ label: "New", path: "/shop/new" },
+	{ label: "Sale", path: "/shop/sale", variant: "sale" },
+];
 
 const Nav = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [isOpen, setIsOpen] = useState(false);
 
-  const collections = [
-    { label: 'Women', path: '/shop/women', icon: <WomenIcon /> },
-    { label: 'Men', path: '/shop/men', icon: <MenIcon /> },
-    { label: 'Trending', path: '/shop/trending', icon: <TrendingIcon /> },
-    { label: 'New', path: '/shop/new', icon: <NewIcon /> },
-    { label: 'Sale', path: '/shop/sale', className: 'nav-sale', icon: <SaleIcon /> },
-  ];
+	const handleNavigate = (path) => {
+		navigate(path);
+		setIsOpen(false);
+	};
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+	const isActive = (path) => location.pathname.startsWith(path);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth > 768) {
+				setIsOpen(false);
+			}
+		};
 
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
-  const handleNavClick = (path) => {
-    navigate(path);
-    setIsMenuOpen(false);
-  };
+	useEffect(() => {
+		setIsOpen(false);
+	}, [location.pathname]);
 
-  return (
-    <>
-      {/* Mobile Menu Button */}
-      <button
-        className="nav-mobile-toggle"
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label="Toggle menu"
-      >
-        {isMenuOpen ? <X size="1.5rem" /> : <Menu size="1.5rem" />}
-      </button>
+	return (
+		<nav className="site-nav" aria-label="Main navigation">
+			<div className="site-nav__desktop">
+				<ul className="site-nav__list">
+					{NAV_ITEMS.map((item) => (
+						<li key={item.path} className="site-nav__item">
+							<button
+								type="button"
+								className={[
+									"site-nav__link",
+									isActive(item.path) ? "site-nav__link--active" : "",
+									item.variant === "sale" ? "site-nav__link--sale" : "",
+								]
+									.filter(Boolean)
+									.join(" ")}
+								onClick={() => handleNavigate(item.path)}
+							>
+								<span className="site-nav__label">{item.label}</span>
+							</button>
+						</li>
+					))}
+				</ul>
+			</div>
 
-      {/* Desktop Navigation */}
-      <nav className={`nav-desktop ${isScrolled ? 'nav-scrolled' : ''}`}>
-        <ul className="nav-list">
-          {collections.map((item) => (
-            <li key={item.path}>
-              <button
-                className={`nav-link ${location.pathname === item.path ? 'nav-active' : ''} ${item.className || ''}`}
-                onClick={() => handleNavClick(item.path)}
-              >
-                <span className="nav-icon">{item.icon}</span>
-                <span className="nav-label">{item.label}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+			<button
+				type="button"
+				className={`site-nav__toggle ${isOpen ? "site-nav__toggle--active" : ""}`}
+				aria-label={isOpen ? "Close menu" : "Open menu"}
+				aria-expanded={isOpen}
+				aria-controls="mobile-navigation"
+				onClick={() => setIsOpen((prev) => !prev)}
+			>
+				<span className="site-nav__toggle-line" />
+				<span className="site-nav__toggle-line" />
+				<span className="site-nav__toggle-line" />
+			</button>
 
-      {/* Mobile Navigation */}
-      <nav className={`nav-mobile ${isMenuOpen ? 'nav-mobile-open' : ''}`}>
-        <div className="nav-mobile-header">
-          <h3 className="nav-mobile-title">Menu</h3>
-          <button
-            className="nav-mobile-close"
-            onClick={() => setIsMenuOpen(false)}
-            aria-label="Close menu"
-          >
-            <X size="1.5rem" />
-          </button>
-        </div>
-        <ul className="nav-mobile-list">
-          {collections.map((item, index) => (
-            <li key={item.path} style={{ '--delay': `${index * 0.1}s` }}>
-              <button
-                className={`nav-mobile-link ${location.pathname === item.path ? 'nav-mobile-active' : ''} ${item.className || ''}`}
-                onClick={() => handleNavClick(item.path)}
-              >
-                <span className="nav-mobile-icon">{item.icon}</span>
-                <span className="nav-mobile-label">{item.label}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+			<div className={`site-nav__overlay ${isOpen ? "site-nav__overlay--visible" : ""}`} onClick={() => setIsOpen(false)} />
 
-      {/* Mobile Overlay */}
-      {isMenuOpen && (
-        <div
-          className="nav-overlay"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )}
-    </>
-  )
-}
+			<div
+				id="mobile-navigation"
+				className={`site-nav__drawer ${isOpen ? "site-nav__drawer--open" : ""}`}
+				aria-hidden={!isOpen}
+			>
+				<div className="site-nav__drawer-header">
+					<p className="site-nav__drawer-title">Collections</p>
+					<button
+						type="button"
+						className="site-nav__drawer-close"
+						aria-label="Close menu"
+						onClick={() => setIsOpen(false)}
+					>
+						×
+					</button>
+				</div>
 
-export default Nav
+				<ul className="site-nav__drawer-list">
+					{NAV_ITEMS.map((item) => (
+						<li key={item.path} className="site-nav__drawer-item">
+							<button
+								type="button"
+								className={[
+									"site-nav__drawer-link",
+									isActive(item.path) ? "site-nav__drawer-link--active" : "",
+									item.variant === "sale" ? "site-nav__drawer-link--sale" : "",
+								]
+									.filter(Boolean)
+									.join(" ")}
+								onClick={() => handleNavigate(item.path)}
+							>
+								{item.label}
+							</button>
+						</li>
+					))}
+				</ul>
+			</div>
+		</nav>
+	);
+};
+
+export default Nav;
