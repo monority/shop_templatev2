@@ -4,6 +4,7 @@ import { Account, Basket, Cart, Check, Favorite, Favorite2, User } from '../SvgS
 import Nav from './Nav';
 import UserGuard from '../../../../cfg/guards/UserGuard';
 import { useStore } from '../../../../cfg/state/Store';
+
 const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -12,6 +13,7 @@ const Header = () => {
 	const [scroll, setScrolled] = useState(false);
 	const number = useStore(state => state.products);
 	const user = useStore(state => state.user);
+	
 	useEffect(() => {
 		const headerChange = () => {
 			setActive(window.scrollY < 200);
@@ -23,6 +25,7 @@ const Header = () => {
 			window.removeEventListener("scroll", headerChange);
 		};
 	}, []);
+	
 	const checkQuantities = () => {
 		if (user && user.products) {
 			const total = user.products.reduce((acc, product) => acc + (product.quantity || 0), 0);
@@ -38,11 +41,11 @@ const Header = () => {
 		}
 		return '';
 	}
+	
 	return (
 		<>
-
 			<header>
-				<div className="lyt_container h_100">
+				<div className="lyt-container h_100">
 					<div className="container_column gap2 h_100">
 						<div className="container_between w_100">
 							<div className="element">
@@ -65,30 +68,27 @@ const Header = () => {
 										<div className="element_center">
 											<Account size="2.5rem" />
 										</div>
-									
+										
 									</li>
 								</UserGuard>
 
-								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/cart")}>
+								<li className="header__nav-item text_size01 cursor_pointer relative" onClick={() => navigate("/cart")}>
 									<div className="element_center">
 										<Basket size="2.8rem" />
-
 									</div>
-									<div className="element_number">
-										<div className={user?.products && user?.products?.length > 0 ? 'background cart_bg' : ''}>
+									<div className="header__notification-badge">
+										<div className={user?.products && user?.products?.length > 0 ? 'header__notification-badge__background header__cart-bg' : ''}>
 											<p> {checkQuantities()}</p>
-
 										</div>
 									</div>
 								</li>
-								<li className="element text_size01 cursor_pointer relative" onClick={() => navigate("/favorites")}>
+								<li className="header__nav-item text_size01 cursor_pointer relative" onClick={() => navigate("/favorites")}>
 									<div className="element_center">
 										<Favorite2 size="2.8rem" color="currentColor" />
 									</div>
-									<div className="element_number">
-										<div className={user?.favorites && user.favorites.length > 0 ? 'background favorite_bg' : ''}>
+									<div className="header__notification-badge">
+										<div className={user?.favorites && user.favorites.length > 0 ? 'header__notification-badge__background header__favorite-bg' : ''}>
 											<p> {checkFavorites()}</p>
-
 										</div>
 									</div>
 								</li>
@@ -99,7 +99,6 @@ const Header = () => {
 					<hr />
 				</div>
 			</header >
-
 		</>
 	);
 };
