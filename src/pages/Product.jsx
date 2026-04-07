@@ -9,7 +9,7 @@ const Product = () => {
   const { product, loading, error } = useProduct(id);
   const { addToCart } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
-  
+
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -35,7 +35,6 @@ const Product = () => {
       color: selectedColor,
       quantity
     });
-    navigate('/cart');
   };
 
   if (loading) {
@@ -86,13 +85,13 @@ const Product = () => {
           <div>
             {/* Main Image */}
             <div className="card overflow-hidden mb-4 aspect-square">
-              <img 
-                src={mainImage} 
+              <img
+                src={mainImage}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
             </div>
-            
+
             {/* Thumbnail Gallery */}
             {product.images && product.images.length > 1 && (
               <div className="flex gap-3">
@@ -100,12 +99,11 @@ const Product = () => {
                   <button
                     key={index}
                     onClick={() => setMainImage(img)}
-                    className={`w-20 h-20 rounded-lg overflow-hidden transition-all ${
-                      mainImage === img ? 'ring-2 ring-brand' : 'ring-2 ring-transparent hover:ring-gray-200'
-                    }`}
+                    className={`w-20 h-20 rounded-lg overflow-hidden transition-all ${mainImage === img ? 'ring-2 ring-brand' : 'ring-2 ring-transparent hover:ring-gray-200'
+                      }`}
                   >
-                    <img 
-                      src={img} 
+                    <img
+                      src={img}
                       alt={`${product.name} ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -130,7 +128,7 @@ const Product = () => {
               <div className="flex gap-0.5 text-warning">
                 {[...Array(5)].map((_, i) => (
                   <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill={i < Math.floor(product.rating || 4.5) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                   </svg>
                 ))}
               </div>
@@ -171,9 +169,8 @@ const Product = () => {
                     <button
                       key={color}
                       onClick={() => setSelectedColor(color)}
-                      className={`w-10 h-10 rounded-full transition-all ${
-                        selectedColor === color ? 'ring-2 ring-offset-2 ring-dark' : 'ring-2 ring-gray-200'
-                      }`}
+                      className={`w-10 h-10 rounded-full transition-all ${selectedColor === color ? 'ring-2 ring-offset-2 ring-dark' : 'ring-2 ring-gray-200'
+                        }`}
                       style={{ background: color.toLowerCase() }}
                       title={color}
                     />
@@ -193,11 +190,10 @@ const Product = () => {
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`min-w-[60px] px-4 py-3 rounded-lg font-semibold transition-all ${
-                        selectedSize === size 
-                          ? 'bg-brand/10 text-brand border-2 border-brand' 
+                      className={`min-w-[60px] px-4 py-3 rounded-lg font-semibold transition-all ${selectedSize === size
+                          ? 'bg-brand/10 text-brand border-2 border-brand'
                           : 'bg-white text-dark border-2 border-gray-200 hover:border-gray-300'
-                      }`}
+                        }`}
                     >
                       {size}
                     </button>
@@ -210,14 +206,14 @@ const Product = () => {
             <div className="flex gap-4 mb-8">
               {/* Quantity Selector */}
               <div className="flex items-center border-2 border-gray-200 rounded-xl overflow-hidden">
-                <button 
+                <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-12 h-12 bg-white text-dark hover:bg-gray-50 transition-colors"
                 >
                   −
                 </button>
                 <span className="w-12 text-center font-semibold">{quantity}</span>
-                <button 
+                <button
                   onClick={() => setQuantity(quantity + 1)}
                   className="w-12 h-12 bg-white text-dark hover:bg-gray-50 transition-colors"
                 >
@@ -226,7 +222,7 @@ const Product = () => {
               </div>
 
               {/* Add to Cart */}
-              <button 
+              <button
                 onClick={handleAddToCart}
                 className="flex-1 btn btn-primary"
               >
@@ -237,12 +233,11 @@ const Product = () => {
               <button
                 onClick={() => toggleFavorite(product)}
                 aria-label={isFavorite(product?.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-                className={`w-14 h-14 rounded-xl border-2 flex items-center justify-center transition-all ${
-                  isFavorite(product?.id) ? 'bg-error text-white border-error' : 'bg-white text-gray border-gray-200 hover:border-error'
-                }`}
+                className={`w-14 h-14 rounded-xl border-2 flex items-center justify-center transition-all ${isFavorite(product?.id) ? 'bg-error text-white border-error' : 'bg-white text-gray border-gray-200 hover:border-error'
+                  }`}
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill={isFavorite(product?.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
               </button>
             </div>

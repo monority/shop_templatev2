@@ -99,7 +99,7 @@ export const useAppStore = create(
       toggleFavorite: (product) => {
         const { user } = get();
         const isFavorite = user.favorites?.some(fav => fav.id === product.id);
-        
+
         set({
           user: {
             ...user,
@@ -120,23 +120,23 @@ export const useAppStore = create(
       addToCart: (product) => {
         const { cart } = get();
         const { items } = cart;
-        
+
         const existingItem = items.find(
-          (item) => item.id === product.id && 
-                   item.size === product.size && 
-                   item.color === product.color
+          (item) => item.id === product.id &&
+            item.size === product.size &&
+            item.color === product.color
         );
-        
+
         const newItems = existingItem
           ? items.map((item) =>
-              item.id === existingItem.id &&
+            item.id === existingItem.id &&
               item.size === existingItem.size &&
               item.color === existingItem.color
-                ? { ...item, quantity: item.quantity + (product.quantity || 1) }
-                : item
-            )
+              ? { ...item, quantity: item.quantity + (product.quantity || 1) }
+              : item
+          )
           : [...items, { ...product, quantity: product.quantity || 1 }];
-        
+
         set({ cart: { ...cart, items: newItems } });
         get().showToast(`${product.name} added to cart`, 'success');
       },
@@ -229,7 +229,7 @@ export const useAppStore = create(
       showToast: (message, type = 'info', duration = 3000) => {
         const { ui } = get();
         set({ ui: { ...ui, toast: { message, type } } });
-        
+
         setTimeout(() => {
           set({ ui: { ...get().ui, toast: null } });
         }, duration);

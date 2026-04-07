@@ -11,28 +11,28 @@ const NAV_LINKS = [
 
 const CartIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
   </svg>
 );
 
 const HeartIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
   </svg>
 );
 
 const SearchIcon = ({ size = 20 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="11" cy="11" r="8"/>
-    <path d="m21 21-4.35-4.35"/>
+    <circle cx="11" cy="11" r="8" />
+    <path d="m21 21-4.35-4.35" />
   </svg>
 );
 
 const UserIcon = ({ size = 20 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-    <circle cx="12" cy="7" r="4"/>
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx="12" cy="7" r="4" />
   </svg>
 );
 
@@ -75,9 +75,8 @@ const Nav = ({ isScrolled }) => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || mobileOpen ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/80 backdrop-blur-sm'
-      }`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || mobileOpen ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/80 backdrop-blur-sm'
+        }`}>
 
         {/* Top bar */}
         <div className="bg-dark text-white text-xs">
@@ -114,13 +113,12 @@ const Nav = ({ isScrolled }) => {
                 <button
                   key={link.path}
                   onClick={() => navigate(link.path)}
-                  className={`px-4 py-2 text-sm font-semibold uppercase tracking-wide rounded-lg transition-colors hover:bg-gray-100 ${
-                    isActive(link.path)
+                  className={`px-4 py-2 text-sm font-semibold uppercase tracking-wide rounded-lg transition-colors hover:bg-gray-100 ${isActive(link.path)
                       ? 'text-brand'
                       : link.highlight
                         ? 'text-accent'
                         : 'text-dark'
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </button>
@@ -149,7 +147,7 @@ const Nav = ({ isScrolled }) => {
                     aria-label="Close search"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                      <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                   </button>
                 </form>
@@ -194,11 +192,11 @@ const Nav = ({ isScrolled }) => {
               >
                 {mobileOpen ? (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
                 ) : (
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
                   </svg>
                 )}
               </button>
@@ -230,13 +228,12 @@ const Nav = ({ isScrolled }) => {
                 <button
                   key={link.path}
                   onClick={() => go(link.path)}
-                  className={`w-full px-4 py-4 flex items-center text-lg font-semibold rounded-xl transition-colors text-left ${
-                    isActive(link.path)
+                  className={`w-full px-4 py-4 flex items-center text-lg font-semibold rounded-xl transition-colors text-left ${isActive(link.path)
                       ? 'bg-brand/10 text-brand'
                       : link.highlight
                         ? 'text-accent hover:bg-orange-50'
                         : 'text-dark hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </button>

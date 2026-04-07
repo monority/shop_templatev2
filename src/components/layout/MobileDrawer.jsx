@@ -32,13 +32,13 @@ const MobileDrawer = ({ isOpen, onClose }) => {
   return (
     <>
       {/* Backdrop Overlay */}
-      <div 
+      <div
         className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={onClose}
       />
 
       {/* Drawer Panel */}
-      <aside 
+      <aside
         className={`fixed top-0 left-0 h-screen w-[min(320px,85vw)] bg-white shadow-xl z-50 flex flex-col transition-transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         {/* Drawer Header */}
@@ -46,14 +46,14 @@ const MobileDrawer = ({ isOpen, onClose }) => {
           <h2 className="text-2xl font-extrabold text-dark">
             SNEAK<span className="text-brand">ARA</span>
           </h2>
-          <button 
+          <button
             onClick={onClose}
             aria-label="Close menu"
             className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6 6 18"/>
-              <path d="m6 6 12 12"/>
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
             </svg>
           </button>
         </div>
@@ -65,11 +65,10 @@ const MobileDrawer = ({ isOpen, onClose }) => {
               <li key={item.path}>
                 <button
                   onClick={() => handleNavigate(item.path)}
-                  className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                    isActive(item.path) 
-                      ? 'bg-brand/10 text-brand font-semibold' 
+                  className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${isActive(item.path)
+                      ? 'bg-brand/10 text-brand font-semibold'
                       : 'text-dark hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <span className="text-xl">{item.icon}</span>
                   {item.label}
@@ -88,8 +87,8 @@ const MobileDrawer = ({ isOpen, onClose }) => {
               className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-gray-200 bg-white text-dark hover:border-brand transition-colors"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.35-4.35"/>
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
               </svg>
               Search
             </button>
@@ -99,7 +98,7 @@ const MobileDrawer = ({ isOpen, onClose }) => {
               className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-gray-200 bg-white text-dark hover:border-brand transition-colors"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
               Favorites
             </button>
@@ -110,9 +109,9 @@ const MobileDrawer = ({ isOpen, onClose }) => {
             >
               <div className="relative">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="9" cy="21" r="1"/>
-                  <circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
                 {cartCount > 0 && (
                   <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-brand text-white text-xs font-semibold flex items-center justify-center">
@@ -136,7 +135,7 @@ const MobileDrawer = ({ isOpen, onClose }) => {
                 <p className="font-semibold text-dark truncate">{user?.username || 'User'}</p>
                 <p className="text-sm text-gray-500 truncate">{user?.email}</p>
               </div>
-              <button 
+              <button
                 onClick={() => {
                   logout();
                   navigate('/');

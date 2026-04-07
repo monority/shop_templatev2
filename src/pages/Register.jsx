@@ -65,8 +65,10 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
       <div className="absolute -top-20 -right-10 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="flex max-w-7xl mx-auto min-h-screen">
 
       {/* Left — branding */}
       <div className="hidden lg:flex flex-1 flex-col justify-center p-16 relative z-10">
@@ -189,6 +191,8 @@ const Register = () => {
             </p>
           </div>
         </div>
+      </div>
+
       </div>
     </div>
   );
