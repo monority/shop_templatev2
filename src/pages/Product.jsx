@@ -191,8 +191,8 @@ const Product = () => {
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`min-w-[60px] px-4 py-3 rounded-lg font-semibold transition-all ${selectedSize === size
-                          ? 'bg-brand/10 text-brand border-2 border-brand'
-                          : 'bg-white text-dark border-2 border-gray-200 hover:border-gray-300'
+                        ? 'bg-brand/10 text-brand border-2 border-brand'
+                        : 'bg-white text-dark border-2 border-gray-200 hover:border-gray-300'
                         }`}
                     >
                       {size}
