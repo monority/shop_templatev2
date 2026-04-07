@@ -1,11 +1,20 @@
 import React, { Suspense, lazy, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import AuthGuard from './cfg/guards/AuthGuard';
 import UnAuthGuard from './cfg/guards/UnAuthGuard';
 import { useAppStore } from './store';
+import Toast from './components/ui/Toast';
 
-// Lazy load pages for better performance
+// Auth layout — no Nav/Footer
+const AuthLayout = () => (
+  <div className="min-h-screen">
+    <Outlet />
+    <Toast />
+  </div>
+);
+
+// Lazy pages
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Product = lazy(() => import('./pages/Product'));
@@ -25,33 +34,38 @@ const Shipping = lazy(() => import('./pages/help/Shipping'));
 const Returns = lazy(() => import('./pages/help/Returns'));
 const TrackOrder = lazy(() => import('./pages/help/TrackOrder'));
 const FAQ = lazy(() => import('./pages/help/FAQ'));
+const Privacy = lazy(() => import('./pages/legal/Privacy'));
+const Terms = lazy(() => import('./pages/legal/Terms'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
-// Loading fallback component
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[50vh] text-gray-500">
-    <div className="animate-pulse">Loading...</div>
+    <div className="animate-pulse">Loading…</div>
   </div>
 );
 
 const Root = () => {
   const initializeAuth = useAppStore((state) => state.initializeAuth);
 
-  useEffect(() => {
-    const unsubscribe = initializeAuth();
-    return () => unsubscribe?.();
-  }, [initializeAuth]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { const unsub = initializeAuth(); return () => unsub?.(); }, []);
 
   return (
-    <Layout>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        {/* Auth routes — no Nav/Footer */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<UnAuthGuard><Login /></UnAuthGuard>} />
+          <Route path="/register" element={<UnAuthGuard><Register /></UnAuthGuard>} />
+        </Route>
+
+        {/* Main routes — full Layout */}
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:category" element={<Shop />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<UnAuthGuard><Login /></UnAuthGuard>} />
-          <Route path="/register" element={<UnAuthGuard><Register /></UnAuthGuard>} />
           <Route path="/checkout" element={<AuthGuard><Payment /></AuthGuard>} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/search" element={<Search />} />
@@ -65,9 +79,12 @@ const Root = () => {
           <Route path="/help/returns" element={<Returns />} />
           <Route path="/help/track" element={<TrackOrder />} />
           <Route path="/help/faq" element={<FAQ />} />
-        </Routes>
-      </Suspense>
-    </Layout>
+          <Route path="/legal/privacy" element={<Privacy />} />
+          <Route path="/legal/terms" element={<Terms />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };
 

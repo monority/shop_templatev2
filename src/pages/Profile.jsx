@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, useCart } from '../store';
+import PageMeta from '../components/ui/PageMeta';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated, setUser } = useAuth();
   const { items } = useCart();
-  
+
   const [activeTab, setActiveTab] = useState('overview');
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -23,13 +24,13 @@ const Profile = () => {
           <div className="max-w-md mx-auto text-center py-16">
             <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gray-100 flex items-center justify-center">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
               </svg>
             </div>
             <h1 className="text-2xl font-bold text-dark mb-4">Sign In Required</h1>
             <p className="text-gray mb-6">Please sign in to view your profile and manage your account.</p>
-            <button 
+            <button
               className="btn btn-primary w-full"
               onClick={() => navigate('/login')}
             >
@@ -61,6 +62,7 @@ const Profile = () => {
 
   return (
     <div className="bg-light min-h-screen pt-24 pb-12">
+      <PageMeta title="My Account" />
       <div className="container">
         {/* Header */}
         <div className="mb-8">
@@ -83,17 +85,16 @@ const Profile = () => {
                 <h2 className="font-bold text-dark">{user?.username || 'User'}</h2>
                 <p className="text-sm text-gray">{user?.email || 'user@example.com'}</p>
               </div>
-              
+
               <nav className="space-y-2">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${
-                      activeTab === tab.id 
-                        ? 'bg-brand text-white' 
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${activeTab === tab.id
+                        ? 'bg-brand text-white'
                         : 'text-dark hover:bg-gray-100'
-                    }`}
+                      }`}
                   >
                     <span>{tab.icon}</span>
                     <span className="font-medium">{tab.label}</span>
@@ -130,14 +131,14 @@ const Profile = () => {
                 <div className="card p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-bold text-dark">Account Information</h2>
-                    <button 
+                    <button
                       className="btn btn-outline btn-sm"
                       onClick={() => setIsEditing(!isEditing)}
                     >
                       {isEditing ? 'Cancel' : 'Edit'}
                     </button>
                   </div>
-                  
+
                   {isEditing ? (
                     <form onSubmit={handleSaveProfile} className="space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
@@ -180,8 +181,8 @@ const Profile = () => {
                       </div>
                       <div className="flex gap-3 pt-4">
                         <button type="submit" className="btn btn-primary">Save Changes</button>
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           className="btn btn-ghost"
                           onClick={() => setIsEditing(false)}
                         >
@@ -215,7 +216,7 @@ const Profile = () => {
                 <div className="card p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-bold text-dark">Recent Orders</h2>
-                    <button 
+                    <button
                       className="text-brand font-medium hover:underline"
                       onClick={() => setActiveTab('orders')}
                     >
@@ -224,8 +225,8 @@ const Profile = () => {
                   </div>
                   <div className="space-y-4">
                     {recentOrders.slice(0, 3).map((order) => (
-                      <div 
-                        key={order.id} 
+                      <div
+                        key={order.id}
                         className="flex items-center justify-between p-4 bg-gray-50 rounded-xl"
                       >
                         <div>
@@ -234,11 +235,10 @@ const Profile = () => {
                         </div>
                         <div className="text-right">
                           <p className="font-semibold text-dark">${order.total.toFixed(2)}</p>
-                          <span className={`text-xs px-2 py-1 rounded-full ${
-                            order.status === 'Delivered' ? 'bg-success/10 text-success' :
-                            order.status === 'Shipped' ? 'bg-brand/10 text-brand' :
-                            'bg-warning/10 text-warning'
-                          }`}>
+                          <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'Delivered' ? 'bg-success/10 text-success' :
+                              order.status === 'Shipped' ? 'bg-brand/10 text-brand' :
+                                'bg-warning/10 text-warning'
+                            }`}>
                             {order.status}
                           </span>
                         </div>
@@ -254,16 +254,16 @@ const Profile = () => {
                 <h2 className="text-xl font-bold text-dark mb-6">Order History</h2>
                 <div className="space-y-4">
                   {recentOrders.map((order) => (
-                    <div 
-                      key={order.id} 
+                    <div
+                      key={order.id}
                       className="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:border-brand/30 transition-colors"
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-brand/10 flex items-center justify-center">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-brand">
-                            <circle cx="9" cy="21" r="1"/>
-                            <circle cx="20" cy="21" r="1"/>
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                           </svg>
                         </div>
                         <div>
@@ -273,11 +273,10 @@ const Profile = () => {
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-dark">${order.total.toFixed(2)}</p>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          order.status === 'Delivered' ? 'bg-success/10 text-success' :
-                          order.status === 'Shipped' ? 'bg-brand/10 text-brand' :
-                          'bg-warning/10 text-warning'
-                        }`}>
+                        <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'Delivered' ? 'bg-success/10 text-success' :
+                            order.status === 'Shipped' ? 'bg-brand/10 text-brand' :
+                              'bg-warning/10 text-warning'
+                          }`}>
                           {order.status}
                         </span>
                       </div>
@@ -324,10 +323,10 @@ const Profile = () => {
                         <p className="text-sm text-gray">Update your password regularly</p>
                       </div>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="9 18 15 12 9 6"/>
+                        <polyline points="9 18 15 12 9 6" />
                       </svg>
                     </button>
-                    <button 
+                    <button
                       className="w-full flex items-center justify-between p-4 bg-error/5 rounded-xl hover:bg-error/10 transition-colors text-error"
                       onClick={() => setUser(null)}
                     >
@@ -336,9 +335,9 @@ const Profile = () => {
                         <p className="text-sm opacity-70">Log out of your account</p>
                       </div>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                        <polyline points="16 17 21 12 16 7"/>
-                        <line x1="21" y1="12" x2="9" y2="12"/>
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
                       </svg>
                     </button>
                   </div>

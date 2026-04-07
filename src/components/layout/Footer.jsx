@@ -89,6 +89,11 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <p>&copy; 2026 Sneakara. All rights reserved.</p>
+          <div className="flex gap-4 mt-2 text-sm">
+            <Link to="/legal/privacy" className="footer-link">Privacy Policy</Link>
+            <span className="text-gray-600">·</span>
+            <Link to="/legal/terms" className="footer-link">Terms &amp; Conditions</Link>
+          </div>
         </div>
       </div>
     </footer>
