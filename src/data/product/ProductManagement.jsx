@@ -1,18 +1,13 @@
-import { useStore } from '../../cfg/state/Store';
+import { useAppStore } from '../../store';
 
+// Thin hook wrapping store cart + favorites for product interactions
 const ProductManagement = () => {
-	const addProduct = useStore((state) => state.addProduct);
-	const updateProduct = useStore((state) => state.updateProduct);
-	const addProductFavorite = useStore((state) => state.addProductFavorite);
-	const handleAddProduct = (product) => {
-		addProduct(product);
-	};
-	const handleUpdateProduct = (product) => {
-		updateProduct(product);
-	}
+	const addToCart = useAppStore((state) => state.addToCart);
+	const toggleFavorite = useAppStore((state) => state.toggleFavorite);
+
 	return {
-		handleAddProduct,
-		handleUpdateProduct
+		handleAddToCart: addToCart,
+		handleToggleFavorite: toggleFavorite,
 	};
 };
 
