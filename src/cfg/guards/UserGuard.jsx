@@ -1,9 +1,9 @@
-import React from 'react'
-import { useStore } from '../state/Store'
+import React from 'react';
+import { useAppStore } from '../../store';
 
 const UserGuard = ({ children, fallback }) => {
-	const isAuthenticated = useStore(state => state.isAuthenticated)
-	const loading = useStore(state => state.loading)
+	const isAuthenticated = useAppStore(state => state.isAuthenticated);
+	const loading = useAppStore(state => state.authLoading);
 
 	if (loading) {
 		return null; 

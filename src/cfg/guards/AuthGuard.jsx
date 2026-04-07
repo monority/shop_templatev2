@@ -1,11 +1,12 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useStore } from '../state/Store';
+import { useAppStore } from '../../store';
+
 const AuthGuard = ({ children }) => {
-  const user = useStore((state) => state.user);
+  const user = useAppStore((state) => state.user);
 
   if (!user || !user.uid) {
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/login" replace />;
   }
 
   return children;

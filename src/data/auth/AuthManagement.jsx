@@ -3,11 +3,11 @@ import React from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../cfg/firebase/firebaseCfg';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../cfg/state/Store';
+import { useAppStore } from '../../store';
+
 const AuthManagement = () => {
-    const setUser = useStore((state) => state.setUser);
-    const errorPop = useStore((state) => state.errorPop);
-    const setData = useStore((state) => state.setData);
+    const setUser = useAppStore((state) => state.setUser);
+    const showToast = useAppStore((state) => state.showToast);
     const navigate = useNavigate();
 
     const handleError = (errorCode) => {
@@ -38,15 +38,14 @@ const AuthManagement = () => {
             const email = data.get("email");
             const emailSecurity = email.toLowerCase();
             const methods = await fetchSignInMethodsForEmail(auth, emailSecurity);
-            setData({ email: emailSecurity });
             if (methods.length > 0) {
-                navigate("/auth/login");
+                navigate("/login");
             } else {
-                navigate("/auth/register");
+                navigate("/login");
             }
         } catch (err) {
             console.error('[checkUser]', err.code, err.message, err);
-            errorPop(handleError(err.code));
+            showToast(handleError(err.code));
         }
     };
     const loginUser = async (data) => {
@@ -61,11 +60,11 @@ const AuthManagement = () => {
                 setUser({ uid: user.uid, ...userDoc.data() });
                 navigate('/');
             } else {
-                errorPop('User data not found in database');
+                showToast('User data not found in database', 'error');
             }
         } catch (err) {
             console.error('[loginUser]', err.code, err.message, err);
-            errorPop(handleError(err.code));
+            showToast(handleError(err.code));
         }
     };
 
@@ -78,11 +77,11 @@ const AuthManagement = () => {
             const userRef = doc(db, 'users', user.uid);
             const userDoc = await getDoc(userRef);
             if (userDoc.exists()) {
-                errorPop('User already exists');
+                showToast('User already exists', 'error');
                 return;
             }
             if (formData.username === '') {
-                errorPop('Username is required');
+                showToast('Username is required', 'error');
                 return;
             }
             await setDoc(userRef, {
@@ -100,7 +99,7 @@ const AuthManagement = () => {
             navigate('/');
         } catch (err) {
             console.error('[registerUser]', err.code, err.message, err);
-            errorPop(handleError(err.code));
+            showToast(handleError(err.code));
         }
     };
 
