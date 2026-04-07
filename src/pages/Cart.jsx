@@ -21,7 +21,7 @@ const Cart = () => {
   return (
     <div className="bg-light min-h-screen">
       <PageMeta title="Your Cart" />
-      {/* Header */}}
+      {/* Header */}
       <div className="bg-brand-dark py-16 pt-24 text-white">
         <div className="container">
           <h1 className="text-4xl font-extrabold">Shopping Cart</h1>

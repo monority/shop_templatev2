@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -13,6 +13,10 @@ const AUTH_ERRORS = {
   'auth/invalid-email': 'Adresse email invalide.',
   'auth/network-request-failed': 'Erreur réseau, réessayez plus tard.',
 };
+
+const SS_KEY = 'sneakara_login_attempts';
+const MAX_ATTEMPTS = 5;
+const COOLDOWN_SECS = 30;
 
 const EyeIcon = ({ open }) => open ? (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -37,8 +41,38 @@ const Login = () => {
   const [showPassword, setShowPw] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [attempts, setAttempts] = useState(0);
-  const [cooldown, setCooldown] = useState(0);
+  const [attempts, setAttempts] = useState(() => {
+    const stored = sessionStorage.getItem(SS_KEY);
+    if (!stored) return 0;
+    const { count, until } = JSON.parse(stored);
+    if (until && Date.now() < until) return count;
+    sessionStorage.removeItem(SS_KEY);
+    return 0;
+  });
+  const [cooldown, setCooldown] = useState(() => {
+    const stored = sessionStorage.getItem(SS_KEY);
+    if (!stored) return 0;
+    const { until } = JSON.parse(stored);
+    if (until && Date.now() < until) return Math.ceil((until - Date.now()) / 1000);
+    return 0;
+  });
+
+  // Resume cooldown countdown if page is refreshed mid-cooldown
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setInterval(() => {
+      setCooldown((c) => {
+        if (c <= 1) {
+          clearInterval(t);
+          sessionStorage.removeItem(SS_KEY);
+          setAttempts(0);
+          return 0;
+        }
+        return c - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,22 +80,33 @@ const Login = () => {
     setError('');
     setLoading(true);
     try {
-      const { user: fbUser } = await signInWithEmailAndPassword(auth, email, password);
+      const { user: fbUser } = await signInWithEmailAndPassword(auth, email.trim().toLowerCase(), password);
       const snap = await getDoc(doc(db, 'users', fbUser.uid));
       setUser(snap.exists()
         ? { uid: fbUser.uid, ...snap.data() }
         : { uid: fbUser.uid, email: fbUser.email, username: email.split('@')[0], favorites: [] }
       );
+      sessionStorage.removeItem(SS_KEY);
       navigate('/');
     } catch (err) {
       const next = attempts + 1;
       setAttempts(next);
-      if (next >= 5) {
-        const secs = 30;
-        setCooldown(secs);
-        const t = setInterval(() => setCooldown((c) => { if (c <= 1) { clearInterval(t); return 0; } return c - 1; }), 1000);
-        setError(`Trop de tentatives. Réessayez dans ${secs}s.`);
+      if (next >= MAX_ATTEMPTS) {
+        const until = Date.now() + COOLDOWN_SECS * 1000;
+        sessionStorage.setItem(SS_KEY, JSON.stringify({ count: next, until }));
+        setCooldown(COOLDOWN_SECS);
+        const t = setInterval(() => setCooldown((c) => {
+          if (c <= 1) {
+            clearInterval(t);
+            sessionStorage.removeItem(SS_KEY);
+            setAttempts(0);
+            return 0;
+          }
+          return c - 1;
+        }), 1000);
+        setError(`Trop de tentatives. Réessayez dans ${COOLDOWN_SECS}s.`);
       } else {
+        sessionStorage.setItem(SS_KEY, JSON.stringify({ count: next, until: null }));
         setError(AUTH_ERRORS[err.code] || 'Une erreur est survenue.');
       }
     } finally {

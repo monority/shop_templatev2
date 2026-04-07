@@ -9,9 +9,24 @@ import { Helmet } from 'react-helmet-async';
 const AUTH_ERRORS = {
   'auth/email-already-in-use': 'Cet email est déjà utilisé.',
   'auth/invalid-email': 'Adresse email invalide.',
-  'auth/weak-password': 'Le mot de passe doit contenir au moins 6 caractères.',
+  'auth/weak-password': 'Le mot de passe doit contenir au moins 8 caractères.',
   'auth/network-request-failed': 'Erreur réseau, réessayez plus tard.',
 };
+
+// Username: 3-20 chars, letters/numbers/underscores only
+const USERNAME_RE = /^[a-zA-Z0-9_]{3,20}$/;
+
+const pwStrength = (pw) => {
+  let score = 0;
+  if (pw.length >= 8) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  return score; // 0-4
+};
+
+const STRENGTH_LABELS = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+const STRENGTH_COLORS = ['', 'bg-red-500', 'bg-orange-400', 'bg-yellow-400', 'bg-green-500'];
 
 const EyeIcon = ({ open }) => open ? (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -38,17 +53,33 @@ const Register = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const strength = pwStrength(password);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    if (!username.trim()) { setError('Le nom d\'utilisateur est requis.'); return; }
+
+    const trimmedUsername = username.trim();
+    if (!USERNAME_RE.test(trimmedUsername)) {
+      setError('Username must be 3-20 characters (letters, numbers, underscores only).');
+      return;
+    }
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters.');
+      return;
+    }
+    if (strength < 2) {
+      setError('Password is too weak. Add uppercase letters, numbers, or special characters.');
+      return;
+    }
+
     setLoading(true);
     try {
-      const { user: fbUser } = await createUserWithEmailAndPassword(auth, email, password);
+      const { user: fbUser } = await createUserWithEmailAndPassword(auth, email.trim().toLowerCase(), password);
       const userData = {
         uid: fbUser.uid,
         email: fbUser.email,
-        username: username.trim(),
+        username: trimmedUsername,
         phone: '',
         address: '',
         role: '',
@@ -135,8 +166,10 @@ const Register = () => {
                       placeholder="johndoe"
                       required
                       autoComplete="username"
+                      maxLength={20}
                       className="input"
                     />
+                    <p className="text-xs text-gray-400 mt-1">3-20 characters, letters/numbers/underscores</p>
                   </div>
 
                   <div className="mb-5">
@@ -163,7 +196,7 @@ const Register = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
                         required
-                        minLength={6}
+                        minLength={8}
                         autoComplete="new-password"
                         className="input pr-12"
                       />
@@ -176,7 +209,23 @@ const Register = () => {
                         <EyeIcon open={showPassword} />
                       </button>
                     </div>
-                    <p className="text-xs text-gray-400 mt-1.5">At least 6 characters</p>
+                    {/* Strength meter */}
+                    {password.length > 0 && (
+                      <div className="mt-2">
+                        <div className="flex gap-1 mb-1">
+                          {[1, 2, 3, 4].map((i) => (
+                            <div
+                              key={i}
+                              className={`h-1 flex-1 rounded-full transition-colors ${i <= strength ? STRENGTH_COLORS[strength] : 'bg-gray-200'}`}
+                            />
+                          ))}
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          Strength: <span className="font-medium">{STRENGTH_LABELS[strength] || 'Very weak'}</span>
+                          {' — '}min 8 chars, uppercase, number, special char
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   <button type="submit" disabled={loading} className="btn btn-primary w-full">
