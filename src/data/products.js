@@ -221,7 +221,7 @@ export const getProductsOnSale = () => products.filter(product => product.discou
  */
 export const searchProducts = (query) => {
   const lowercaseQuery = query.toLowerCase();
-  return products.filter(product => 
+  return products.filter(product =>
     product.name.toLowerCase().includes(lowercaseQuery) ||
     product.brand.toLowerCase().includes(lowercaseQuery)
   );

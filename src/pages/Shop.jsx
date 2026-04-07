@@ -58,11 +58,11 @@ const Shop = () => {
                 </button>
               ))}
             </div>
-            
+
             {/* Sort Dropdown */}
             <div className="flex items-center gap-3">
               <span className="text-sm text-gray">Sort by:</span>
-              <select 
+              <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="input w-auto"

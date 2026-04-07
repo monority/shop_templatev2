@@ -6,7 +6,7 @@ const UserGuard = ({ children, fallback }) => {
 	const loading = useAppStore(state => state.authLoading);
 
 	if (loading) {
-		return null; 
+		return null;
 	}
 
 	if (fallback) {

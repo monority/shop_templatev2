@@ -47,8 +47,8 @@ const Footer = () => {
             <ul className="footer-links">
               {footerLinks.shop.map((link) => (
                 <li key={link.label}>
-                  <button 
-                    onClick={() => navigate(link.path)} 
+                  <button
+                    onClick={() => navigate(link.path)}
                     className="footer-link"
                   >
                     {link.label}

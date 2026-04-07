@@ -6,24 +6,24 @@ import { auth, db } from '../cfg/firebase/firebaseCfg';
 import { useAuth } from '../store';
 
 const AUTH_ERRORS = {
-  'auth/invalid-credential':     'Email ou mot de passe incorrect.',
-  'auth/user-not-found':         'Aucun compte associé à cet email.',
-  'auth/wrong-password':         'Mot de passe incorrect.',
-  'auth/invalid-email':          'Adresse email invalide.',
+  'auth/invalid-credential': 'Email ou mot de passe incorrect.',
+  'auth/user-not-found': 'Aucun compte associé à cet email.',
+  'auth/wrong-password': 'Mot de passe incorrect.',
+  'auth/invalid-email': 'Adresse email invalide.',
   'auth/network-request-failed': 'Erreur réseau, réessayez plus tard.',
 };
 
 const EyeIcon = ({ open }) => open ? (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
-    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
-    <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
-    <line x1="2" x2="22" y1="2" y2="22"/>
+    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+    <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+    <line x1="2" x2="22" y1="2" y2="22" />
   </svg>
 ) : (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-    <circle cx="12" cy="12" r="3"/>
+    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+    <circle cx="12" cy="12" r="3" />
   </svg>
 );
 
@@ -31,11 +31,11 @@ const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
-  const [email, setEmail]           = useState('');
-  const [password, setPassword]     = useState('');
-  const [showPassword, setShowPw]   = useState(false);
-  const [error, setError]           = useState('');
-  const [loading, setLoading]       = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPw] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,8 +57,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
       <div className="absolute -top-20 -right-10 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="flex max-w-7xl mx-auto min-h-screen">
 
       {/* Left — branding */}
       <div className="hidden lg:flex flex-1 flex-col justify-center p-16 relative z-10">
@@ -105,7 +107,7 @@ const Login = () => {
             {error && (
               <div role="alert" className="p-4 bg-error/10 text-error rounded-xl mb-6 text-sm flex items-center gap-2">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
+                  <circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" />
                 </svg>
                 {error}
               </div>
@@ -154,7 +156,7 @@ const Login = () => {
               <button type="submit" disabled={loading} className="btn btn-primary w-full">
                 {loading ? (
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-spin">
-                    <circle cx="12" cy="12" r="10" strokeDasharray="60" strokeDashoffset="30"/>
+                    <circle cx="12" cy="12" r="10" strokeDasharray="60" strokeDashoffset="30" />
                   </svg>
                 ) : 'Sign In'}
               </button>
@@ -166,6 +168,8 @@ const Login = () => {
             </p>
           </div>
         </div>
+      </div>
+
       </div>
     </div>
   );

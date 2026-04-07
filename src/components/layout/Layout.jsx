@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Nav from './Nav';
 import Footer from './Footer';
+import Toast from '../ui/Toast';
 
 const Layout = ({ children }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,6 +35,9 @@ const Layout = ({ children }) => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Global toast notifications */}
+      <Toast />
     </div>
   );
 };
