@@ -242,9 +242,12 @@ export const useAppStore = create(
     }),
     {
       name: 'sneakara-2026',
+      // Only persist the cart and the user's uid — full user data is reloaded
+      // from Firestore on auth state change. This prevents sensitive data
+      // (email, address, phone) from living in localStorage indefinitely.
       partialize: (state) => ({
-        user: state.user,
         cart: state.cart,
+        user: state.user?.uid ? { uid: state.user.uid } : {},
       }),
     }
   )

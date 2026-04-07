@@ -1,7 +1,29 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart, useAuth } from '../store';
-import { Button } from '../components/ui/Button';
+
+// Luhn algorithm — validates credit card numbers
+const luhn = (num) => {
+  const digits = num.replace(/\D/g, '');
+  if (digits.length < 13) return false;
+  let sum = 0;
+  let alt = false;
+  for (let i = digits.length - 1; i >= 0; i--) {
+    let n = parseInt(digits[i], 10);
+    if (alt) { n *= 2; if (n > 9) n -= 9; }
+    sum += n;
+    alt = !alt;
+  }
+  return sum % 10 === 0;
+};
+
+const formatCardNumber = (value) =>
+  value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trimEnd();
+
+const formatExpiry = (value) => {
+  const digits = value.replace(/\D/g, '').slice(0, 4);
+  return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+};
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -9,6 +31,7 @@ const Payment = () => {
   const { user, isAuthenticated } = useAuth();
   const [isProcessing, setIsProcessing] = useState(false);
   const [step, setStep] = useState(isAuthenticated ? 1 : 0);
+  const [cardError, setCardError] = useState('');
   const [formData, setFormData] = useState({
     // Shipping
     fullName: user?.name || '',
@@ -17,7 +40,7 @@ const Payment = () => {
     city: '',
     postalCode: '',
     country: 'France',
-    // Payment
+    // Payment — never persisted, cleared after submit
     cardNumber: '',
     cardName: '',
     expiryDate: '',
@@ -31,11 +54,17 @@ const Payment = () => {
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
+    setCardError('');
+
+    if (!luhn(formData.cardNumber)) {
+      setCardError('Invalid card number.');
+      return;
+    }
+
     setIsProcessing(true);
-    
-    // Simulate payment processing
+    // Simulate payment — clear sensitive fields immediately
+    setFormData((prev) => ({ ...prev, cardNumber: '', cvv: '', expiryDate: '', cardName: '' }));
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    
     clearCart();
     setIsProcessing(false);
     setStep(3); // Success
@@ -211,16 +240,34 @@ const Payment = () => {
           <div className="grid lg:grid-cols-2 gap-8">
             <div>
               <h2 className="text-xl font-bold text-dark mb-4">Payment Information</h2>
+
+              {/* Demo disclaimer */}
+              <div className="p-3 mb-4 bg-yellow-50 border border-yellow-200 rounded-xl text-sm text-yellow-800 flex gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" x2="12" y1="9" y2="13" /><line x1="12" x2="12.01" y1="17" y2="17" />
+                </svg>
+                <span><strong>Demo mode.</strong> No real payment is processed. Do not enter real card details.</span>
+              </div>
+
+              {cardError && (
+                <div role="alert" className="p-3 mb-4 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
+                  {cardError}
+                </div>
+              )}
+
               <form onSubmit={handlePaymentSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="cardNumber">Card Number</label>
                   <input
                     id="cardNumber"
                     type="text"
+                    inputMode="numeric"
                     value={formData.cardNumber}
-                    onChange={(e) => setFormData({ ...formData, cardNumber: e.target.value })}
-                    className="input"
+                    onChange={(e) => setFormData({ ...formData, cardNumber: formatCardNumber(e.target.value) })}
+                    className="input font-mono tracking-widest"
                     placeholder="1234 5678 9012 3456"
+                    maxLength={19}
+                    autoComplete="cc-number"
                     required
                   />
                 </div>
@@ -233,6 +280,7 @@ const Payment = () => {
                     value={formData.cardName}
                     onChange={(e) => setFormData({ ...formData, cardName: e.target.value })}
                     className="input"
+                    autoComplete="cc-name"
                     required
                   />
                 </div>
@@ -243,10 +291,13 @@ const Payment = () => {
                     <input
                       id="expiryDate"
                       type="text"
+                      inputMode="numeric"
                       value={formData.expiryDate}
-                      onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
+                      onChange={(e) => setFormData({ ...formData, expiryDate: formatExpiry(e.target.value) })}
                       className="input"
                       placeholder="MM/YY"
+                      maxLength={5}
+                      autoComplete="cc-exp"
                       required
                     />
                   </div>
@@ -254,26 +305,30 @@ const Payment = () => {
                     <label htmlFor="cvv">CVV</label>
                     <input
                       id="cvv"
-                      type="text"
+                      type="password"
+                      inputMode="numeric"
                       value={formData.cvv}
-                      onChange={(e) => setFormData({ ...formData, cvv: e.target.value })}
+                      onChange={(e) => setFormData({ ...formData, cvv: e.target.value.replace(/\D/g, '').slice(0, 4) })}
                       className="input"
-                      placeholder="123"
+                      placeholder="•••"
+                      maxLength={4}
+                      autoComplete="cc-csc"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-            <button className="btn btn-outline flex-1" onClick={() => setStep(1)}>
-              Back
-            </button>
-            <button
-              className="btn btn-primary flex-1"
-              disabled={isProcessing}
-            >
-              {isProcessing ? 'Processing...' : `Pay $${getCartTotal().toFixed(2)}`}
-            </button>
+                  <button type="button" className="btn btn-outline flex-1" onClick={() => setStep(1)}>
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary flex-1"
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? 'Processing...' : `Pay $${getCartTotal().toFixed(2)}`}
+                  </button>
                 </div>
               </form>
             </div>
