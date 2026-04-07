@@ -4,6 +4,7 @@ import { useFeaturedProducts } from '../hooks/useProducts';
 import { useCategories } from '../hooks/useCategories';
 import { Hero } from '../components/ui/Hero';
 import { ProductCard } from '../components/ui/ProductCard';
+import PageMeta from '../components/ui/PageMeta';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,7 +13,8 @@ const Home = () => {
 
   return (
     <div className="bg-light">
-      <Hero 
+      <PageMeta description="Premium sneakers for the modern urban lifestyle. Shop the latest drops at Sneakara." />
+      <Hero
         onPrimaryClick={() => navigate('/shop')}
         onSecondaryClick={() => navigate('/shop/new')}
       />
@@ -25,12 +27,12 @@ const Home = () => {
             <button className="btn btn-ghost" onClick={() => navigate('/shop')}>
               View All
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14"/>
-                <path d="m12 5 7 7-7 7"/>
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
               </svg>
             </button>
           </div>
-          
+
           {productsLoading ? (
             <div className="products-grid">
               {[...Array(4)].map((_, i) => (
@@ -57,7 +59,7 @@ const Home = () => {
           <div className="section-header">
             <h2 className="section-title">Shop by Category</h2>
           </div>
-          
+
           {categoriesLoading ? (
             <div className="categories-grid">
               {[...Array(4)].map((_, i) => (
@@ -71,14 +73,14 @@ const Home = () => {
           ) : (
             <div className="categories-grid">
               {categories.map((category) => (
-                <div 
+                <div
                   key={category.id}
                   className="card cursor-pointer"
                   onClick={() => navigate(`/shop/${category.slug}`)}
                 >
                   <div className="relative" style={{ aspectRatio: '16/10' }}>
-                    <img 
-                      src={category.image} 
+                    <img
+                      src={category.image}
                       alt={category.name}
                       className="w-full h-full object-cover"
                     />
@@ -101,7 +103,7 @@ const Home = () => {
           <h2 className="text-3xl font-bold text-center text-white mb-12">
             Why Choose <span className="text-brand">SNEAKARA</span>?
           </h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: '🚀', title: 'Free Express Shipping', desc: 'Get your sneakers delivered within 24-48 hours, completely free.' },
@@ -131,8 +133,8 @@ const Home = () => {
               Subscribe to get special offers, free giveaways, and exclusive deals.
             </p>
             <form className="flex gap-2 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder="Enter your email"
                 className="input flex-1"
               />

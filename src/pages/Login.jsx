@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../cfg/firebase/firebaseCfg';
 import { useAuth } from '../store';
+import { Helmet } from 'react-helmet-async';
 
 const AUTH_ERRORS = {
   'auth/invalid-credential': 'Email ou mot de passe incorrect.',
@@ -36,9 +37,12 @@ const Login = () => {
   const [showPassword, setShowPw] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [attempts, setAttempts] = useState(0);
+  const [cooldown, setCooldown] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (cooldown > 0) return;
     setError('');
     setLoading(true);
     try {
@@ -50,7 +54,16 @@ const Login = () => {
       );
       navigate('/');
     } catch (err) {
-      setError(AUTH_ERRORS[err.code] || 'Une erreur est survenue.');
+      const next = attempts + 1;
+      setAttempts(next);
+      if (next >= 5) {
+        const secs = 30;
+        setCooldown(secs);
+        const t = setInterval(() => setCooldown((c) => { if (c <= 1) { clearInterval(t); return 0; } return c - 1; }), 1000);
+        setError(`Trop de tentatives. Réessayez dans ${secs}s.`);
+      } else {
+        setError(AUTH_ERRORS[err.code] || 'Une erreur est survenue.');
+      }
     } finally {
       setLoading(false);
     }
@@ -58,6 +71,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
+      <Helmet><title>Sign In · Sneakara</title></Helmet>
       <div className="absolute -top-20 -right-10 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="flex max-w-7xl mx-auto min-h-screen">
@@ -153,12 +167,12 @@ const Login = () => {
                   </div>
                 </div>
 
-                <button type="submit" disabled={loading} className="btn btn-primary w-full">
+                <button type="submit" disabled={loading || cooldown > 0} className="btn btn-primary w-full">
                   {loading ? (
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-spin">
                       <circle cx="12" cy="12" r="10" strokeDasharray="60" strokeDashoffset="30" />
                     </svg>
-                  ) : 'Sign In'}
+                  ) : cooldown > 0 ? `Réessayez dans ${cooldown}s` : 'Sign In'}
                 </button>
               </form>
 

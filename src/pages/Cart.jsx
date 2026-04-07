@@ -1,16 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../store';
+import PageMeta from '../components/ui/PageMeta';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { 
-    items, 
-    updateCartQuantity, 
+  const {
+    items,
+    updateCartQuantity,
     removeFromCart,
     getCartSubtotal,
     getCartShipping,
-    getCartTotal 
+    getCartTotal
   } = useCart();
 
   const subtotal = getCartSubtotal();
@@ -19,7 +20,8 @@ const Cart = () => {
 
   return (
     <div className="bg-light min-h-screen">
-      {/* Header */}
+      <PageMeta title="Your Cart" />
+      {/* Header */}}
       <div className="bg-brand-dark py-16 pt-24 text-white">
         <div className="container">
           <h1 className="text-4xl font-extrabold">Shopping Cart</h1>
@@ -47,14 +49,14 @@ const Cart = () => {
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
-                <div 
+                <div
                   key={`${item.id}-${item.size}-${item.color}`}
                   className="card flex gap-4 p-4"
                 >
                   {/* Product Image */}
                   <div className="w-28 h-28 flex-shrink-0">
-                    <img 
-                      src={item.image} 
+                    <img
+                      src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover rounded-lg"
                     />
@@ -79,8 +81,8 @@ const Cart = () => {
                         className="w-8 h-8 rounded-full bg-gray-100 text-gray hover:bg-error hover:text-white transition-colors flex items-center justify-center"
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M18 6 6 18"/>
-                          <path d="m6 6 12 12"/>
+                          <path d="M18 6 6 18" />
+                          <path d="m6 6 12 12" />
                         </svg>
                       </button>
                     </div>
@@ -88,7 +90,7 @@ const Cart = () => {
                     <div className="flex justify-between items-center mt-4">
                       {/* Quantity Controls */}
                       <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
-                        <button 
+                        <button
                           onClick={() => updateCartQuantity(item.id, item.size, item.color, Math.max(1, item.quantity - 1))}
                           className="w-9 h-9 bg-white text-dark hover:bg-gray-100 transition-colors"
                         >
@@ -97,7 +99,7 @@ const Cart = () => {
                         <span className="w-10 text-center font-semibold">
                           {item.quantity}
                         </span>
-                        <button 
+                        <button
                           onClick={() => updateCartQuantity(item.id, item.size, item.color, item.quantity + 1)}
                           className="w-9 h-9 bg-white text-dark hover:bg-gray-100 transition-colors"
                         >
@@ -114,13 +116,13 @@ const Cart = () => {
                 </div>
               ))}
 
-              <button 
+              <button
                 onClick={() => navigate('/shop')}
                 className="btn btn-outline mt-4"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 12H5"/>
-                  <path d="m12 19-7-7 7-7"/>
+                  <path d="M19 12H5" />
+                  <path d="m12 19-7-7 7-7" />
                 </svg>
                 Continue Shopping
               </button>
@@ -158,7 +160,7 @@ const Cart = () => {
                   </span>
                 </div>
 
-                <button 
+                <button
                   onClick={() => navigate('/checkout')}
                   className="btn btn-primary w-full"
                 >
@@ -167,7 +169,7 @@ const Cart = () => {
 
                 <div className="flex justify-center gap-2 mt-4 text-sm text-gray">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-success">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                   </svg>
                   <span>Secure checkout</span>
                 </div>
