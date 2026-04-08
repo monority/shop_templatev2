@@ -1,5 +1,4 @@
 import { signInWithEmailAndPassword, fetchSignInMethodsForEmail, createUserWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../cfg/firebase/firebaseCfg';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +32,6 @@ const AuthManagement = () => {
     };
 
     const checkUser = async (data) => {
-        console.log('[checkUser] called', data);
         try {
             const email = data.get("email");
             const emailSecurity = email.toLowerCase();
@@ -49,7 +47,6 @@ const AuthManagement = () => {
         }
     };
     const loginUser = async (data) => {
-        console.log('[loginUser] called', data);
         try {
             const formData = formDataToObject(data);
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
@@ -69,7 +66,6 @@ const AuthManagement = () => {
     };
 
     const registerUser = async (data) => {
-        console.log('[registerUser] called', data);
         try {
             const formData = formDataToObject(data);
             const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);

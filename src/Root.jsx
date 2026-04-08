@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import AuthGuard from './cfg/guards/AuthGuard';

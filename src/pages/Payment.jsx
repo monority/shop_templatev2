@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart, useAuth } from '../store';
+import { formatPrice } from '../utils/format';
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 const luhn = (num) => {
@@ -24,7 +25,7 @@ const formatExpiry = (v) => {
   return d.length > 2 ? `${d.slice(0, 2)}/${d.slice(2)}` : d;
 };
 
-// ── OrderSummary — extrait pour éviter la duplication ────────────────────────
+// ── OrderSummary ──────────────────────────────────────────────────────────────
 const OrderSummary = ({ items, getCartSubtotal, getCartShipping, getCartTotal }) => (
   <div className="card p-6 sticky top-24">
     <h3 className="font-semibold text-lg mb-4 text-dark">Order Summary</h3>
@@ -36,21 +37,21 @@ const OrderSummary = ({ items, getCartSubtotal, getCartShipping, getCartTotal })
             <p className="text-gray">{item.brand} · Size {item.size}</p>
             <p className="text-gray">Qty: {item.quantity}</p>
           </div>
-          <p className="font-medium text-dark">${(item.price * item.quantity).toFixed(2)}</p>
+          <p className="font-medium text-dark">{formatPrice(item.price * item.quantity)}</p>
         </div>
       ))}
     </div>
     <div className="flex justify-between py-2 border-b border-gray-100">
       <span className="text-gray">Subtotal</span>
-      <span className="font-semibold">${getCartSubtotal().toFixed(2)}</span>
+      <span className="font-semibold">{formatPrice(getCartSubtotal())}</span>
     </div>
     <div className="flex justify-between py-2 border-b border-gray-100">
       <span className="text-gray">Shipping</span>
-      <span className="font-semibold">{getCartShipping() === 0 ? 'Free' : `$${getCartShipping().toFixed(2)}`}</span>
+      <span className="font-semibold">{getCartShipping() === 0 ? 'Free' : formatPrice(getCartShipping())}</span>
     </div>
     <div className="flex justify-between pt-4">
       <span className="font-bold text-dark">Total</span>
-      <span className="font-bold text-brand text-xl">${getCartTotal().toFixed(2)}</span>
+      <span className="font-bold text-brand text-xl">{formatPrice(getCartTotal())}</span>
     </div>
   </div>
 );
@@ -64,7 +65,7 @@ const Stepper = ({ current }) => (
       const step = i + 1;
       const active = current >= step;
       return (
-        <React.Fragment key={label}>
+        <Fragment key={label}>
           {i > 0 && <div className="flex-1 h-px bg-gray-200" />}
           <div className={`flex items-center gap-2 ${active ? 'text-brand' : 'text-gray'}`}>
             <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${active ? 'bg-brand text-white' : 'bg-gray-200 text-gray-500'}`}>
@@ -72,7 +73,7 @@ const Stepper = ({ current }) => (
             </span>
             <span className="text-sm font-medium hidden sm:block">{label}</span>
           </div>
-        </React.Fragment>
+        </Fragment>
       );
     })}
   </div>
@@ -141,7 +142,6 @@ const Payment = () => {
         <h1 className="text-3xl font-bold text-dark mb-8">Checkout</h1>
         <Stepper current={step} />
 
-        {/* Step 0 — not authenticated */}
         {step === 0 && (
           <div className="max-w-md mx-auto text-center">
             <p className="text-gray mb-4">Please sign in to continue</p>
@@ -151,7 +151,6 @@ const Payment = () => {
           </div>
         )}
 
-        {/* Step 1 — Shipping */}
         {step === 1 && (
           <div className="grid lg:grid-cols-2 gap-8">
             <div>
@@ -192,7 +191,6 @@ const Payment = () => {
           </div>
         )}
 
-        {/* Step 2 — Payment */}
         {step === 2 && (
           <div className="grid lg:grid-cols-2 gap-8">
             <div>
@@ -207,7 +205,7 @@ const Payment = () => {
               </div>
 
               {cardError && (
-                <div role="alert" className="p-3 mb-4 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700" aria-live="assertive">
+                <div role="alert" className="p-3 mb-4 bg-error/10 border border-error/30 rounded-xl text-sm text-error" aria-live="assertive">
                   {cardError}
                 </div>
               )}
@@ -254,7 +252,7 @@ const Payment = () => {
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-spin" aria-hidden="true">
                         <circle cx="12" cy="12" r="10" strokeDasharray="60" strokeDashoffset="30"/>
                       </svg>
-                    ) : `Pay $${getCartTotal().toFixed(2)}`}
+                    ) : `Pay ${formatPrice(getCartTotal())}`}
                   </button>
                 </div>
               </form>
@@ -263,7 +261,6 @@ const Payment = () => {
           </div>
         )}
 
-        {/* Step 3 — Success */}
         {step === 3 && (
           <div className="text-center py-16">
             <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-success flex items-center justify-center" role="status" aria-live="polite">

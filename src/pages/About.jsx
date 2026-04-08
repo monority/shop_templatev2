@@ -1,8 +1,12 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import PageMeta from '../components/ui/PageMeta';
 
 const About = () => (
     <div className="min-h-screen bg-light">
+      <PageMeta
+        title="About Us"
+        description="Born in the streets, built for the future. Sneakara makes premium sneaker culture accessible to everyone."
+      />
         {/* Hero */}
         <div className="bg-dark text-white py-24 px-8 text-center">
             <h1 className="text-5xl font-extrabold tracking-tight mb-4">
@@ -14,9 +18,8 @@ const About = () => (
         </div>
 
         <div className="container max-w-4xl mx-auto px-6 py-20 space-y-16">
-            {/* Mission */}
-            <section>
-                <h2 className="text-3xl font-bold text-dark mb-4">Our Mission</h2>
+        <section aria-labelledby="mission">
+                <h2 id="mission" className="text-3xl font-bold text-dark mb-4">Our Mission</h2>
                 <p className="text-gray-600 text-lg leading-relaxed">
                     Sneakara was founded with a single vision: make premium sneaker culture accessible to everyone.
                     We believe great footwear isn't a luxury — it's a statement. Every pair we carry is curated for
@@ -34,9 +37,8 @@ const About = () => (
                 ))}
             </section>
 
-            {/* Story */}
-            <section>
-                <h2 className="text-3xl font-bold text-dark mb-4">Our Story</h2>
+        <section aria-labelledby="story">
+                <h2 id="story" className="text-3xl font-bold text-dark mb-4">Our Story</h2>
                 <p className="text-gray-600 text-lg leading-relaxed mb-4">
                     What started as a small pop-up in Paris has grown into a destination for sneaker enthusiasts
                     across Europe. Our team of passionate collectors handpicks every model — from classic silhouettes
@@ -48,9 +50,8 @@ const About = () => (
                 </p>
             </section>
 
-            {/* Values */}
-            <section>
-                <h2 className="text-3xl font-bold text-dark mb-8">What We Stand For</h2>
+        <section aria-labelledby="values">
+                <h2 id="values" className="text-3xl font-bold text-dark mb-8">What We Stand For</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[
                         { icon: '🎯', title: 'Authenticity', text: 'Every item is 100% verified and genuine.' },
@@ -58,7 +59,7 @@ const About = () => (
                         { icon: '♻️', title: 'Responsibility', text: 'Committed to a more sustainable future.' },
                     ].map(({ icon, title, text }) => (
                         <div key={title} className="card p-6">
-                            <div className="text-3xl mb-3">{icon}</div>
+                            <div className="text-3xl mb-3" aria-hidden="true">{icon}</div>
                             <h3 className="font-bold text-dark text-lg mb-2">{title}</h3>
                             <p className="text-gray-500">{text}</p>
                         </div>

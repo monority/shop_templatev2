@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import PageMeta from '../../components/ui/PageMeta';
 
 const FAQS = [

@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Composant de base — barre de skeleton animée.
  */

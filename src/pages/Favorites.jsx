@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFavorites } from '../store';
 import { ProductCard } from '../components/ui/ProductCard';
@@ -82,7 +81,7 @@ const Favorites = () => {
         {/* Footer Promo */}
         <div className="card bg-brand/10 border-brand/20">
           <div className="card-body flex items-center gap-4">
-            <span className="text-2xl">💡</span>
+            <span className="text-2xl" aria-hidden="true">💡</span>
             <p className="text-dark">
               <strong>Pro tip:</strong> Favorite items often sell out quickly. Add them to your cart to secure your size!
             </p>

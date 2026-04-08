@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
+import PageMeta from '../components/ui/PageMeta';
 
 const ROLES = [
     { title: 'Senior Frontend Engineer', team: 'Engineering', location: 'Paris / Remote', type: 'Full-time' },
@@ -11,9 +12,14 @@ const ROLES = [
 
 const Careers = () => {
     const [open, setOpen] = useState(null);
+    const toggle = useCallback((i) => setOpen((prev) => prev === i ? null : i), []);
 
     return (
         <div className="min-h-screen bg-light">
+          <PageMeta
+            title="Careers"
+            description="Join the Sneakara team. Help us build the future of sneaker culture."
+          />
             {/* Hero */}
             <div className="bg-dark text-white py-24 px-8 text-center">
                 <h1 className="text-5xl font-extrabold tracking-tight mb-4">Join the Team</h1>
@@ -34,7 +40,7 @@ const Careers = () => {
                             { icon: '👟', title: 'Sneaker Perks', text: 'Exclusive access to drops and staff discounts.' },
                         ].map(({ icon, title, text }) => (
                             <div key={title} className="card p-6 flex gap-4">
-                                <span className="text-3xl">{icon}</span>
+                                <span className="text-3xl" aria-hidden="true">{icon}</span>
                                 <div>
                                     <h3 className="font-bold text-dark mb-1">{title}</h3>
                                     <p className="text-gray-500 text-sm">{text}</p>
@@ -51,7 +57,8 @@ const Careers = () => {
                         {ROLES.map((role, i) => (
                             <div key={i} className="card overflow-hidden">
                                 <button
-                                    onClick={() => setOpen(open === i ? null : i)}
+                                    onClick={() => toggle(i)}
+                                    aria-expanded={open === i}
                                     className="w-full flex items-center justify-between p-5 text-left"
                                 >
                                     <div>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Nike Air Max 90 — fond blanc neutre, mix-blend-mode supprime le fond visuellement
 const DEFAULT_IMAGE = 'img/heroshow.webp';
 

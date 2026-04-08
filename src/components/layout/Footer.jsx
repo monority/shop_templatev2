@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Constante hors composant — pas recréée à chaque render
