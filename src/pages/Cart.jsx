@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../store';
 import PageMeta from '../components/ui/PageMeta';
 import { formatPrice } from '../utils/format';
+import useImageFallback from '../hooks/useImageFallback';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Cart = () => {
     getCartShipping,
     getCartTotal,
   } = useCart();
+  const handleImgError = useImageFallback();
 
   const subtotal = getCartSubtotal();
   const shipping = getCartShipping();
@@ -56,6 +58,7 @@ const Cart = () => {
                       alt={item.name}
                       className="w-full h-full object-cover rounded-lg"
                       loading="lazy"
+                      onError={handleImgError}
                     />
                   </div>
 

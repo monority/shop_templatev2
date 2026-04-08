@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect, useRef } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import AuthGuard from './cfg/guards/AuthGuard';
@@ -6,6 +6,7 @@ import UnAuthGuard from './cfg/guards/UnAuthGuard';
 import { useAppStore } from './store';
 import Toast from './components/ui/Toast';
 import ErrorBoundary from './components/ui/ErrorBoundary';
+import { ThemeProvider } from './cfg/theme/ThemeProvider';
 
 // Auth layout — no Nav/Footer
 const AuthLayout = () => (
@@ -48,46 +49,52 @@ const PageLoader = () => (
 
 const Root = () => {
   const initializeAuth = useAppStore((state) => state.initializeAuth);
+  const unsubRef = useRef(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { const unsub = initializeAuth(); return () => unsub?.(); }, []);
+  // Run once on mount — initializeAuth is a stable Zustand action
+  useEffect(() => {
+    unsubRef.current = initializeAuth();
+    return () => unsubRef.current?.();
+  }, []); // mount only
 
   return (
     <ErrorBoundary>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-        {/* Auth routes — no Nav/Footer */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<UnAuthGuard><Login /></UnAuthGuard>} />
-          <Route path="/register" element={<UnAuthGuard><Register /></UnAuthGuard>} />
-        </Route>
+      <ThemeProvider>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+          {/* Auth routes — no Nav/Footer */}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<UnAuthGuard><Login /></UnAuthGuard>} />
+            <Route path="/register" element={<UnAuthGuard><Register /></UnAuthGuard>} />
+          </Route>
 
-        {/* Main routes — full Layout */}
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/:category" element={<Shop />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<AuthGuard><Payment /></AuthGuard>} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
-          <Route path="/about" element={<About />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/press" element={<Press />} />
-          <Route path="/sustainability" element={<Sustainability />} />
-          <Route path="/help/size-guide" element={<SizeGuide />} />
-          <Route path="/help/shipping" element={<Shipping />} />
-          <Route path="/help/returns" element={<Returns />} />
-          <Route path="/help/track" element={<TrackOrder />} />
-          <Route path="/help/faq" element={<FAQ />} />
-          <Route path="/legal/privacy" element={<Privacy />} />
-          <Route path="/legal/terms" element={<Terms />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-        </Routes>
-      </Suspense>
+          {/* Main routes — full Layout */}
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/:category" element={<Shop />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<AuthGuard><Payment /></AuthGuard>} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
+            <Route path="/about" element={<About />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/sustainability" element={<Sustainability />} />
+            <Route path="/help/size-guide" element={<SizeGuide />} />
+            <Route path="/help/shipping" element={<Shipping />} />
+            <Route path="/help/returns" element={<Returns />} />
+            <Route path="/help/track" element={<TrackOrder />} />
+            <Route path="/help/faq" element={<FAQ />} />
+            <Route path="/legal/privacy" element={<Privacy />} />
+            <Route path="/legal/terms" element={<Terms />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+          </Routes>
+        </Suspense>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 };

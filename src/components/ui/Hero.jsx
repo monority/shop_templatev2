@@ -1,15 +1,22 @@
 // Nike Air Max 90 — fond blanc neutre, mix-blend-mode supprime le fond visuellement
-const DEFAULT_IMAGE = 'img/heroshow.webp';
+const DEFAULT_IMAGE  = 'img/heroshow.webp';
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80';
+
+const handleHeroError = (e) => {
+  if (e.currentTarget.src !== FALLBACK_IMAGE) {
+    e.currentTarget.src = FALLBACK_IMAGE;
+  }
+};
 
 /**
  * Section Hero — LCP optimisé (loading eager, alt descriptif, aria).
  */
 const Hero = ({
-  eyebrow        = 'NEW COLLECTION 2026',
-  title          = 'Step Into The',
-  titleHighlight = 'Future',
-  description    = 'Discover the latest premium sneakers designed for ultimate style, comfort, and performance.',
-  primaryAction  = 'Shop Now',
+  eyebrow         = 'NEW COLLECTION 2026',
+  title           = 'Step Into The',
+  titleHighlight  = 'Future',
+  description     = 'Discover the latest premium sneakers designed for ultimate style, comfort, and performance.',
+  primaryAction   = 'Shop Now',
   secondaryAction = 'View Collection',
   onPrimaryClick,
   onSecondaryClick,
@@ -41,13 +48,18 @@ const Hero = ({
 
         {/* Image — eager pour LCP, mix-blend-mode:multiply efface le fond blanc */}
         <div className="relative flex items-center justify-center" aria-hidden="true">
-          <div className="absolute w-96 h-96" />
+          <div className="absolute w-96 h-96 bg-brand/20 rounded-full blur-3xl" />
           <img
             src={imageSrc}
             alt={alt}
             className="relative w-full max-w-lg animate-fade-in-up"
+            style={{
+              mixBlendMode: 'multiply',
+              filter: 'drop-shadow(0 24px 48px rgba(99,102,241,0.18))',
+            }}
             loading="eager"
             fetchPriority="high"
+            onError={handleHeroError}
           />
         </div>
       </div>

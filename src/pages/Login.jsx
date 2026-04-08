@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -59,9 +59,11 @@ const Login = () => {
     return 0;
   });
 
-  // Resume cooldown countdown if page is refreshed mid-cooldown
+  const initialCooldown = useRef(cooldown);
+
+  // Resume cooldown countdown on mount only (page refresh mid-cooldown)
   useEffect(() => {
-    if (cooldown <= 0) return;
+    if (initialCooldown.current <= 0) return;
     const t = setInterval(() => {
       setCooldown((c) => {
         if (c <= 1) {
@@ -74,7 +76,7 @@ const Login = () => {
       });
     }, 1000);
     return () => clearInterval(t);
-  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // mount only — intentional
 
   const handleSubmit = async (e) => {
     e.preventDefault();
