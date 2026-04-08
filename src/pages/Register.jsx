@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../cfg/firebase/firebaseCfg';
 import { useAuth } from '../store';
-import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/ui/PageMeta';
 
 const AUTH_ERRORS = {
   'auth/email-already-in-use': 'Cet email est déjà utilisé.',
@@ -26,7 +26,7 @@ const pwStrength = (pw) => {
 };
 
 const STRENGTH_LABELS = ['', 'Weak', 'Fair', 'Good', 'Strong'];
-const STRENGTH_COLORS = ['', 'bg-red-500', 'bg-orange-400', 'bg-yellow-400', 'bg-green-500'];
+const STRENGTH_COLORS = ['', 'bg-error', 'bg-warning', 'bg-yellow-400', 'bg-success'];
 
 const EyeIcon = ({ open }) => open ? (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -100,11 +100,9 @@ const Register = () => {
 
   return (
     <>
-      <Helmet><title>Create Account · Sneakara</title></Helmet>
       <div className="min-h-screen bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
+        <PageMeta title="Create Account" description="Join Sneakara — premium sneakers for the modern urban lifestyle." noIndex />
         <div className="absolute -top-20 -right-10 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none" />
-
-        {/* Bouton retour accueil */}
         <button
           onClick={() => navigate('/')}
           className="absolute top-5 left-5 z-20 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-200 text-sm font-semibold text-dark hover:bg-white hover:shadow-md transition-all"
@@ -138,7 +136,7 @@ const Register = () => {
               <div className="space-y-3">
                 {[['🔥', 'Exclusive drops & early access'], ['🏆', 'Rewards program & VIP perks'], ['🚚', 'Free shipping on orders over $200']].map(([icon, text]) => (
                   <div key={text} className="flex items-center gap-4 p-4 bg-white/40 rounded-xl">
-                    <span className="text-2xl">{icon}</span>
+                  <span className="text-2xl" aria-hidden="true">{icon}</span>
                     <span className="text-dark font-medium">{text}</span>
                   </div>
                 ))}

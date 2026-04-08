@@ -30,6 +30,11 @@ export default defineConfig({
     // Minification agressive
     minify: 'esbuild',
 
+    // Supprime les console.log en production
+    esbuildOptions: {
+      drop: ['console', 'debugger'],
+    },
+
     // Source maps en prod désactivées (sécurité)
     sourcemap: false,
 

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../cfg/firebase/firebaseCfg';
 import { useAuth } from '../store';
-import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/ui/PageMeta';
 
 const AUTH_ERRORS = {
   'auth/invalid-credential': 'Email ou mot de passe incorrect.',
@@ -118,7 +118,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
-      <Helmet><title>Sign In · Sneakara</title></Helmet>
+      <PageMeta title="Sign In" description="Sign in to your Sneakara account." noIndex />
       <div className="absolute -top-20 -right-10 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Bouton retour accueil */}
@@ -155,7 +155,7 @@ const Login = () => {
             <div className="space-y-3">
               {[['🔥', 'Exclusive drops & early access'], ['🏆', 'Rewards program & VIP perks'], ['🚚', 'Free shipping on orders over $200']].map(([icon, text]) => (
                 <div key={text} className="flex items-center gap-4 p-4 bg-white/40 rounded-xl">
-                  <span className="text-2xl">{icon}</span>
+                  <span className="text-2xl" aria-hidden="true">{icon}</span>
                   <span className="text-dark font-medium">{text}</span>
                 </div>
               ))}

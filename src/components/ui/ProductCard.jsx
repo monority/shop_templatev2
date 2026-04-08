@@ -1,6 +1,7 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart, useFavorites } from '../../store';
+import { formatPrice } from '../../utils/format';
 
 const HeartIcon = ({ filled }) => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -44,7 +45,7 @@ const ProductCard = memo(({ product, showAddToCart = true }) => {
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleClick()}
       role="button"
       tabIndex={0}
-      aria-label={`${name} par ${brand} — $${price}`}
+      aria-label={`${name} par ${brand} — ${formatPrice(price)}`}
     >
       {/* Image */}
       <div className="relative overflow-hidden">
@@ -100,9 +101,9 @@ const ProductCard = memo(({ product, showAddToCart = true }) => {
         </div>
 
         <div className="flex items-center gap-2 mt-3">
-          <span className="font-bold text-dark">${price}</span>
+          <span className="font-bold text-dark">{formatPrice(price)}</span>
           {originalPrice && (
-            <span className="text-sm text-gray line-through" aria-label={`Prix original : $${originalPrice}`}>${originalPrice}</span>
+            <span className="text-sm text-gray line-through" aria-label={`Prix original : ${formatPrice(originalPrice)}`}>{formatPrice(originalPrice)}</span>
           )}
         </div>
       </div>

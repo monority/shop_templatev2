@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useProduct } from '../hooks/useProducts';
 import { useCart, useFavorites } from '../store';
 import PageMeta from '../components/ui/PageMeta';
 import { ProductDetailSkeleton } from '../components/ui/Skeleton';
+import { formatPrice } from '../utils/format';
 
 const Product = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const Product = () => {
     }
   }, [product]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     if (!product || !selectedSize) return;
     addToCart({
       id: product.id,
@@ -40,7 +41,7 @@ const Product = () => {
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
-  };
+  }, [product, selectedSize, selectedColor, mainImage, quantity, addToCart]);
 
   if (loading) {
     return (
@@ -143,11 +144,11 @@ const Product = () => {
             {/* Price */}
             <div className="flex items-baseline gap-4 mb-6">
               <span className="text-3xl font-extrabold text-dark">
-                ${product.price}
+                {formatPrice(product.price)}
               </span>
               {product.originalPrice && (
                 <span className="text-xl text-gray line-through">
-                  ${product.originalPrice}
+                  {formatPrice(product.originalPrice)}
                 </span>
               )}
               {product.discount > 0 && (
@@ -235,7 +236,7 @@ const Product = () => {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 6 9 17l-5-5" /></svg>
                     Added!
                   </span>
-                ) : `Add to Cart — $${product.price * quantity}`}
+                ) : `Add to Cart — ${formatPrice(product.price * quantity)}`}
               </button>
 
               {/* Wishlist */}

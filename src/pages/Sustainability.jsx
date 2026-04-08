@@ -1,8 +1,12 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import PageMeta from '../components/ui/PageMeta';
 
 const Sustainability = () => (
     <div className="min-h-screen bg-light">
+      <PageMeta
+        title="Sustainability"
+        description="Style shouldn't cost the planet. Our commitment to eco packaging, sustainable brands, and circular fashion."
+      />
         {/* Hero */}
         <div className="bg-dark text-white py-24 px-8 text-center">
             <h1 className="text-5xl font-extrabold tracking-tight mb-4">Sustainability</h1>

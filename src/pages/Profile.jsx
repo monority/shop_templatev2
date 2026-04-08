@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, useCart } from '../store';
 import PageMeta from '../components/ui/PageMeta';
+import { formatPrice, formatDate } from '../utils/format';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated, setUser } = useAuth();
+  const { user, isAuthenticated, setUser, logout } = useAuth();
   const { items } = useCart();
 
   const [activeTab, setActiveTab] = useState('overview');
@@ -42,11 +43,11 @@ const Profile = () => {
     );
   }
 
-  const handleSaveProfile = (e) => {
+  const handleSaveProfile = useCallback((e) => {
     e.preventDefault();
     setUser({ ...user, ...formData });
     setIsEditing(false);
-  };
+  }, [user, formData, setUser]);
 
   const recentOrders = [
     { id: '#ORD-001', date: '2026-03-15', total: 299.99, status: 'Delivered', items: 2 },
@@ -235,10 +236,10 @@ const Profile = () => {
                       >
                         <div>
                           <p className="font-semibold text-dark">{order.id}</p>
-                          <p className="text-sm text-gray">{order.date} • {order.items} items</p>
+                          <p className="text-sm text-gray">{formatDate(order.date)} • {order.items} items</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold text-dark">${order.total.toFixed(2)}</p>
+                          <p className="font-semibold text-dark">{formatPrice(order.total)}</p>
                           <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'Delivered' ? 'bg-success/10 text-success' :
                               order.status === 'Shipped' ? 'bg-brand/10 text-brand' :
                                 'bg-warning/10 text-warning'
@@ -272,11 +273,11 @@ const Profile = () => {
                         </div>
                         <div>
                           <p className="font-semibold text-dark">{order.id}</p>
-                          <p className="text-sm text-gray">{order.date} • {order.items} items</p>
+                          <p className="text-sm text-gray">{formatDate(order.date)} • {order.items} items</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-dark">${order.total.toFixed(2)}</p>
+                        <p className="font-semibold text-dark">{formatPrice(order.total)}</p>
                         <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'Delivered' ? 'bg-success/10 text-success' :
                             order.status === 'Shipped' ? 'bg-brand/10 text-brand' :
                               'bg-warning/10 text-warning'
@@ -332,7 +333,7 @@ const Profile = () => {
                     </button>
                     <button
                       className="w-full flex items-center justify-between p-4 bg-error/5 rounded-xl hover:bg-error/10 transition-colors text-error"
-                      onClick={() => setUser(null)}
+                      onClick={() => logout()}
                     >
                       <div>
                         <p className="font-medium">Sign Out</p>

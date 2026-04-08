@@ -1,4 +1,4 @@
-import React from 'react';
+import PageMeta from '../components/ui/PageMeta';
 
 const COVERAGE = [
     { outlet: 'Hypebeast', quote: 'Sneakara is redefining the European sneaker retail experience.', date: 'March 2025' },
@@ -9,6 +9,10 @@ const COVERAGE = [
 
 const Press = () => (
     <div className="min-h-screen bg-light">
+      <PageMeta
+        title="Press & Media"
+        description="What the world is saying about Sneakara. Press coverage, media kit, and contact."
+      />
         {/* Hero */}
         <div className="bg-dark text-white py-24 px-8 text-center">
             <h1 className="text-5xl font-extrabold tracking-tight mb-4">Press & Media</h1>

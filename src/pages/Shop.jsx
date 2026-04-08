@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { ProductCard } from '../components/ui/ProductCard';
@@ -100,7 +100,7 @@ const Shop = () => {
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-2xl font-bold mb-2">No products found</h3>
               <p className="text-gray mb-6">Try adjusting your filters or browse all products</p>
-              <button className="btn btn-primary" onClick={() => setFilter('all')}>
+              <button className="btn btn-primary" onClick={() => navigate('/shop')}>
                 View All Products
               </button>
             </div>

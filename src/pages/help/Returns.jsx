@@ -1,4 +1,3 @@
-import React from 'react';
 import PageMeta from '../../components/ui/PageMeta';
 
 const Returns = () => (
