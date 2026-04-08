@@ -1,8 +1,3 @@
-/**
- * Product Service
- * Business logic for products
- */
-
 import {
   getAllProducts,
   getProductById,
@@ -10,65 +5,32 @@ import {
   getFeaturedProducts,
   getNewArrivals,
   getProductsOnSale,
-  searchProducts
+  searchProducts,
 } from '../data/products';
 
 export const productService = {
-  /**
-   * Get all products
-   */
-  getAll: () => {
-    return Promise.resolve(getAllProducts());
-  },
+  getAll:        ()         => Promise.resolve(getAllProducts()),
+  getFeatured:   ()         => Promise.resolve(getFeaturedProducts()),
+  getNewArrivals:()         => Promise.resolve(getNewArrivals()),
+  getOnSale:     ()         => Promise.resolve(getProductsOnSale()),
 
-  /**
-   * Get product by ID
-   */
   getById: (id) => {
     const product = getProductById(id);
-    if (!product) {
-      return Promise.reject(new Error('Product not found'));
-    }
-    return Promise.resolve(product);
+    return product
+      ? Promise.resolve(product)
+      : Promise.reject(new Error(`Produit introuvable (id: ${id})`));
   },
 
-  /**
-   * Get products by category
-   * Handles special slugs: new, sale, kids (all)
-   */
   getByCategory: (category) => {
-    if (category === 'new') return Promise.resolve(getNewArrivals());
+    if (category === 'new')  return Promise.resolve(getNewArrivals());
     if (category === 'sale') return Promise.resolve(getProductsOnSale());
     return Promise.resolve(getProductsByCategory(category));
   },
 
-  /**
-   * Get featured products
-   */
-  getFeatured: () => {
-    return Promise.resolve(getFeaturedProducts());
-  },
-
-  /**
-   * Get new arrivals
-   */
-  getNewArrivals: () => {
-    return Promise.resolve(getNewArrivals());
-  },
-
-  /**
-   * Get products on sale
-   */
-  getOnSale: () => {
-    return Promise.resolve(getProductsOnSale());
-  },
-
-  /**
-   * Search products
-   */
   search: (query) => {
-    return Promise.resolve(searchProducts(query));
-  }
+    if (!query?.trim()) return Promise.resolve([]);
+    return Promise.resolve(searchProducts(query.trim().toLowerCase()));
+  },
 };
 
 export default productService;

@@ -149,6 +149,7 @@ const Profile = () => {
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             className="input"
+                            autoComplete="name"
                           />
                         </div>
                         <div className="form-group">
@@ -158,6 +159,7 @@ const Profile = () => {
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             className="input"
+                            autoComplete="email"
                           />
                         </div>
                         <div className="form-group">
@@ -167,6 +169,7 @@ const Profile = () => {
                             value={formData.phone}
                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                             className="input"
+                            autoComplete="tel"
                           />
                         </div>
                         <div className="form-group">
@@ -176,6 +179,7 @@ const Profile = () => {
                             value={formData.address}
                             onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                             className="input"
+                            autoComplete="street-address"
                           />
                         </div>
                       </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { ProductCard } from '../components/ui/ProductCard';
 import PageMeta from '../components/ui/PageMeta';
+import { ProductGridSkeleton } from '../components/ui/Skeleton';
 
 const Shop = () => {
   const { category } = useParams();
@@ -89,13 +90,9 @@ const Shop = () => {
 
           {/* Products Grid */}
           {loading ? (
-            <div className="products-grid">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="card animate-pulse" style={{ height: '300px' }} />
-              ))}
-            </div>
+            <ProductGridSkeleton count={8} />
           ) : error ? (
-            <div className="text-center py-16">
+            <div className="text-center py-16" role="alert">
               <p className="text-gray">Error loading products</p>
             </div>
           ) : filteredProducts.length === 0 ? (
