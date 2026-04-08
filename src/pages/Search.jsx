@@ -1,61 +1,101 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSearchProducts } from '../hooks/useProducts';
 import { ProductCard } from '../components/ui/ProductCard';
+import PageMeta from '../components/ui/PageMeta';
+import { ProductGridSkeleton } from '../components/ui/Skeleton';
 
+// ── Constantes ────────────────────────────────────────────────────────────────
+const PRICE_RANGES = [
+  { value: 'all',      label: 'All Prices' },
+  { value: 'under50',  label: 'Under $50' },
+  { value: '50to100',  label: '$50 – $100' },
+  { value: '100to200', label: '$100 – $200' },
+  { value: 'over200',  label: 'Over $200' },
+];
+
+const SORT_OPTIONS = [
+  { value: 'relevance',  label: 'Relevance' },
+  { value: 'price-low',  label: 'Price: Low to High' },
+  { value: 'price-high', label: 'Price: High to Low' },
+  { value: 'newest',     label: 'Newest First' },
+  { value: 'rating',     label: 'Top Rated' },
+];
+
+const filterByPrice = (product, range) => {
+  const price = product.price;
+  switch (range) {
+    case 'under50':  return price < 50;
+    case '50to100':  return price >= 50 && price <= 100;
+    case '100to200': return price > 100 && price <= 200;
+    case 'over200':  return price > 200;
+    default:         return true;
+  }
+};
+
+const sortProducts = (products, sortBy) => [...products].sort((a, b) => {
+  switch (sortBy) {
+    case 'price-low':  return a.price - b.price;
+    case 'price-high': return b.price - a.price;
+    case 'newest':     return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+    case 'rating':     return (b.rating || 0) - (a.rating || 0);
+    default:           return 0;
+  }
+});
+
+// ── Composant ─────────────────────────────────────────────────────────────────
 const Search = () => {
   const navigate = useNavigate();
-  const [query, setQuery] = useState('');
-  const [debouncedQuery, setDebouncedQuery] = useState('');
-  const [filters, setFilters] = useState({
-    category: 'all',
-    priceRange: 'all',
-    sortBy: 'relevance'
-  });
-  
-  const { products, loading, error } = useSearchProducts(debouncedQuery);
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  // Lit l'état depuis l'URL — persistant au refresh et partageable
+  const [query,      setQuery]      = useState(searchParams.get('q') || '');
+  const [category,   setCategory]   = useState(searchParams.get('cat') || 'all');
+  const [priceRange, setPriceRange] = useState(searchParams.get('price') || 'all');
+  const [sortBy,     setSortBy]     = useState(searchParams.get('sort') || 'relevance');
+  const [debouncedQuery, setDebouncedQuery] = useState(searchParams.get('q') || '');
+
+  // Debounce query
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 300);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setDebouncedQuery(query), 300);
+    return () => clearTimeout(t);
   }, [query]);
 
-  const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`);
-  };
+  // Sync URL params
+  useEffect(() => {
+    const params = {};
+    if (query)      params.q     = query;
+    if (category   !== 'all') params.cat   = category;
+    if (priceRange !== 'all') params.price = priceRange;
+    if (sortBy     !== 'relevance') params.sort = sortBy;
+    setSearchParams(params, { replace: true });
+  }, [query, category, priceRange, sortBy, setSearchParams]);
 
-  const filteredProducts = products.filter(product => {
-    if (filters.category !== 'all' && product.category !== filters.category) {
-      return false;
-    }
-    if (filters.priceRange !== 'all') {
-      const price = parseFloat(product.price);
-      switch (filters.priceRange) {
-        case 'under50': return price < 50;
-        case '50to100': return price >= 50 && price <= 100;
-        case '100to200': return price > 100 && price <= 200;
-        case 'over200': return price > 200;
-        default: return true;
-      }
-    }
-    return true;
-  });
+  const { products, loading, error } = useSearchProducts(debouncedQuery);
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    switch (filters.sortBy) {
-      case 'price-low': return parseFloat(a.price) - parseFloat(b.price);
-      case 'price-high': return parseFloat(b.price) - parseFloat(a.price);
-      case 'newest': return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-      case 'rating': return (b.rating || 0) - (a.rating || 0);
-      default: return 0;
-    }
-  });
+  const results = useMemo(() => {
+    const filtered = products.filter((p) => {
+      if (category !== 'all' && p.category !== category) return false;
+      return filterByPrice(p, priceRange);
+    });
+    return sortProducts(filtered, sortBy);
+  }, [products, category, priceRange, sortBy]);
+
+  const handleClear = useCallback(() => {
+    setQuery('');
+    setCategory('all');
+    setPriceRange('all');
+    setSortBy('relevance');
+  }, []);
 
   return (
     <div className="bg-light min-h-screen">
-      {/* Search Header */}
+      <PageMeta
+        title={debouncedQuery ? `Search: "${debouncedQuery}"` : 'Search'}
+        description="Search through our collection of premium sneakers"
+      />
+
+      {/* Header */}
       <div className="bg-brand/10 py-16 pt-24">
         <div className="container">
           <h1 className="text-4xl font-extrabold text-center mb-4 text-dark">
@@ -65,117 +105,113 @@ const Search = () => {
             Search through our collection of premium sneakers
           </p>
 
-          {/* Search Bar */}
-          <form className="max-w-2xl mx-auto">
+          <form
+            className="max-w-2xl mx-auto"
+            onSubmit={(e) => e.preventDefault()}
+            role="search"
+            aria-label="Product search"
+          >
             <div className="flex gap-4">
-              <div className="flex-1 relative">
-                <div className="flex items-center bg-white rounded-xl px-4 py-3 border-2 border-gray-200 focus-within:border-brand transition-colors">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray mr-3">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
-                  </svg>
-                  <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search by brand, style, or color..."
-                    className="flex-1 bg-transparent outline-none"
-                  />
-                  {query && (
-                    <button 
-                      type="button"
-                      onClick={() => setQuery('')}
-                      className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M18 6 6 18"/>
-                        <path d="m6 6 12 12"/>
-                      </svg>
-                    </button>
-                  )}
-                </div>
+              <div className="flex-1 flex items-center bg-white rounded-xl px-4 py-3 border-2 border-gray-200 focus-within:border-brand transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray mr-3 flex-shrink-0" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search by brand, style, or color..."
+                  className="flex-1 bg-transparent outline-none"
+                  autoComplete="off"
+                  aria-label="Search products"
+                />
+                {query && (
+                  <button
+                    type="button"
+                    onClick={handleClear}
+                    className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors flex-shrink-0"
+                    aria-label="Clear search"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                      <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                    </svg>
+                  </button>
+                )}
               </div>
-              <button type="submit" className="btn btn-primary">
-                Search
-              </button>
             </div>
           </form>
         </div>
       </div>
 
-      {/* Search Results */}
+      {/* Results */}
       <div className="container py-8">
         {/* Filters */}
-        <div className="card mb-8">
+        <div className="card mb-6">
           <div className="card-body flex flex-wrap justify-between items-center gap-4">
-            <span className="font-semibold text-dark">
-              {loading ? 'Searching...' : `${sortedProducts.length} results`}
+            <span className="font-semibold text-dark" role="status" aria-live="polite">
+              {loading ? 'Searching…' : `${results.length} result${results.length !== 1 ? 's' : ''}`}
             </span>
-            
-            <div className="flex gap-4 flex-wrap">
+
+            <div className="flex gap-3 flex-wrap">
               <select
-                value={filters.category}
-                onChange={(e) => setFilters({...filters, category: e.target.value})}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 className="input w-auto"
+                aria-label="Filter by category"
               >
                 <option value="all">All Categories</option>
                 <option value="men">Men</option>
                 <option value="women">Women</option>
-                <option value="kids">Kids</option>
+                <option value="running">Running</option>
+                <option value="lifestyle">Lifestyle</option>
               </select>
 
               <select
-                value={filters.priceRange}
-                onChange={(e) => setFilters({...filters, priceRange: e.target.value})}
+                value={priceRange}
+                onChange={(e) => setPriceRange(e.target.value)}
                 className="input w-auto"
+                aria-label="Filter by price"
               >
-                <option value="all">All Prices</option>
-                <option value="under50">Under $50</option>
-                <option value="50to100">$50 - $100</option>
-                <option value="100to200">$100 - $200</option>
-                <option value="over200">Over $200</option>
+                {PRICE_RANGES.map((r) => (
+                  <option key={r.value} value={r.value}>{r.label}</option>
+                ))}
               </select>
 
               <select
-                value={filters.sortBy}
-                onChange={(e) => setFilters({...filters, sortBy: e.target.value})}
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
                 className="input w-auto"
+                aria-label="Sort results"
               >
-                <option value="relevance">Relevance</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="newest">Newest First</option>
-                <option value="rating">Top Rated</option>
+                {SORT_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
               </select>
             </div>
           </div>
         </div>
 
-        {/* Results Grid */}
+        {/* Grid */}
         {loading ? (
-          <div className="products-grid">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="card animate-pulse" style={{ height: '300px' }} />
-            ))}
-          </div>
+          <ProductGridSkeleton count={8} />
         ) : error ? (
-          <div className="text-center py-16">
-            <h3 className="text-2xl font-bold mb-4">Something went wrong</h3>
+          <div className="text-center py-16" role="alert">
+            <h3 className="text-2xl font-bold mb-2">Something went wrong</h3>
             <p className="text-gray">Please try again later</p>
           </div>
-        ) : sortedProducts.length === 0 ? (
+        ) : results.length === 0 ? (
           <div className="text-center py-16">
-            <div className="w-28 h-28 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-gray">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.35-4.35"/>
-                <path d="M8 8l6 6"/>
-                <path d="M14 8l-6 6"/>
+            <div className="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gray">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                <path d="M8 8l6 6"/><path d="M14 8l-6 6"/>
               </svg>
             </div>
-            <h3 className="text-2xl font-bold mb-4">No results found</h3>
+            <h3 className="text-2xl font-bold mb-2">No results found</h3>
             <p className="text-gray max-w-md mx-auto mb-6">
-              We couldn't find any products matching "{debouncedQuery}". Try different keywords or browse our categories.
+              {debouncedQuery
+                ? `No products matching "${debouncedQuery}". Try different keywords.`
+                : 'Start typing to search our collection.'}
             </p>
             <button className="btn btn-primary" onClick={() => navigate('/shop')}>
               Browse All Products
@@ -183,7 +219,7 @@ const Search = () => {
           </div>
         ) : (
           <div className="products-grid">
-            {sortedProducts.map((product) => (
+            {results.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

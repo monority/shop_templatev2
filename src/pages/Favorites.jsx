@@ -8,9 +8,18 @@ const Favorites = () => {
   const navigate = useNavigate();
   const { favorites } = useFavorites();
 
+  // PageMeta toujours présent, même liste vide
+  const meta = (
+    <PageMeta
+      title="My Wishlist"
+      description="Your saved sneakers — all in one place."
+    />
+  );
+
   if (!favorites || favorites.length === 0) {
     return (
       <div className="bg-light min-h-screen">
+        {meta}
         <div className="container py-24">
           <div className="text-center py-16">
             <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center">
@@ -36,7 +45,7 @@ const Favorites = () => {
 
   return (
     <div className="bg-light min-h-screen">
-      <PageMeta title="Wishlist" />
+      {meta}
       <div className="container py-12 pt-24">
         {/* Header */}
         <div className="flex flex-wrap justify-between items-start gap-6 mb-8">

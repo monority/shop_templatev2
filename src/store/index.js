@@ -4,247 +4,116 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../cfg/firebase/firebaseCfg';
 
-// ============================================================================
-// STORE UNIFIÉ SNEAKARA 2026
-// ============================================================================
+const EMPTY_USER = {
+  uid: '', username: '', email: '', phone: '',
+  address: '', role: '', createdAt: '', favorites: [],
+};
 
 export const useAppStore = create(
   persist(
     (set, get) => ({
-      // ==========================================================================
-      // AUTH STATE
-      // ==========================================================================
-      user: {
-        uid: '',
-        username: '',
-        email: '',
-        phone: '',
-        address: '',
-        role: '',
-        createdAt: '',
-        favorites: [],
-      },
+      // ── Auth ────────────────────────────────────────────────────────────────
+      user:            { ...EMPTY_USER },
       isAuthenticated: false,
-      authLoading: true,
+      authLoading:     true,
 
-      // ==========================================================================
-      // CART STATE
-      // ==========================================================================
-      cart: {
-        items: [],
-        coupon: null,
-      },
+      // ── Cart ────────────────────────────────────────────────────────────────
+      cart: { items: [], coupon: null },
 
-      // ==========================================================================
-      // UI STATE
-      // ==========================================================================
-      ui: {
-        mobileMenuOpen: false,
-        searchOpen: false,
-        toast: null,
-      },
+      // ── UI ──────────────────────────────────────────────────────────────────
+      ui: { mobileMenuOpen: false, searchOpen: false, toast: null },
 
-      // ==========================================================================
-      // AUTH ACTIONS
-      // ==========================================================================
+      // ── Auth actions ────────────────────────────────────────────────────────
       setUser: (userData) => set({
-        user: userData || {
-          uid: '',
-          username: '',
-          email: '',
-          phone: '',
-          address: '',
-          role: '',
-          createdAt: '',
-          favorites: [],
-        },
+        user:            userData ?? { ...EMPTY_USER },
         isAuthenticated: !!userData,
-        authLoading: false,
+        authLoading:     false,
       }),
 
       initializeAuth: () => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-          if (currentUser) {
-            try {
-              const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-              if (userDoc.exists()) {
-                get().setUser({ uid: currentUser.uid, ...userDoc.data() });
-              } else {
-                get().setUser({ uid: currentUser.uid, email: currentUser.email, favorites: [] });
-              }
-            } catch (error) {
-              console.error('Auth error:', error);
-              get().setUser(null);
-            }
-          } else {
+        const unsub = onAuthStateChanged(auth, async (fbUser) => {
+          if (!fbUser) { get().setUser(null); return; }
+          try {
+            const snap = await getDoc(doc(db, 'users', fbUser.uid));
+            get().setUser(snap.exists()
+              ? { uid: fbUser.uid, ...snap.data() }
+              : { uid: fbUser.uid, email: fbUser.email, favorites: [] }
+            );
+          } catch (err) {
+            console.error('[Auth]', err);
             get().setUser(null);
           }
         });
-        return unsubscribe;
+        return unsub;
       },
 
       logout: async () => {
-        try {
-          await signOut(auth);
-        } catch (error) {
-          console.error('Logout error:', error);
-        }
+        try { await signOut(auth); } catch (err) { console.error('[Logout]', err); }
         get().setUser(null);
         get().clearCart();
       },
 
-      // ==========================================================================
-      // FAVORITES ACTIONS
-      // ==========================================================================
+      // ── Favorites ───────────────────────────────────────────────────────────
       toggleFavorite: (product) => {
         const { user } = get();
-        const isFavorite = user.favorites?.some(fav => fav.id === product.id);
-
-        set({
-          user: {
-            ...user,
-            favorites: isFavorite
-              ? user.favorites.filter(fav => fav.id !== product.id)
-              : [...(user.favorites || []), product],
-          },
-        });
+        const favs = user.favorites ?? [];
+        const exists = favs.some((f) => f.id === product.id);
+        set({ user: { ...user, favorites: exists ? favs.filter((f) => f.id !== product.id) : [...favs, product] } });
       },
 
-      isFavorite: (productId) => {
-        return get().user.favorites?.some(fav => fav.id === productId);
-      },
+      isFavorite: (productId) => get().user.favorites?.some((f) => f.id === productId) ?? false,
 
-      // ==========================================================================
-      // CART ACTIONS
-      // ==========================================================================
+      // ── Cart actions ────────────────────────────────────────────────────────
       addToCart: (product) => {
         const { cart } = get();
-        const { items } = cart;
-
-        const existingItem = items.find(
-          (item) => item.id === product.id &&
-            item.size === product.size &&
-            item.color === product.color
-        );
-
-        const newItems = existingItem
-          ? items.map((item) =>
-            item.id === existingItem.id &&
-              item.size === existingItem.size &&
-              item.color === existingItem.color
-              ? { ...item, quantity: item.quantity + (product.quantity || 1) }
-              : item
-          )
-          : [...items, { ...product, quantity: product.quantity || 1 }];
-
-        set({ cart: { ...cart, items: newItems } });
-        get().showToast(`${product.name} added to cart`, 'success');
+        const key = (i) => `${i.id}-${i.size}-${i.color}`;
+        const pKey = key(product);
+        const exists = cart.items.find((i) => key(i) === pKey);
+        const items = exists
+          ? cart.items.map((i) => key(i) === pKey ? { ...i, quantity: i.quantity + (product.quantity ?? 1) } : i)
+          : [...cart.items, { ...product, quantity: product.quantity ?? 1 }];
+        set({ cart: { ...cart, items } });
+        get().showToast(`${product.name} ajouté au panier`, 'success');
       },
 
       removeFromCart: (id, size, color) => {
         const { cart } = get();
-        set({
-          cart: {
-            ...cart,
-            items: cart.items.filter(
-              (item) => !(item.id === id && item.size === size && item.color === color)
-            ),
-          },
-        });
+        set({ cart: { ...cart, items: cart.items.filter((i) => !(i.id === id && i.size === size && i.color === color)) } });
       },
 
       updateCartQuantity: (id, size, color, quantity) => {
         if (quantity < 1) return;
         const { cart } = get();
-        set({
-          cart: {
-            ...cart,
-            items: cart.items.map((item) =>
-              item.id === id && item.size === size && item.color === color
-                ? { ...item, quantity }
-                : item
-            ),
-          },
-        });
+        set({ cart: { ...cart, items: cart.items.map((i) => i.id === id && i.size === size && i.color === color ? { ...i, quantity } : i) } });
       },
 
-      clearCart: () => {
-        const { cart } = get();
-        set({ cart: { ...cart, items: [] } });
-      },
+      clearCart: () => set((s) => ({ cart: { ...s.cart, items: [] } })),
+      applyCoupon: (code, discount) => set((s) => ({ cart: { ...s.cart, coupon: { code, discount } } })),
 
-      applyCoupon: (code, discount) => {
-        const { cart } = get();
-        set({ cart: { ...cart, coupon: { code, discount } } });
-      },
-
-      // ==========================================================================
-      // CART GETTERS
-      // ==========================================================================
-      getCartCount: () => {
-        return get().cart.items.reduce((total, item) => total + item.quantity, 0);
-      },
-
-      getCartSubtotal: () => {
-        return get().cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
-      },
-
-      getCartShipping: () => {
-        const subtotal = get().getCartSubtotal();
-        return subtotal > 200 ? 0 : 15;
-      },
-
+      // ── Cart getters ────────────────────────────────────────────────────────
+      getCartCount:    () => get().cart.items.reduce((t, i) => t + i.quantity, 0),
+      getCartSubtotal: () => get().cart.items.reduce((t, i) => t + i.price * i.quantity, 0),
+      getCartShipping: () => get().getCartSubtotal() > 200 ? 0 : 15,
       getCartDiscount: () => {
-        const { cart } = get();
-        if (!cart.coupon) return 0;
-        const subtotal = get().getCartSubtotal();
-        return subtotal * (cart.coupon.discount / 100);
+        const { coupon } = get().cart;
+        return coupon ? get().getCartSubtotal() * (coupon.discount / 100) : 0;
       },
+      getCartTotal: () => get().getCartSubtotal() + get().getCartShipping() - get().getCartDiscount(),
 
-      getCartTotal: () => {
-        const subtotal = get().getCartSubtotal();
-        const shipping = get().getCartShipping();
-        const discount = get().getCartDiscount();
-        return subtotal + shipping - discount;
-      },
-
-      // ==========================================================================
-      // UI ACTIONS
-      // ==========================================================================
-      toggleMobileMenu: () => {
-        const { ui } = get();
-        set({ ui: { ...ui, mobileMenuOpen: !ui.mobileMenuOpen } });
-      },
-
-      closeMobileMenu: () => {
-        const { ui } = get();
-        set({ ui: { ...ui, mobileMenuOpen: false } });
-      },
-
-      toggleSearch: () => {
-        const { ui } = get();
-        set({ ui: { ...ui, searchOpen: !ui.searchOpen } });
-      },
+      // ── UI actions ──────────────────────────────────────────────────────────
+      toggleMobileMenu: () => set((s) => ({ ui: { ...s.ui, mobileMenuOpen: !s.ui.mobileMenuOpen } })),
+      closeMobileMenu:  () => set((s) => ({ ui: { ...s.ui, mobileMenuOpen: false } })),
+      toggleSearch:     () => set((s) => ({ ui: { ...s.ui, searchOpen: !s.ui.searchOpen } })),
 
       showToast: (message, type = 'info', duration = 3000) => {
-        const { ui } = get();
-        set({ ui: { ...ui, toast: { message, type } } });
-
-        setTimeout(() => {
-          set({ ui: { ...get().ui, toast: null } });
-        }, duration);
+        set((s) => ({ ui: { ...s.ui, toast: { message, type } } }));
+        setTimeout(() => set((s) => ({ ui: { ...s.ui, toast: null } })), duration);
       },
 
-      hideToast: () => {
-        const { ui } = get();
-        set({ ui: { ...ui, toast: null } });
-      },
+      hideToast: () => set((s) => ({ ui: { ...s.ui, toast: null } })),
     }),
     {
       name: 'sneakara-2026',
-      // Only persist the cart and the user's uid — full user data is reloaded
-      // from Firestore on auth state change. This prevents sensitive data
-      // (email, address, phone) from living in localStorage indefinitely.
       partialize: (state) => ({
         cart: state.cart,
         user: state.user?.uid ? { uid: state.user.uid } : {},
@@ -253,50 +122,51 @@ export const useAppStore = create(
   )
 );
 
-// ============================================================================
-// HOOKS UTILITAIRES
-// ============================================================================
+// ── Hooks utilitaires — selectors atomiques (pas d'objet retourné) ────────────
+// Chaque selector retourne une valeur primitive ou une fonction stable
+// → pas de re-render infini, pas de "getSnapshot should be cached"
 
 export const useAuth = () => {
-  const { user, isAuthenticated, authLoading, setUser, initializeAuth, logout } = useAppStore();
+  const user            = useAppStore((s) => s.user);
+  const isAuthenticated = useAppStore((s) => s.isAuthenticated);
+  const authLoading     = useAppStore((s) => s.authLoading);
+  const setUser         = useAppStore((s) => s.setUser);
+  const initializeAuth  = useAppStore((s) => s.initializeAuth);
+  const logout          = useAppStore((s) => s.logout);
   return { user, isAuthenticated, authLoading, setUser, initializeAuth, logout };
 };
 
 export const useCart = () => {
-  const store = useAppStore();
-  return {
-    items: store.cart.items,
-    coupon: store.cart.coupon,
-    addToCart: store.addToCart,
-    removeFromCart: store.removeFromCart,
-    updateCartQuantity: store.updateCartQuantity,
-    clearCart: store.clearCart,
-    applyCoupon: store.applyCoupon,
-    getCartCount: store.getCartCount,
-    getCartSubtotal: store.getCartSubtotal,
-    getCartShipping: store.getCartShipping,
-    getCartDiscount: store.getCartDiscount,
-    getCartTotal: store.getCartTotal,
-  };
+  const items              = useAppStore((s) => s.cart.items);
+  const coupon             = useAppStore((s) => s.cart.coupon);
+  const addToCart          = useAppStore((s) => s.addToCart);
+  const removeFromCart     = useAppStore((s) => s.removeFromCart);
+  const updateCartQuantity = useAppStore((s) => s.updateCartQuantity);
+  const clearCart          = useAppStore((s) => s.clearCart);
+  const applyCoupon        = useAppStore((s) => s.applyCoupon);
+  const getCartCount       = useAppStore((s) => s.getCartCount);
+  const getCartSubtotal    = useAppStore((s) => s.getCartSubtotal);
+  const getCartShipping    = useAppStore((s) => s.getCartShipping);
+  const getCartDiscount    = useAppStore((s) => s.getCartDiscount);
+  const getCartTotal       = useAppStore((s) => s.getCartTotal);
+  return { items, coupon, addToCart, removeFromCart, updateCartQuantity, clearCart, applyCoupon, getCartCount, getCartSubtotal, getCartShipping, getCartDiscount, getCartTotal };
 };
 
 export const useFavorites = () => {
-  const { user, toggleFavorite, isFavorite } = useAppStore();
-  return {
-    favorites: user.favorites,
-    toggleFavorite,
-    isFavorite,
-  };
+  const favorites      = useAppStore((s) => s.user.favorites);
+  const toggleFavorite = useAppStore((s) => s.toggleFavorite);
+  const isFavorite     = useAppStore((s) => s.isFavorite);
+  return { favorites, toggleFavorite, isFavorite };
 };
 
 export const useUI = () => {
-  const { ui, toggleMobileMenu, closeMobileMenu, toggleSearch, showToast, hideToast } = useAppStore();
-  return {
-    ...ui,
-    toggleMobileMenu,
-    closeMobileMenu,
-    toggleSearch,
-    showToast,
-    hideToast,
-  };
+  const toast           = useAppStore((s) => s.ui.toast);
+  const mobileMenuOpen  = useAppStore((s) => s.ui.mobileMenuOpen);
+  const searchOpen      = useAppStore((s) => s.ui.searchOpen);
+  const toggleMobileMenu = useAppStore((s) => s.toggleMobileMenu);
+  const closeMobileMenu  = useAppStore((s) => s.closeMobileMenu);
+  const toggleSearch     = useAppStore((s) => s.toggleSearch);
+  const showToast        = useAppStore((s) => s.showToast);
+  const hideToast        = useAppStore((s) => s.hideToast);
+  return { toast, mobileMenuOpen, searchOpen, toggleMobileMenu, closeMobileMenu, toggleSearch, showToast, hideToast };
 };

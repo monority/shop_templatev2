@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useProduct } from '../hooks/useProducts';
 import { useCart, useFavorites } from '../store';
 import PageMeta from '../components/ui/PageMeta';
+import { ProductDetailSkeleton } from '../components/ui/Skeleton';
 
 const Product = () => {
   const { id } = useParams();
@@ -43,11 +44,8 @@ const Product = () => {
 
   if (loading) {
     return (
-      <div className="bg-light min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-14 h-14 border-4 border-gray-200 border-t-brand rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray">Loading product...</p>
-        </div>
+      <div className="bg-light min-h-screen">
+        <ProductDetailSkeleton />
       </div>
     );
   }

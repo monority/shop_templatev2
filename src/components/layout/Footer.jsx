@@ -1,31 +1,32 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+// Constante hors composant — pas recréée à chaque render
+const FOOTER_LINKS = {
+  shop: [
+    { label: 'All Products', path: '/shop' },
+    { label: 'Women',        path: '/shop/women' },
+    { label: 'Men',          path: '/shop/men' },
+    { label: 'New Arrivals', path: '/shop/new' },
+    { label: 'Sale',         path: '/shop/sale' },
+  ],
+  help: [
+    { label: 'Size Guide',   path: '/help/size-guide' },
+    { label: 'Shipping Info',path: '/help/shipping' },
+    { label: 'Returns',      path: '/help/returns' },
+    { label: 'Track Order',  path: '/help/track' },
+    { label: 'FAQ',          path: '/help/faq' },
+  ],
+  company: [
+    { label: 'About Us',       path: '/about' },
+    { label: 'Careers',        path: '/careers' },
+    { label: 'Press',          path: '/press' },
+    { label: 'Sustainability', path: '/sustainability' },
+  ],
+};
+
 const Footer = () => {
   const navigate = useNavigate();
-
-  const footerLinks = {
-    shop: [
-      { label: 'All Products', path: '/shop' },
-      { label: 'Women', path: '/shop/women' },
-      { label: 'Men', path: '/shop/men' },
-      { label: 'New Arrivals', path: '/shop/new' },
-      { label: 'Sale', path: '/shop/sale' },
-    ],
-    help: [
-      { label: 'Size Guide', path: '/help/size-guide' },
-      { label: 'Shipping Info', path: '/help/shipping' },
-      { label: 'Returns', path: '/help/returns' },
-      { label: 'Track Order', path: '/help/track' },
-      { label: 'FAQ', path: '/help/faq' },
-    ],
-    company: [
-      { label: 'About Us', path: '/about' },
-      { label: 'Careers', path: '/careers' },
-      { label: 'Press', path: '/press' },
-      { label: 'Sustainability', path: '/sustainability' },
-    ],
-  };
 
   return (
     <footer className="footer">
@@ -45,12 +46,9 @@ const Footer = () => {
           <div>
             <h3 className="footer-heading">Shop</h3>
             <ul className="footer-links">
-              {footerLinks.shop.map((link) => (
+              {FOOTER_LINKS.shop.map((link) => (
                 <li key={link.label}>
-                  <button
-                    onClick={() => navigate(link.path)}
-                    className="footer-link"
-                  >
+                  <button onClick={() => navigate(link.path)} className="footer-link">
                     {link.label}
                   </button>
                 </li>
@@ -62,11 +60,9 @@ const Footer = () => {
           <div>
             <h3 className="footer-heading">Help</h3>
             <ul className="footer-links">
-              {footerLinks.help.map((link) => (
+              {FOOTER_LINKS.help.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.path} className="footer-link">
-                    {link.label}
-                  </Link>
+                  <Link to={link.path} className="footer-link">{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -76,11 +72,9 @@ const Footer = () => {
           <div>
             <h3 className="footer-heading">Company</h3>
             <ul className="footer-links">
-              {footerLinks.company.map((link) => (
+              {FOOTER_LINKS.company.map((link) => (
                 <li key={link.label}>
-                  <Link to={link.path} className="footer-link">
-                    {link.label}
-                  </Link>
+                  <Link to={link.path} className="footer-link">{link.label}</Link>
                 </li>
               ))}
             </ul>

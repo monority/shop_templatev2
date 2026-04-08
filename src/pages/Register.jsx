@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../cfg/firebase/firebaseCfg';
@@ -44,7 +44,9 @@ const EyeIcon = ({ open }) => open ? (
 
 const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useAuth();
+  const redirectTo = location.state?.from?.pathname || '/';
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -88,7 +90,7 @@ const Register = () => {
       };
       await setDoc(doc(db, 'users', fbUser.uid), userData);
       setUser(userData);
-      navigate('/');
+      navigate(redirectTo);
     } catch (err) {
       setError(AUTH_ERRORS[err.code] || 'Une erreur est survenue.');
     } finally {
@@ -101,6 +103,18 @@ const Register = () => {
       <Helmet><title>Create Account · Sneakara</title></Helmet>
       <div className="min-h-screen bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
         <div className="absolute -top-20 -right-10 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none" />
+
+        {/* Bouton retour accueil */}
+        <button
+          onClick={() => navigate('/')}
+          className="absolute top-5 left-5 z-20 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-200 text-sm font-semibold text-dark hover:bg-white hover:shadow-md transition-all"
+          aria-label="Back to home"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+            <path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>
+          </svg>
+          Back to Home
+        </button>
 
         <div className="flex max-w-7xl mx-auto min-h-screen">
 
@@ -239,7 +253,7 @@ const Register = () => {
 
                 <p className="text-center text-sm text-gray-500 mt-6">
                   Already have an account?{' '}
-                  <Link to="/login" className="text-brand font-semibold hover:underline">Sign in</Link>
+                  <Link to="/login" state={location.state} className="text-brand font-semibold hover:underline">Sign in</Link>
                 </p>
               </div>
             </div>

@@ -29,9 +29,8 @@ export const products = [
     name: "Ultra Boost",
     brand: "Adidas",
     price: 179,
-    image: "https://images.unsplash.com/photo-1587563871167-1ee9c7311efb?w=400",
+    image: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400",
     images: [
-      "https://images.unsplash.com/photo-1587563871167-1ee9c7311efb?w=600",
       "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600",
       "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600"
     ],
@@ -117,7 +116,7 @@ export const products = [
     name: "997H",
     brand: "New Balance",
     price: 92,
-    image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400",
+    image: "https://images.unsplash.com/photo-1621315271772-28b1f3a5df87?w=400",
     images: [
       "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600",
       "https://images.unsplash.com/photo-1579338628-040f0659553c?w=600",

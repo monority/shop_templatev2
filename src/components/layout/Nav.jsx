@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart, useAuth } from '../../store';
 
@@ -48,17 +48,19 @@ const Nav = ({ isScrolled }) => {
   const searchRef = useRef(null);
   const cartCount = getCartCount();
 
-  const isActive = (path) =>
+  const isActive = useCallback((path) =>
     path === '/shop'
       ? location.pathname === '/shop'
-      : location.pathname.startsWith(path);
+      : location.pathname.startsWith(path),
+    [location.pathname]
+  );
 
-  const go = (path) => {
+  const go = useCallback((path) => {
     navigate(path);
     setMobileOpen(false);
-  };
+  }, [navigate]);
 
-  const handleSearch = (e) => {
+  const handleSearch = useCallback((e) => {
     e.preventDefault();
     const q = searchQuery.trim();
     if (!q) return;
@@ -66,12 +68,12 @@ const Nav = ({ isScrolled }) => {
     setSearchOpen(false);
     setSearchQuery('');
     setMobileOpen(false);
-  };
+  }, [searchQuery, navigate]);
 
-  const openSearch = () => {
+  const openSearch = useCallback(() => {
     setSearchOpen(true);
     setTimeout(() => searchRef.current?.focus(), 50);
-  };
+  }, []);
 
   return (
     <>
@@ -88,9 +90,25 @@ const Nav = ({ isScrolled }) => {
                   <UserIcon size={14} /> My Account
                 </button>
               ) : (
-                <button onClick={() => navigate('/login')} className="hover:text-brand transition-colors">
-                  Sign In / Join
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => navigate('/login')}
+                    className="text-white/70 hover:text-white transition-colors text-xs font-medium"
+                  >
+                    Sign In
+                  </button>
+                  <span className="text-white/30">|</span>
+                  <button
+                    onClick={() => navigate('/register')}
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand text-white text-xs font-semibold hover:bg-brand-dark transition-all hover:shadow-[0_0_12px_rgba(99,102,241,0.5)]"
+                    aria-label="Create a free account"
+                  >
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    Join Free
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -138,6 +156,8 @@ const Nav = ({ isScrolled }) => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search..."
                     className="h-10 w-40 sm:w-56 pl-4 pr-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:bg-white transition-all"
+                    autoComplete="off"
+                    aria-label="Search products"
                     onBlur={() => { if (!searchQuery) setSearchOpen(false); }}
                   />
                   <button
@@ -217,6 +237,8 @@ const Nav = ({ isScrolled }) => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search products..."
                   className="w-full h-12 pl-12 pr-4 bg-gray-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand/20"
+                  autoComplete="off"
+                  aria-label="Search products"
                 />
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                   <SearchIcon size={18} />

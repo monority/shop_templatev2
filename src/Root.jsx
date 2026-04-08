@@ -5,6 +5,7 @@ import AuthGuard from './cfg/guards/AuthGuard';
 import UnAuthGuard from './cfg/guards/UnAuthGuard';
 import { useAppStore } from './store';
 import Toast from './components/ui/Toast';
+import ErrorBoundary from './components/ui/ErrorBoundary';
 
 // Auth layout — no Nav/Footer
 const AuthLayout = () => (
@@ -39,8 +40,9 @@ const Terms = lazy(() => import('./pages/legal/Terms'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-[50vh] text-gray-500">
-    <div className="animate-pulse">Loading…</div>
+  <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4" aria-label="Loading page" role="status">
+    <div className="w-10 h-10 border-4 border-gray-200 border-t-brand rounded-full animate-spin" aria-hidden="true" />
+    <span className="sr-only">Loading…</span>
   </div>
 );
 
@@ -51,8 +53,9 @@ const Root = () => {
   useEffect(() => { const unsub = initializeAuth(); return () => unsub?.(); }, []);
 
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
+    <ErrorBoundary>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
         {/* Auth routes — no Nav/Footer */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<UnAuthGuard><Login /></UnAuthGuard>} />
@@ -83,8 +86,9 @@ const Root = () => {
           <Route path="/legal/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-      </Routes>
-    </Suspense>
+        </Routes>
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 

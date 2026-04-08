@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../cfg/firebase/firebaseCfg';
@@ -34,7 +34,9 @@ const EyeIcon = ({ open }) => open ? (
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useAuth();
+  const redirectTo = location.state?.from?.pathname || '/';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -87,7 +89,7 @@ const Login = () => {
         : { uid: fbUser.uid, email: fbUser.email, username: email.split('@')[0], favorites: [] }
       );
       sessionStorage.removeItem(SS_KEY);
-      navigate('/');
+      navigate(redirectTo);
     } catch (err) {
       const next = attempts + 1;
       setAttempts(next);
@@ -118,6 +120,18 @@ const Login = () => {
     <div className="min-h-screen bg-gradient-to-br from-brand/5 via-light to-white relative overflow-hidden">
       <Helmet><title>Sign In · Sneakara</title></Helmet>
       <div className="absolute -top-20 -right-10 w-[500px] h-[500px] bg-brand/10 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Bouton retour accueil */}
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-5 left-5 z-20 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-200 text-sm font-semibold text-dark hover:bg-white hover:shadow-md transition-all"
+        aria-label="Retour à l'accueil"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+          <path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>
+        </svg>
+        Back to Home
+      </button>
 
       <div className="flex max-w-7xl mx-auto min-h-screen">
 

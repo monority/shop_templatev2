@@ -2,112 +2,59 @@ import { useState, useEffect, useCallback } from 'react';
 import { productService } from '../services/productService';
 
 /**
- * Hook to get all products
+ * Hook générique pour les états async — évite la duplication.
  */
+const useAsync = (asyncFn, deps) => {
+  const [state, setState] = useState({ data: null, loading: true, error: null });
+
+  useEffect(() => {
+    let cancelled = false;
+    setState((s) => ({ ...s, loading: true, error: null }));
+
+    asyncFn()
+      .then((data)  => { if (!cancelled) setState({ data, loading: false, error: null }); })
+      .catch((err)  => { if (!cancelled) setState({ data: null, loading: false, error: err.message }); });
+
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  return state;
+};
+
+/** Produits par catégorie */
 export const useProducts = (category = 'all') => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await productService.getByCategory(category);
-        setProducts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, [category]);
-
-  return { products, loading, error };
+  const { data, loading, error } = useAsync(() => productService.getByCategory(category), [category]);
+  return { products: data ?? [], loading, error };
 };
 
-/**
- * Hook to get a single product by ID
- */
+/** Produit unique par ID */
 export const useProduct = (id) => {
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      if (!id) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await productService.getById(id);
-        setProduct(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
-
-  return { product, loading, error };
+  const { data, loading, error } = useAsync(
+    () => id ? productService.getById(id) : Promise.resolve(null),
+    [id]
+  );
+  return { product: data, loading, error };
 };
 
-/**
- * Hook to get featured products
- */
+/** Produits mis en avant */
 export const useFeaturedProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await productService.getFeatured();
-        setProducts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  return { products, loading, error };
+  const { data, loading, error } = useAsync(() => productService.getFeatured(), []);
+  return { products: data ?? [], loading, error };
 };
 
-/**
- * Hook to search products
- */
+/** Recherche avec debounce géré côté composant */
 export const useSearchProducts = (query) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading,  setLoading]  = useState(false);
+  const [error,    setError]    = useState(null);
 
-  const search = useCallback(async (searchQuery) => {
-    if (!searchQuery) {
-      setProducts([]);
-      return;
-    }
-
+  const search = useCallback(async (q) => {
+    if (!q) { setProducts([]); return; }
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
-      const data = await productService.search(searchQuery);
+      const data = await productService.search(q);
       setProducts(data);
     } catch (err) {
       setError(err.message);
@@ -116,9 +63,7 @@ export const useSearchProducts = (query) => {
     }
   }, []);
 
-  useEffect(() => {
-    search(query);
-  }, [query, search]);
+  useEffect(() => { search(query); }, [query, search]);
 
   return { products, loading, error, search };
 };

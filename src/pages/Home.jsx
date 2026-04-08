@@ -5,6 +5,7 @@ import { useCategories } from '../hooks/useCategories';
 import { Hero } from '../components/ui/Hero';
 import { ProductCard } from '../components/ui/ProductCard';
 import PageMeta from '../components/ui/PageMeta';
+import { ProductGridSkeleton, CategoryGridSkeleton } from '../components/ui/Skeleton';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -34,13 +35,9 @@ const Home = () => {
           </div>
 
           {productsLoading ? (
-            <div className="products-grid">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="card animate-pulse" style={{ height: '300px' }} />
-              ))}
-            </div>
+            <ProductGridSkeleton count={8} />
           ) : productsError ? (
-            <div className="text-center py-12">
+            <div className="text-center py-12" role="alert">
               <p className="text-gray">Error loading products</p>
             </div>
           ) : (
@@ -61,13 +58,9 @@ const Home = () => {
           </div>
 
           {categoriesLoading ? (
-            <div className="categories-grid">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="card animate-pulse" style={{ height: '200px' }} />
-              ))}
-            </div>
+            <CategoryGridSkeleton count={4} />
           ) : categoriesError ? (
-            <div className="text-center py-12">
+            <div className="text-center py-12" role="alert">
               <p className="text-gray">Error loading categories</p>
             </div>
           ) : (
@@ -137,6 +130,8 @@ const Home = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="input flex-1"
+                autoComplete="email"
+                aria-label="Email address"
               />
               <button type="submit" className="btn btn-primary">
                 Subscribe
