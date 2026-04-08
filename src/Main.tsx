@@ -4,8 +4,15 @@ import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import Root from './Root'
 import './index.css'
+import { initWebVitals } from './utils/initWebVitals'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// Initialize Web Vitals tracking
+initWebVitals()
+
+const rootElement = document.getElementById('root')
+if (!rootElement) throw new Error('Root element not found')
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
