@@ -6,6 +6,7 @@ import { Hero } from '../components/ui/Hero';
 import { ProductCard } from '../components/ui/ProductCard';
 import PageMeta from '../components/ui/PageMeta';
 import { ProductGridSkeleton, CategoryGridSkeleton } from '../components/ui/Skeleton';
+import useImageFallback from '../hooks/useImageFallback';
 
 // ── Constantes hors composant ─────────────────────────────────────────────────
 const FEATURES = [
@@ -22,6 +23,7 @@ const Home = () => {
 
   const goShop    = useCallback(() => navigate('/shop'),     [navigate]);
   const goNew     = useCallback(() => navigate('/shop/new'), [navigate]);
+  const handleImgError = useImageFallback();
 
   return (
     <div className="bg-light">
@@ -88,6 +90,7 @@ const Home = () => {
                       alt={category.name}
                       className="w-full h-full object-cover"
                       loading="lazy"
+                      onError={handleImgError}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true" />
                     <div className="absolute bottom-0 left-0 right-0 p-4">

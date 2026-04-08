@@ -16,7 +16,16 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
 
   server: {
-    headers: securityHeaders,
+   headers: {
+      ...securityHeaders,
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
+    hmr: {
+      timeout: 30000,
+      protocol: 'ws',
+    },
   },
 
   preview: {
@@ -60,8 +69,11 @@ export default defineConfig({
     },
   },
 
-  // Optimisation des dépendances en dev
-  optimizeDeps: {
+ optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'zustand'],
+    force: true,  
+  },
+    css: {
+    devSourcemap: true,
   },
 });

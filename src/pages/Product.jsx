@@ -5,6 +5,7 @@ import { useCart, useFavorites } from '../store';
 import PageMeta from '../components/ui/PageMeta';
 import { ProductDetailSkeleton } from '../components/ui/Skeleton';
 import { formatPrice } from '../utils/format';
+import useImageFallback from '../hooks/useImageFallback';
 
 const Product = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const Product = () => {
   const { product, loading, error } = useProduct(id);
   const { addToCart } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
+  const handleImgError = useImageFallback();
 
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -93,6 +95,8 @@ const Product = () => {
                 src={mainImage}
                 alt={product.name}
                 className="w-full h-full object-cover"
+                loading="eager"
+                onError={handleImgError}
               />
             </div>
 
@@ -103,13 +107,14 @@ const Product = () => {
                   <button
                     key={index}
                     onClick={() => setMainImage(img)}
-                    className={`w-20 h-20 rounded-lg overflow-hidden transition-all ${mainImage === img ? 'ring-2 ring-brand' : 'ring-2 ring-transparent hover:ring-gray-200'
-                      }`}
+                    className={`w-20 h-20 rounded-lg overflow-hidden transition-all ${mainImage === img ? 'ring-2 ring-brand' : 'ring-2 ring-transparent hover:ring-gray-200'}`}
                   >
                     <img
                       src={img}
                       alt={`${product.name} ${index + 1}`}
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      onError={handleImgError}
                     />
                   </button>
                 ))}

@@ -16,7 +16,7 @@ const useAsync = (asyncFn, deps) => {
       .catch((err)  => { if (!cancelled) setState({ data: null, loading: false, error: err.message }); });
 
     return () => { cancelled = true; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // mount/deps only — asyncFn is intentionally excluded (would cause infinite loop)
   }, deps);
 
   return state;
