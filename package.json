@@ -18,7 +18,7 @@
     "test:watch": "vitest --watch",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "[ -z \"$CI\" ] && husky install || true"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
