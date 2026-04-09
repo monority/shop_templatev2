@@ -16,7 +16,7 @@ const AuthLayout = () => (
   </div>
 );
 
-// Lazy pages
+// Lazy pages with route-based code splitting
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Product = lazy(() => import('./pages/Product'));

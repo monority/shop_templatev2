@@ -109,7 +109,7 @@ const ProductCard = memo(({ product, showAddToCart = true }: ProductCardProps) =
       </div>
 
       {/* Info */}
-      <div className="card-body">
+      <div className="p-4">
         <span className="text-sm text-brand font-medium">{brand}</span>
         <h3 className="font-semibold text-dark mt-1 line-clamp-1">{name}</h3>
 

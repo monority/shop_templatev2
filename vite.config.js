@@ -15,11 +15,9 @@ export default defineConfig({
   plugins: [react()],
 
   server: {
-   headers: {
+    headers: {
       ...securityHeaders,
-      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
+      'Cache-Control': 'public, max-age=3600',
     },
     hmr: {
       timeout: 30000,
@@ -71,7 +69,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'zustand'],
   },
-    css: {
+  css: {
     devSourcemap: true,
   },
 });

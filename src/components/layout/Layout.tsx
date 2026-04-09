@@ -56,7 +56,7 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-light flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#f8fafc' }}>
       <Nav isScrolled={isScrolled} />
       <main className="flex-1" id="main-content">
         <Outlet />

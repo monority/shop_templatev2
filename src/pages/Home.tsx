@@ -16,6 +16,26 @@ const FEATURES = [
   { icon: '💎', title: 'Exclusive Drops',       desc: 'Get early access to limited edition releases.' },
 ];
 
+const STATS = [
+  { value: '50K+', label: 'Happy Customers' },
+  { value: '2K+', label: 'Premium Sneakers' },
+  { value: '4.9★', label: 'Average Rating' },
+  { value: '24h', label: 'Fast Delivery' },
+];
+
+const HOW_IT_WORKS = [
+  { step: '1', title: 'Browse', desc: 'Explore our curated collection of premium sneakers' },
+  { step: '2', title: 'Select', desc: 'Choose your size, color, and add to cart' },
+  { step: '3', title: 'Checkout', desc: 'Secure payment with multiple options' },
+  { step: '4', title: 'Enjoy', desc: 'Receive your sneakers in 24-48 hours' },
+];
+
+const TESTIMONIALS = [
+  { name: 'Alex Johnson', role: 'Sneaker Enthusiast', text: 'Best selection of authentic sneakers I\'ve found. Fast shipping and great customer service!', rating: 5 },
+  { name: 'Maria Garcia', role: 'Collector', text: 'The quality is incredible. Every pair is exactly as described. Highly recommend!', rating: 5 },
+  { name: 'James Chen', role: 'Athlete', text: 'Perfect for both style and performance. The returns process was hassle-free.', rating: 5 },
+];
+
 const Home = () => {
   const navigate = useNavigate();
   const { products: featuredProducts, loading: productsLoading, error: productsError } = useFeaturedProducts();
@@ -29,6 +49,20 @@ const Home = () => {
     <div className="bg-light">
       <PageMeta description="Premium sneakers for the modern urban lifestyle. Shop the latest drops at Sneakara." />
       <Hero onPrimaryClick={goShop} onSecondaryClick={goNew} />
+
+      {/* Stats Section */}
+      <section className="section bg-white border-b border-gray-100">
+        <div className="container">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="stat-card">
+                <div className="stat-value">{stat.value}</div>
+                <p className="stat-label">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Featured Products */}
       <section className="section" aria-labelledby="featured-title">
@@ -60,7 +94,7 @@ const Home = () => {
       </section>
 
       {/* Categories */}
-      <section className="section bg-white" aria-labelledby="categories-title">
+      <section className="section bg-light border-b border-gray-100" aria-labelledby="categories-title">
         <div className="container">
           <div className="section-header">
             <h2 id="categories-title" className="section-title">Shop by Category</h2>
@@ -105,18 +139,70 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="section bg-dark" aria-labelledby="features-title">
+      {/* How It Works */}
+      <section className="section bg-light text-dark relative overflow-hidden" aria-labelledby="how-title">
+        <div className="container relative z-10">
+          <h2 id="how-title" className="text-3xl md:text-4xl font-bold text-center mb-12">
+            How It <span className="text-dark">Works</span>
+          </h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            {HOW_IT_WORKS.map((item, idx) => (
+              <div key={item.step} className="relative">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-16 h-16 rounded-full bg-dark text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">
+                    {item.step}
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-dark">{item.title}</h3>
+                  <p className="text-gray text-sm">{item.desc}</p>
+                </div>
+                {idx < HOW_IT_WORKS.length - 1 && (
+                  <div className="hidden md:block absolute top-8 -right-3 w-6 h-0.5 bg-dark/30" aria-hidden="true" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="section bg-white" aria-labelledby="testimonials-title">
         <div className="container">
-          <h2 id="features-title" className="text-3xl font-bold text-center text-white mb-12">
-            Why Choose <span className="text-brand">SNEAKARA</span>?
+          <h2 id="testimonials-title" className="text-3xl md:text-4xl font-bold text-center mb-12 text-dark">
+            What Our <span className="text-dark">Customers</span> Say
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((testimonial) => (
+              <div key={testimonial.name} className="testimonial-card">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-warning" aria-hidden="true">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-gray mb-4 italic">"{testimonial.text}"</p>
+                <div className="pt-4 border-t border-gray-200">
+                  <p className="font-semibold text-dark">{testimonial.name}</p>
+                  <p className="text-sm text-gray">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="section bg-white relative overflow-hidden" aria-labelledby="features-title">
+        <div className="container relative z-10">
+          <h2 id="features-title" className="text-3xl md:text-4xl font-bold text-center text-dark mb-12">
+            Why Choose <span className="text-dark">SNEAKARA</span>?
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {FEATURES.map((f) => (
-              <div key={f.title} className="p-6 rounded-xl bg-white/5 border border-white/10">
+              <div key={f.title} className="feature-card">
                 <div className="text-3xl mb-3" aria-hidden="true">{f.icon}</div>
-                <h3 className="text-white font-semibold mb-2">{f.title}</h3>
-                <p className="text-gray-400 text-sm">{f.desc}</p>
+                <h3 className="text-dark font-semibold mb-2">{f.title}</h3>
+                <p className="text-gray text-sm">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -124,13 +210,13 @@ const Home = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="section" aria-labelledby="newsletter-title">
-        <div className="container">
+      <section className="section bg-white relative overflow-hidden border-t border-gray-100" aria-labelledby="newsletter-title">
+        <div className="container relative z-10">
           <div className="max-w-xl mx-auto text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-brand flex items-center justify-center text-2xl" aria-hidden="true">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-light flex items-center justify-center text-2xl shadow-sm border border-gray-100" aria-hidden="true">
               📧
             </div>
-            <h2 id="newsletter-title" className="text-2xl font-bold mb-2">Join the Club</h2>
+            <h2 id="newsletter-title" className="text-2xl md:text-3xl font-bold mb-2 text-dark">Join the Club</h2>
             <p className="text-gray mb-6">
               Subscribe to get special offers, free giveaways, and exclusive deals.
             </p>

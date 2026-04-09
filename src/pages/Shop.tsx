@@ -32,7 +32,7 @@ const Shop = () => {
       <PageMeta title={categoryLabel} description={`Shop ${categoryLabel.toLowerCase()} sneakers at Sneakara`} />
       <div className="bg-light min-h-screen">
         {/* Shop Header */}
-        <div className="bg-brand-dark py-16 pt-24 text-white">
+        <div className="bg-dark py-16 pt-24 text-white">
           <div className="container">
             <div className="flex items-center gap-2 mb-4 text-white/80 text-sm">
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
