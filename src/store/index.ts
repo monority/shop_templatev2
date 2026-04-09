@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../cfg/firebase/firebaseCfg';
+
+// Firebase disabled for now - using mock auth
+// import { onAuthStateChanged, signOut } from 'firebase/auth';
+// import { doc, getDoc } from 'firebase/firestore';
+// import { auth, db } from '../cfg/firebase/firebaseCfg';
 
 const EMPTY_USER = {
   uid: '', username: '', email: '', phone: '',
@@ -15,7 +17,7 @@ export const useAppStore = create(
       // ── Auth ────────────────────────────────────────────────────────────────
       user:            { ...EMPTY_USER },
       isAuthenticated: false,
-      authLoading:     true,
+      authLoading:     false,
 
       // ── Cart ────────────────────────────────────────────────────────────────
       cart: { items: [], coupon: null },
@@ -31,24 +33,12 @@ export const useAppStore = create(
       }),
 
       initializeAuth: () => {
-        const unsub = onAuthStateChanged(auth, async (fbUser) => {
-          if (!fbUser) { get().setUser(null); return; }
-          try {
-            const snap = await getDoc(doc(db, 'users', fbUser.uid));
-            get().setUser(snap.exists()
-              ? { uid: fbUser.uid, ...snap.data() }
-              : { uid: fbUser.uid, email: fbUser.email, favorites: [] }
-            );
-          } catch (err) {
-            console.error('[Auth]', err);
-            get().setUser(null);
-          }
-        });
-        return unsub;
+        // Firebase disabled - return no-op unsubscribe
+        return () => {};
       },
 
       logout: async () => {
-        try { await signOut(auth); } catch (err) { console.error('[Logout]', err); }
+        // Firebase disabled - just clear user
         get().setUser(null);
         get().clearCart();
       },
