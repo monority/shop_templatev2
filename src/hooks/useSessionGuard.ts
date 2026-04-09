@@ -9,7 +9,7 @@ import { useAppStore } from '../store';
  * Si la session expire pendant la navigation, déconnecte l'utilisateur
  * et le redirige vers /login avec un message explicite.
  */
-const useSessionGuard = () => {
+const useSessionGuard = (): void => {
   const navigate   = useNavigate();
   const setUser    = useAppStore((s) => s.setUser);
   const clearCart  = useAppStore((s) => s.clearCart);
@@ -22,7 +22,7 @@ const useSessionGuard = () => {
       try {
         // Force le refresh du token — lève une erreur si expiré/révoqué
         await fbUser.getIdToken(true);
-      } catch (err) {
+      } catch (err: any) {
         console.warn('[SessionGuard] Token invalide, déconnexion.', err.code);
         setUser(null);
         clearCart();

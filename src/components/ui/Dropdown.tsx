@@ -1,7 +1,20 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, ReactNode } from 'react';
 
-export const Dropdown = ({ trigger, items, align = 'left' }) => {
+type DropdownAlign = 'left' | 'right';
+
+interface DropdownItem {
+  label: string;
+  onClick?: () => void;
+}
+
+interface DropdownProps {
+  trigger: ReactNode;
+  items: DropdownItem[];
+  align?: DropdownAlign;
+}
+
+export const Dropdown = ({ trigger, items, align = 'left' }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
 

@@ -1,4 +1,12 @@
 import { motion } from 'framer-motion';
+import { ReactNode, HTMLAttributes } from 'react';
+
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+  className?: string;
+  hover?: boolean;
+  animated?: boolean;
+}
 
 export const Card = ({
   children,
@@ -6,7 +14,7 @@ export const Card = ({
   hover = true,
   animated = true,
   ...props
-}) => {
+}: CardProps) => {
   const Component = animated ? motion.div : 'div';
   const animationProps = animated ? {
     initial: { opacity: 0, y: 20 },

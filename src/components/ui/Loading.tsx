@@ -1,6 +1,13 @@
 import { motion } from 'framer-motion';
 
-export const Loading = ({ size = 'md', fullScreen = false }) => {
+type LoadingSize = 'sm' | 'md' | 'lg';
+
+interface LoadingProps {
+  size?: LoadingSize;
+  fullScreen?: boolean;
+}
+
+export const Loading = ({ size = 'md', fullScreen = false }: LoadingProps) => {
   const sizes = {
     sm: 'w-6 h-6',
     md: 'w-10 h-10',

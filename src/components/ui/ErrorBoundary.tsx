@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { ReactNode, ErrorInfo } from 'react';
+
+interface ErrorBoundaryProps {
+  children?: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
 
 /**
  * Error Boundary global — capture les crashes React et affiche un fallback propre.
  * Doit être une class component (API React obligatoire).
  */
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
     // En prod, envoyer à Sentry / LogRocket ici
     console.error('[ErrorBoundary]', error, info.componentStack);
   }

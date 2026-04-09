@@ -1,9 +1,16 @@
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  maxVisible?: number;
+}
+
 export const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
   maxVisible = 5,
-}) => {
+}: PaginationProps) => {
   const getPageNumbers = () => {
     const pages = [];
     const half = Math.floor(maxVisible / 2);
