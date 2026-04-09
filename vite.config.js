@@ -55,10 +55,10 @@ export default defineConfig({
           if (id.includes('firebase/auth'))      return 'firebase-auth';
           if (id.includes('firebase/firestore')) return 'firebase-firestore';
           if (id.includes('firebase'))           return 'firebase-core';
-          if (id.includes('react-dom'))          return 'react-dom';
           if (id.includes('react-router'))       return 'react-router';
-          if (id.includes('react'))              return 'react-vendor';
           if (id.includes('zustand'))            return 'zustand';
+          // Keep react and react-dom together
+          if (id.includes('react'))              return 'react-vendor';
           return 'vendor';
         },
         // Nommage des assets avec hash pour cache busting
@@ -69,9 +69,8 @@ export default defineConfig({
     },
   },
 
- optimizeDeps: {
+  optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'zustand'],
-    force: true,  
   },
     css: {
     devSourcemap: true,
