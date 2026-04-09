@@ -1,9 +1,21 @@
+import { ReactNode, HTMLAttributes } from 'react';
+
+type BadgeVariant = 'default' | 'primary' | 'success' | 'warning' | 'error';
+type BadgeSize = 'sm' | 'md' | 'lg';
+
+interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+  children?: ReactNode;
+  variant?: BadgeVariant;
+  size?: BadgeSize;
+  className?: string;
+}
+
 export const Badge = ({
   children,
   variant = 'default',
   size = 'md',
   className = '',
-}) => {
+}: BadgeProps) => {
   const variants = {
     default: 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white',
     primary: 'bg-brand/10 text-brand dark:bg-brand/20',

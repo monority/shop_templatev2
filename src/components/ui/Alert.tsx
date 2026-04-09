@@ -1,4 +1,15 @@
 import { motion } from 'framer-motion';
+import { ReactNode, HTMLAttributes } from 'react';
+
+type AlertVariant = 'success' | 'error' | 'warning' | 'info';
+
+interface AlertProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+  variant?: AlertVariant;
+  title?: string;
+  onClose?: () => void;
+  className?: string;
+}
 
 export const Alert = ({
   children,
@@ -6,7 +17,7 @@ export const Alert = ({
   title,
   onClose,
   className = '',
-}) => {
+}: AlertProps) => {
   const variants = {
     success: {
       bg: 'bg-green-50 dark:bg-green-900/20',

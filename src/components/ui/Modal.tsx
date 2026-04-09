@@ -1,7 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, ReactNode } from 'react';
 
-export const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
+type ModalSize = 'sm' | 'md' | 'lg' | 'xl';
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  children?: ReactNode;
+  size?: ModalSize;
+}
+
+export const Modal = ({ isOpen, onClose, title, children, size = 'md' }: ModalProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';

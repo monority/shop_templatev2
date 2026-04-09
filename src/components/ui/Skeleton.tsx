@@ -1,8 +1,28 @@
+import { HTMLAttributes, ReactNode } from 'react';
+
+interface SkeletonBaseProps extends HTMLAttributes<HTMLDivElement> {
+  className?: string;
+}
+
 /**
  * Composant de base — barre de skeleton animée.
  */
-const SkeletonBase = ({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-200 rounded-lg ${className}`} aria-hidden="true" />
+const SkeletonBase = ({ className = '', ...props }: SkeletonBaseProps) => (
+  <div className={`animate-pulse bg-gray-200 rounded-lg ${className}`} aria-hidden="true" {...props} />
+);
+
+interface ProductGridSkeletonProps {
+  count?: number;
+}
+
+/**
+ * Grille de skeletons pour la page Shop / Home.
+ */
+export const ProductGridSkeleton = ({ count = 8 }: ProductGridSkeletonProps) => (
+  <div className="products-grid" role="status" aria-label="Loading products">
+    <span className="sr-only">Loading products…</span>
+    {[...Array(count)].map((_, i) => <ProductCardSkeleton key={i} />)}
+  </div>
 );
 
 /**
@@ -24,15 +44,9 @@ export const ProductCardSkeleton = () => (
   </div>
 );
 
-/**
- * Grille de skeletons pour la page Shop / Home.
- */
-export const ProductGridSkeleton = ({ count = 8 }) => (
-  <div className="products-grid" role="status" aria-label="Loading products">
-    <span className="sr-only">Loading products…</span>
-    {[...Array(count)].map((_, i) => <ProductCardSkeleton key={i} />)}
-  </div>
-);
+interface CategoryGridSkeletonProps {
+  count?: number;
+}
 
 /**
  * Skeleton d'une CategoryCard.
@@ -46,7 +60,7 @@ export const CategoryCardSkeleton = () => (
 /**
  * Grille de skeletons pour les catégories.
  */
-export const CategoryGridSkeleton = ({ count = 4 }) => (
+export const CategoryGridSkeleton = ({ count = 4 }: CategoryGridSkeletonProps) => (
   <div className="categories-grid" role="status" aria-label="Loading categories">
     <span className="sr-only">Loading categories…</span>
     {[...Array(count)].map((_, i) => <CategoryCardSkeleton key={i} />)}

@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+
+interface TooltipProps {
+  children: ReactNode;
+  content: ReactNode;
+  position?: TooltipPosition;
+  delay?: number;
+}
 
 export const Tooltip = ({
   children,
   content,
   position = 'top',
   delay = 0.2,
-}) => {
+}: TooltipProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const positionClasses = {

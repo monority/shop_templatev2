@@ -1,6 +1,19 @@
-import { forwardRef } from 'react';
+import { forwardRef, ReactNode, ButtonHTMLAttributes } from 'react';
 
-const VARIANTS = {
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'black';
+type ButtonSize = 'sm' | 'default' | 'lg' | 'xl' | 'icon';
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: ReactNode;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+  isLoading?: boolean;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+}
+
+const VARIANTS: Record<ButtonVariant, string> = {
   primary:     'btn btn-primary',
   secondary:   'btn btn-secondary',
   outline:     'btn btn-outline',
@@ -9,7 +22,7 @@ const VARIANTS = {
   black:       'btn btn-primary',
 };
 
-const SIZES = {
+const SIZES: Record<ButtonSize, string> = {
   sm:      'btn-sm',
   default: '',
   lg:      'btn-lg',
@@ -20,7 +33,7 @@ const SIZES = {
 /**
  * Bouton réutilisable avec variantes, tailles, état loading et icônes.
  */
-const Button = forwardRef(({
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   children,
   variant   = 'primary',
   size      = 'default',

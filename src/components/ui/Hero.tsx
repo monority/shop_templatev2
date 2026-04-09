@@ -1,12 +1,27 @@
 // Nike Air Max 90 — fond blanc neutre, mix-blend-mode supprime le fond visuellement
+import { ReactNode } from 'react';
+
 const DEFAULT_IMAGE  = 'img/heroshow.webp';
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80';
 
-const handleHeroError = (e) => {
+const handleHeroError = (e: React.SyntheticEvent<HTMLImageElement>) => {
   if (e.currentTarget.src !== FALLBACK_IMAGE) {
     e.currentTarget.src = FALLBACK_IMAGE;
   }
 };
+
+interface HeroProps {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  description?: string;
+  primaryAction?: string;
+  secondaryAction?: string;
+  onPrimaryClick?: () => void;
+  onSecondaryClick?: () => void;
+  imageSrc?: string;
+  alt?: string;
+}
 
 /**
  * Section Hero — LCP optimisé (loading eager, alt descriptif, aria).
@@ -22,7 +37,7 @@ const Hero = ({
   onSecondaryClick,
   imageSrc = DEFAULT_IMAGE,
   alt      = 'Premium sneakers collection',
-}) => (
+}: HeroProps) => (
   <section className="hero" aria-labelledby="hero-title">
     <div className="container">
       <div className="hero-grid">

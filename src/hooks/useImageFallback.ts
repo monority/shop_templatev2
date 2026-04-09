@@ -9,7 +9,7 @@ const FALLBACK_SRC =
  * En cas d'échec de chargement, remplace par un placeholder neutre.
  */
 const useImageFallback = () =>
-  useCallback((e) => {
+  useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
     if (e.currentTarget.src !== FALLBACK_SRC) {
       e.currentTarget.src = FALLBACK_SRC;
     }
