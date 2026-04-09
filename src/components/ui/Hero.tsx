@@ -73,7 +73,7 @@ const Hero = ({
               filter: 'drop-shadow(0 24px 48px rgba(99,102,241,0.18))',
             }}
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             onError={handleHeroError}
           />
         </div>
