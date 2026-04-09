@@ -9,14 +9,19 @@ const useAsync = (asyncFn, deps) => {
 
   useEffect(() => {
     let cancelled = false;
-    setState((s) => ({ ...s, loading: true, error: null }));
 
-    asyncFn()
-      .then((data)  => { if (!cancelled) setState({ data, loading: false, error: null }); })
-      .catch((err)  => { if (!cancelled) setState({ data: null, loading: false, error: err.message }); });
+    const fetchData = async () => {
+      try {
+        const data = await asyncFn();
+        if (!cancelled) setState({ data, loading: false, error: null });
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        if (!cancelled) setState({ data: null, loading: false, error: errorMessage });
+      }
+    };
 
+    fetchData();
     return () => { cancelled = true; };
-  // mount/deps only — asyncFn is intentionally excluded (would cause infinite loop)
   }, deps);
 
   return state;
