@@ -3,20 +3,27 @@ export default {
   darkMode: 'class',
   content: [
     './index.html',
-    './src/**/*.{js,jsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
     extend: {
       colors: {
-        brand: '#000000',
-        dark: '#1a1a1a',
-        success: '#10b981',
+        brand: '#6366f1',
+        'brand-dark': '#4f46e5',
+        'brand-light': '#818cf8',
+        accent: '#f97316',
+        dark: '#0f172a',
+        light: '#f8fafc',
+        gray: '#64748b',
+        success: '#22c55e',
         error: '#ef4444',
         warning: '#f59e0b',
+        info: '#3b82f6',
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in',
         'slide-up': 'slideUp 0.3s ease-out',
+        'spin': 'spin 1s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -27,6 +34,9 @@ export default {
           '0%': { transform: 'translateY(10px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
+      },
+      spacing: {
+        'header-height': '64px',
       },
     },
   },
