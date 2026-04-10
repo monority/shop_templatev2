@@ -16,7 +16,7 @@ const TrackOrder = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <PageMeta title="Track Your Order" description="Check your delivery status." />
+      <PageMeta title="Track Your Order" description="Enter your order number and email to check your HORLOGÉ delivery status in real time." canonical="/help/track" />
       <DarkPage title="Track Order" subtitle="Enter your order number and email to check your delivery status." label="Tracking" maxWidth="max-w-xl">
 
         <Reveal>

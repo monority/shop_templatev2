@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const Sustainability = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="Sustainability" description="Our commitment to responsible luxury." />
+    <PageMeta title="Sustainability" description="Our commitment to responsible luxury — eco packaging, ethical sourcing, and circular commerce." canonical="/sustainability" />
     <DarkPage title="Sustainability" subtitle="Luxury without compromise. Our commitment to a better industry." label="Responsibility">
 
       <Reveal>

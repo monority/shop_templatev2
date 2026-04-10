@@ -21,7 +21,7 @@ const LUG_WIDTHS = [
 
 const SizeGuide = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="Watch Size Guide" description="Find the perfect case size and strap width for your wrist." />
+    <PageMeta title="Watch Size Guide" description="Find the perfect case diameter and lug width for your wrist. Full guide from 36mm to 44mm." canonical="/help/size-guide" />
     <DarkPage title="Watch Size Guide" subtitle="Find the perfect case size and lug width for your wrist." label="Guide">
 
       <Reveal>

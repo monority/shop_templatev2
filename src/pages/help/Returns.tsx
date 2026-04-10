@@ -4,7 +4,7 @@ import { Reveal, RevealGroup, RevealItem } from '../../components/ui/Reveal';
 
 const Returns = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="Returns & Exchanges" description="30-day hassle-free returns on all timepieces." />
+    <PageMeta title="Returns & Exchanges" description="30-day hassle-free returns on all timepieces. Free return shipping, refunds in 3–5 business days." canonical="/help/returns" />
     <DarkPage title="Returns & Exchanges" subtitle="Not the right piece? No problem. 30-day returns, no questions asked." label="Returns">
 
       <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04]" stagger={0.08}>

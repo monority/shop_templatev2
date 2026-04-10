@@ -19,7 +19,7 @@ const Careers = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <PageMeta title="Careers" description="Join the HORLOGÉ team. Help us build the future of watch culture." />
+      <PageMeta title="Careers" description="Join the HORLOGÉ team. Help us build the future of luxury watch culture." canonical="/careers" />
       <DarkPage title="Join the Team" subtitle="Help us build the future of watch culture." label="Careers">
 
         <RevealGroup className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/[0.04]" stagger={0.08}>

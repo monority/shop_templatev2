@@ -5,7 +5,7 @@ import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 
 const About = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="About Us" description="HORLOGÉ — curated luxury timepieces since 2019." />
+    <PageMeta title="About Us" description="HORLOGÉ — curated luxury timepieces since 2019. Born from a passion for horology, built for the modern collector." canonical="/about" />
     <DarkPage title="About HORLOGÉ" subtitle="Born from a passion for horology. Built for the modern collector." label="Our Story">
       <Reveal>
         <DarkSection title="Our Mission" id="mission">

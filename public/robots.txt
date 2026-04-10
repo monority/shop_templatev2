@@ -4,5 +4,7 @@ Allow: /
 Disallow: /checkout
 Disallow: /profile
 Disallow: /cart
+Disallow: /login
+Disallow: /register
 
-Sitemap: https://sneakara.com/sitemap.xml
+Sitemap: https://horloge.com/sitemap.xml

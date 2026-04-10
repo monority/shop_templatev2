@@ -102,7 +102,7 @@ const Search = () => {
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen">
-      <PageMeta title={debouncedQuery ? `"${debouncedQuery}"` : 'Search'} description="Search premium watchs" />
+      <PageMeta title={debouncedQuery ? `"${debouncedQuery}"` : 'Search'} description="Search our collection of luxury timepieces — filter by brand, movement, and price." canonical="/search" />
 
       {/* Header */}
       <div className="border-b border-white/[0.06] py-16">

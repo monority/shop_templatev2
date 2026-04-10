@@ -45,7 +45,7 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <PageMeta title="FAQ" description="Answers to our most common questions." />
+      <PageMeta title="FAQ" description="Answers to common questions about orders, shipping, returns, and watch authentication at HORLOGÉ." canonical="/help/faq" />
       <DarkPage title="FAQ" subtitle="Answers to our most common questions about orders, shipping, and authentication." label="Help">
         {FAQS.map((section) => (
           <Reveal key={section.category}>
