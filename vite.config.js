@@ -30,8 +30,8 @@ export default defineConfig({
   },
 
   build: {
-    // Alerte si un chunk dépasse 500kb
-    chunkSizeWarningLimit: 500,
+    // Augmenter la limite pour réduire les avertissements
+    chunkSizeWarningLimit: 600,
 
     // Minification agressive
     minify: 'esbuild',
@@ -39,6 +39,9 @@ export default defineConfig({
     // Supprime les console.log en production
     esbuildOptions: {
       drop: ['console', 'debugger'],
+      
+      // Essayer d'éviter certains problèmes de minification
+      keepNames: true,
     },
 
     // Source maps en prod désactivées (sécurité)
@@ -50,34 +53,75 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes('node_modules')) return;
           
-          // Assure que React et React-DOM sont dans le même chunk
-          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
-            return 'react-vendor';
+          // Isoler les grosses bibliothèques pour éviter les conflits
+          if (id.includes('node_modules/react/')) {
+            return 'react';
           }
           
-          // Gestion spécifique de lodash s'il est présent
-          if (id.includes('node_modules/lodash') || id.includes('node_modules/underscore')) {
+          if (id.includes('node_modules/react-dom/')) {
+            return 'react-dom';
+          }
+          
+          if (id.includes('node_modules/react-router/')) {
+            return 'react-router';
+          }
+          
+          if (id.includes('node_modules/zustand/')) {
+            return 'zustand';
+          }
+          
+          if (id.includes('node_modules/framer-motion/')) {
+            return 'framer-motion';
+          }
+          
+          if (id.includes('node_modules/firebase/auth/')) {
+            return 'firebase-auth';
+          }
+          
+          if (id.includes('node_modules/firebase/firestore/')) {
+            return 'firebase-firestore';
+          }
+          
+          if (id.includes('node_modules/firebase/')) {
+            return 'firebase-core';
+          }
+          
+          // Isoler les bibliothèques utilitaires qui peuvent causer des conflits
+          if (id.includes('node_modules/react-fast-compare')) {
+            return 'fast-compare';
+          }
+          
+          if (id.includes('node_modules/lodash') || 
+              id.includes('node_modules/underscore')) {
             return 'lodash';
           }
           
-          if (id.includes('firebase/auth'))      return 'firebase-auth';
-          if (id.includes('firebase/firestore')) return 'firebase-firestore';
-          if (id.includes('firebase'))           return 'firebase-core';
-          if (id.includes('react-router'))       return 'react-router';
-          if (id.includes('zustand'))            return 'zustand';
-          
+          // Regrouper les autres petits modules ensemble
           return 'vendor';
         },
         // Nommage des assets avec hash pour cache busting
         chunkFileNames:  'assets/js/[name]-[hash].js',
         entryFileNames:  'assets/js/[name]-[hash].js',
         assetFileNames:  'assets/[ext]/[name]-[hash].[ext]',
+        
+        // Désactiver le hoisting pour éviter les conflits de portée
+        hoistTransitiveImports: false,
       },
     },
   },
 
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'zustand'],
+    include: [
+      'react', 
+      'react-dom', 
+      'react-router-dom', 
+      'zustand',
+      'framer-motion',
+      'firebase/app',
+      'firebase/auth',
+      'firebase/firestore',
+      'react-fast-compare'
+    ],
   },
   css: {
     devSourcemap: true,
