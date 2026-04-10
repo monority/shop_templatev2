@@ -12,7 +12,7 @@ const METHODS = [
 
 const Shipping = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="Shipping Info" description="Fast, insured delivery for every timepiece." />
+    <PageMeta title="Shipping Info" description="Fast, insured delivery for every timepiece. Free shipping over $200, express options available." canonical="/help/shipping" />
     <DarkPage title="Shipping Info" subtitle="Every order is fully insured and tracked from our vault to your door." label="Delivery">
 
       <Reveal>

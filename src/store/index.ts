@@ -63,7 +63,7 @@ export const useAppStore = create(
           ? cart.items.map((i) => key(i) === pKey ? { ...i, quantity: i.quantity + (product.quantity ?? 1) } : i)
           : [...cart.items, { ...product, quantity: product.quantity ?? 1 }];
         set({ cart: { ...cart, items } });
-        get().showToast(`${product.name} ajouté au panier`, 'success');
+        get().showToast(`${product.name} added to cart`, 'success');
       },
 
       removeFromCart: (id, size, color) => {

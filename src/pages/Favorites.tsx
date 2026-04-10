@@ -7,7 +7,7 @@ const Favorites = () => {
   const navigate = useNavigate();
   const { favorites } = useFavorites();
 
-  const meta = <PageMeta title="My Wishlist" description="Your saved watchs — all in one place." />;
+  const meta = <PageMeta title="My Wishlist" description="Your saved timepieces — all in one place." />;
 
   if (!favorites || favorites.length === 0) {
     return (

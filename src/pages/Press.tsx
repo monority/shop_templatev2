@@ -11,7 +11,7 @@ const COVERAGE = [
 
 const Press = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="Press & Media" description="What the world is saying about HORLOGÉ." />
+    <PageMeta title="Press & Media" description="What the world is saying about HORLOGÉ. Press coverage, media kit, and contact." canonical="/press" />
     <DarkPage title="Press & Media" subtitle="What the world is saying about HORLOGÉ." label="Media">
 
       <Reveal>
