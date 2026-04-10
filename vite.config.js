@@ -55,6 +55,11 @@ export default defineConfig({
             return 'react-vendor';
           }
           
+          // Gestion spécifique de lodash s'il est présent
+          if (id.includes('node_modules/lodash') || id.includes('node_modules/underscore')) {
+            return 'lodash';
+          }
+          
           if (id.includes('firebase/auth'))      return 'firebase-auth';
           if (id.includes('firebase/firestore')) return 'firebase-firestore';
           if (id.includes('firebase'))           return 'firebase-core';
