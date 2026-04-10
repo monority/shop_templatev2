@@ -49,13 +49,18 @@ export default defineConfig({
         // Chunking manuel — sépare les vendors lourds
         manualChunks(id) {
           if (!id.includes('node_modules')) return;
+          
+          // Assure que React et React-DOM sont dans le même chunk
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+            return 'react-vendor';
+          }
+          
           if (id.includes('firebase/auth'))      return 'firebase-auth';
           if (id.includes('firebase/firestore')) return 'firebase-firestore';
           if (id.includes('firebase'))           return 'firebase-core';
           if (id.includes('react-router'))       return 'react-router';
           if (id.includes('zustand'))            return 'zustand';
-          // Keep react and react-dom together
-          if (id.includes('react'))              return 'react-vendor';
+          
           return 'vendor';
         },
         // Nommage des assets avec hash pour cache busting
