@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,8 +14,8 @@ html {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: #ffffff;
-  color: #0a0a0a;
+  background-color: #0a0a0a;
+  color: #ffffff;
 }
 
 ::selection {
@@ -29,16 +29,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f5;
+  background: #1a1a1a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cccccc;
+  background: #333333;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #999999;
+  background: #555555;
 }
 
 :focus-visible {
@@ -55,6 +55,34 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Product card — CSS-driven fade-in, no JS scroll listener */
+.product-card-root {
+  animation: fadeInUp 0.5s ease both;
+  animation-play-state: paused;
+  /* CSS containment — browser skips layout/paint for off-screen cards */
+  contain: layout style;
+}
+
+/* Trigger when card enters viewport via content-visibility */
+@supports (animation-timeline: scroll()) {
+  .product-card-root {
+    animation-play-state: running;
+  }
+}
+
+/* Fallback: just show them */
+@media (prefers-reduced-motion: reduce) {
+  .product-card-root {
+    animation: none;
+  }
+}
+
+/* Sections below the fold — skip rendering until near viewport */
+.content-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
 }
 
 @keyframes slideInLeft {
@@ -104,7 +132,7 @@ body {
 
   .section-title {
     @apply text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-dark;
-    font-family: 'Playfair Display', serif;
+    font-family: 'DM Serif Display', serif;
   }
 
   .btn {
@@ -112,28 +140,23 @@ body {
   }
 
   .btn-primary {
-    @apply bg-dark text-white hover:bg-brand-dark shadow-lg hover:shadow-xl hover:scale-105;
+    @apply bg-white text-[#0a0a0a] hover:bg-white/90 shadow-none;
   }
 
   .btn-secondary {
-    @apply border-2 border-dark text-dark hover:bg-dark/5 hover:scale-105;
+    @apply border border-white/20 text-white hover:bg-white/5 hover:border-white/40;
   }
 
   .btn-ghost {
-    @apply text-dark hover:bg-light hover:translate-x-1 transition-transform;
+    @apply text-white/50 hover:text-white transition-colors;
   }
 
   .input {
-    @apply w-full px-4 py-3 rounded-lg border transition-all;
-    border-color: #e5e5e5;
-    background-color: #ffffff;
+    @apply w-full px-4 py-3 transition-all bg-white/5 border border-white/10 text-white placeholder:text-white/25;
   }
 
   .input:focus {
-    @apply outline-none ring-2;
-    ring-color: rgba(0, 0, 0, 0.1);
-    border-color: #000000;
-    background-color: white;
+    @apply outline-none border-white/30;
   }
 
   .form-label {
@@ -145,8 +168,8 @@ body {
   }
 
   .card {
-    @apply rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105;
-    border: 1px solid #e5e5e5;
+    @apply overflow-hidden bg-[#111111] transition-all duration-300;
+    border: 1px solid rgba(255,255,255,0.06);
   }
 
   .products-grid {
@@ -157,43 +180,7 @@ body {
     @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
   }
 
-  .hero {
-    @apply relative py-24 md:py-40 text-dark overflow-hidden;
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-  }
-
-  .hero::before {
-    content: '';
-    @apply absolute inset-0 opacity-5;
-    background-image: 
-      radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.1) 0%, transparent 50%);
-  }
-
-  .hero-grid {
-    @apply grid md:grid-cols-2 gap-16 items-center relative z-10;
-  }
-
-  .hero-tag {
-    @apply inline-block text-xs font-bold tracking-widest mb-4 uppercase;
-    color: #000000;
-    letter-spacing: 0.15em;
-  }
-
-  .hero-title {
-    @apply text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 text-dark;
-    font-family: 'Playfair Display', serif;
-  }
-
-  .hero-desc {
-    @apply text-lg mb-8 max-w-md;
-    color: #666666;
-    line-height: 1.8;
-  }
-
-  .hero-actions {
-    @apply flex flex-col sm:flex-row gap-4;
-  }
+  /* Hero is now fully self-contained in Hero.tsx */
 
   .product-card {
     @apply rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all;
@@ -235,7 +222,7 @@ body {
 
   .stat-card .stat-value {
     @apply text-4xl md:text-5xl font-extrabold text-dark mb-2;
-    font-family: 'Playfair Display', serif;
+    font-family: 'DM Serif Display', serif;
   }
 
   .stat-card .stat-label {
@@ -257,8 +244,12 @@ body {
     @apply h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent;
   }
 
-  /* Premium accent */
-  .accent-gold {
-    color: #d4af37;
-  }
+/* Smooth image hover — GPU composited */
+.product-card-root img {
+  transform: translateZ(0);
+}
+
+.product-card-root:hover img {
+  will-change: transform;
+}
 }

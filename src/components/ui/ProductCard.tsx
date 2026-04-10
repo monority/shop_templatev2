@@ -1,4 +1,4 @@
-import { memo, useCallback, ReactNode } from 'react';
+import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart, useFavorites } from '../../store';
 import { formatPrice } from '../../utils/format';
@@ -14,43 +14,49 @@ interface Product {
   isNew?: boolean;
   discount?: number;
   rating?: number;
+  movement?: string;
 }
 
 interface ProductCardProps {
   product: Product;
   showAddToCart?: boolean;
+  dark?: boolean;
 }
 
 const HeartIcon = ({ filled }: { filled: boolean }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" aria-hidden="true">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" aria-hidden="true">
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
   </svg>
 );
 
-const StarIcon = ({ filled }: { filled: boolean }) => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" aria-hidden="true">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-  </svg>
+const Stars = ({ rating }: { rating: number }) => (
+  <div className="flex gap-0.5" aria-hidden="true">
+    {[1,2,3,4,5].map((i) => (
+      <svg key={i} width="11" height="11" viewBox="0 0 24 24"
+        fill={i <= Math.floor(rating) ? 'currentColor' : 'none'}
+        stroke="currentColor" strokeWidth="2"
+      >
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    ))}
+  </div>
 );
 
-/**
- * ProductCard — mémoïsé, accessible, images responsive.
- */
-const ProductCard = memo(({ product, showAddToCart = true }: ProductCardProps) => {
-  const navigate  = useNavigate();
-  const { addToCart }                          = useCart();
-  const { toggleFavorite, isFavorite: check }  = useFavorites();
-  const handleImgError                         = useImageFallback();
+const ProductCard = memo(({ product, showAddToCart = true, dark = false }: ProductCardProps) => {
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const { toggleFavorite, isFavorite: check } = useFavorites();
+  const handleImgError = useImageFallback();
 
-  const { id, name, brand, price, originalPrice, image, isNew, discount, rating = 4.5 } = product;
+  const { id, name, brand, price, originalPrice, image, isNew, discount, rating = 4.5, movement } = product;
   const isFav = check(id);
 
-  const handleAddToCart = useCallback((e) => {
+  const handleAddToCart = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart({ id, name, brand, price, image, size: 42, color: 'Default', quantity: 1 });
+    addToCart({ id, name, brand, price, image, size: 40, color: 'Black Leather', quantity: 1 });
   }, [id, name, brand, price, image, addToCart]);
 
-  const handleFavorite = useCallback((e) => {
+  const handleFavorite = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     toggleFavorite(product);
   }, [product, toggleFavorite]);
@@ -59,12 +65,12 @@ const ProductCard = memo(({ product, showAddToCart = true }: ProductCardProps) =
 
   return (
     <article
-      className="card cursor-pointer group"
+      className={`product-card-root cursor-pointer group ${dark ? 'bg-[#0a0a0a]' : 'card'}`}
       onClick={handleClick}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleClick()}
       role="button"
       tabIndex={0}
-      aria-label={`${name} par ${brand} — ${formatPrice(price)}`}
+      aria-label={`${name} by ${brand} — ${formatPrice(price)}`}
     >
       {/* Image */}
       <div className="relative overflow-hidden">
@@ -72,19 +78,20 @@ const ProductCard = memo(({ product, showAddToCart = true }: ProductCardProps) =
           src={image}
           alt={name}
           loading="lazy"
+          decoding="async"
           width={400}
           height={400}
           onError={handleImgError}
-          className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Quick add overlay */}
+        {/* Quick add — CSS only, no JS animation */}
         {showAddToCart && (
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <button
-              className="btn btn-primary translate-y-4 group-hover:translate-y-0 transition-transform"
+              className="px-5 py-2.5 bg-white text-[#0a0a0a] text-xs font-bold tracking-[0.2em] uppercase translate-y-3 group-hover:translate-y-0 transition-transform duration-300"
               onClick={handleAddToCart}
-              aria-label={`Ajouter ${name} au panier`}
+              aria-label={`Add ${name} to cart`}
             >
               Add to Cart
             </button>
@@ -92,16 +99,26 @@ const ProductCard = memo(({ product, showAddToCart = true }: ProductCardProps) =
         )}
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
-          {isNew     && <span className="badge badge-brand">New</span>}
-          {discount > 0 && <span className="badge badge-error">-{discount}%</span>}
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          {isNew && (
+            <span className="text-[9px] tracking-[0.2em] uppercase font-bold bg-white text-[#0a0a0a] px-2 py-0.5">New</span>
+          )}
+          {(discount ?? 0) > 0 && (
+            <span className="text-[9px] tracking-[0.2em] uppercase font-bold bg-accent text-white px-2 py-0.5">-{discount}%</span>
+          )}
         </div>
 
         {/* Wishlist */}
         <button
           onClick={handleFavorite}
-          className={`absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all ${isFav ? 'bg-error text-white' : 'bg-white text-gray hover:text-error'}`}
-          aria-label={isFav ? `Retirer ${name} des favoris` : `Ajouter ${name} aux favoris`}
+          className={`absolute top-3 right-3 w-8 h-8 flex items-center justify-center transition-all duration-200 ${
+            isFav
+              ? 'text-white bg-accent/80'
+              : dark
+                ? 'text-white/30 bg-white/5 hover:text-white hover:bg-white/10'
+                : 'text-black/40 bg-white/80 hover:text-black hover:bg-white'
+          }`}
+          aria-label={isFav ? `Remove ${name} from wishlist` : `Add ${name} to wishlist`}
           aria-pressed={isFav}
         >
           <HeartIcon filled={isFav} />
@@ -110,20 +127,31 @@ const ProductCard = memo(({ product, showAddToCart = true }: ProductCardProps) =
 
       {/* Info */}
       <div className="p-4">
-        <span className="text-sm text-brand font-medium">{brand}</span>
-        <h3 className="font-semibold text-dark mt-1 line-clamp-1">{name}</h3>
+        <p className={`text-[10px] tracking-[0.2em] uppercase font-medium mb-1 ${dark ? 'text-white/30' : 'text-black/40'}`}>
+          {brand}
+        </p>
+        <h3 className={`text-sm font-semibold line-clamp-1 ${dark ? 'text-white' : 'text-[#0a0a0a]'}`}>
+          {name}
+        </h3>
+        {movement && (
+          <p className={`text-[10px] tracking-widest uppercase mt-0.5 ${dark ? 'text-white/20' : 'text-black/25'}`}>
+            {movement}
+          </p>
+        )}
 
-        <div className="flex items-center gap-1 mt-2" aria-label={`Note : ${rating} sur 5`}>
-          <div className="flex text-warning">
-            {[...Array(5)].map((_, i) => <StarIcon key={i} filled={i < Math.floor(rating)} />)}
-          </div>
-          <span className="text-xs text-gray">({rating})</span>
+        <div className="flex items-center gap-1.5 mt-2" aria-label={`Rating: ${rating} out of 5`}>
+          <Stars rating={rating} />
+          <span className={`text-[10px] ${dark ? 'text-white/20' : 'text-black/30'}`}>({rating})</span>
         </div>
 
         <div className="flex items-center gap-2 mt-3">
-          <span className="font-bold text-dark">{formatPrice(price)}</span>
+          <span className={`font-bold text-sm ${dark ? 'text-white' : 'text-[#0a0a0a]'}`}>
+            {formatPrice(price)}
+          </span>
           {originalPrice && (
-            <span className="text-sm text-gray line-through" aria-label={`Prix original : ${formatPrice(originalPrice)}`}>{formatPrice(originalPrice)}</span>
+            <span className={`text-xs line-through ${dark ? 'text-white/20' : 'text-black/30'}`}>
+              {formatPrice(originalPrice)}
+            </span>
           )}
         </div>
       </div>
@@ -132,6 +160,5 @@ const ProductCard = memo(({ product, showAddToCart = true }: ProductCardProps) =
 });
 
 ProductCard.displayName = 'ProductCard';
-
 export { ProductCard };
 export default ProductCard;

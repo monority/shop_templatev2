@@ -2,7 +2,7 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// ── Validation des variables d'environnement ─────────────────────────────────
+// ── Required env vars ─────────────────────────────────────────────────────────
 const REQUIRED = [
   'VITE_FIREBASE_API_KEY',
   'VITE_FIREBASE_AUTH_DOMAIN',
@@ -10,11 +10,26 @@ const REQUIRED = [
   'VITE_FIREBASE_STORAGE_BUCKET',
   'VITE_FIREBASE_MESSAGING_SENDER_ID',
   'VITE_FIREBASE_APP_ID',
-];
+] as const;
 
-const missing = REQUIRED.filter((k) => !import.meta.env[k]);
+// Detect unconfigured placeholders
+const PLACEHOLDER_PATTERNS = ['your-', 'YOUR_', 'xxx', ''];
+
+const isPlaceholder = (val: string | undefined) =>
+  !val || PLACEHOLDER_PATTERNS.some((p) => val.startsWith(p));
+
+const missing = REQUIRED.filter((k) => isPlaceholder(import.meta.env[k]));
+
 if (missing.length > 0) {
-  console.error('[Firebase] Variables manquantes :', missing.join(', '));
+  if (import.meta.env.DEV) {
+    console.warn(
+      `%c[HORLOGÉ] Firebase not configured\n` +
+      `Copy .env.example → .env.local and fill in your Firebase credentials.\n` +
+      `Missing / placeholder: ${missing.join(', ')}\n` +
+      `Auth and Firestore features will be disabled.`,
+      'color: #f59e0b; font-weight: bold;'
+    );
+  }
 }
 
 // ── Initialisation (singleton) ────────────────────────────────────────────────
@@ -32,3 +47,6 @@ const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db   = getFirestore(app);
+
+/** True when Firebase is properly configured (not placeholder values) */
+export const isFirebaseConfigured = missing.length === 0;

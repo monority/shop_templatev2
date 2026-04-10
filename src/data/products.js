@@ -87,7 +87,7 @@ export const products = [
       "https://images.unsplash.com/photo-1580902215262-9b941bc6eab3?w=600"
     ],
     category: "men",
-    description: "The iconic visible Air cushioning that changed footwear forever. A timeless silhouette for every wardrobe.",
+    description: "The iconic visible Air cushioning that changed timepieces forever. A timeless silhouette for every wardrobe.",
     sizes: [40, 41, 42, 43, 44, 45, 46],
     colors: ["White", "Black", "Infrared"],
     features: ["Visible Max Air unit", "Leather and mesh upper", "Foam midsole", "Rubber outsole"]
@@ -106,7 +106,7 @@ export const products = [
     ],
     discount: 17,
     category: "men",
-    description: "The shoe that changed basketball and culture. The Jordan 1 Retro High is the original sneaker icon.",
+    description: "The shoe that changed basketball and culture. The Jordan 1 Retro High is the original watch icon.",
     sizes: [40, 41, 42, 43, 44, 45],
     colors: ["Chicago Red", "Royal Blue", "Shadow"],
     features: ["Full grain leather upper", "Encapsulated Air-Sole unit", "Pivot point outsole", "High-top silhouette"]
@@ -303,7 +303,7 @@ export const products = [
       "https://images.unsplash.com/photo-1579338628-040f0659553c?w=600"
     ],
     category: "women",
-    description: "The 574 is a timeless everyday sneaker with a classic silhouette that suits every casual look.",
+    description: "The 574 is a timeless everyday watch with a classic silhouette that suits every casual look.",
     sizes: [36, 37, 38, 39, 40, 41],
     colors: ["Sea Salt", "Black", "Burgundy"],
     features: ["Suede and mesh upper", "ENCAP midsole", "Rubber outsole", "Iconic retro design"]
@@ -506,7 +506,7 @@ export const products = [
     ],
     discount: 15,
     category: "lifestyle",
-    description: "Born on the hardwood, raised on the streets. The Dunk Low is the ultimate streetwear sneaker.",
+    description: "Born on the hardwood, raised on the streets. The Dunk Low is the ultimate streetwear watch.",
     sizes: [38, 39, 40, 41, 42, 43, 44, 45],
     colors: ["White/Black", "Green", "Red"],
     features: ["Leather upper", "Foam midsole", "Pivot point outsole", "Classic low-top design"]
@@ -523,7 +523,7 @@ export const products = [
       "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600"
     ],
     category: "lifestyle",
-    description: "One of the most iconic sneakers ever made. The Stan Smith has been defining clean style since 1971.",
+    description: "One of the most iconic watchs ever made. The Stan Smith has been defining clean style since 1971.",
     sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44],
     colors: ["White/Green", "White/Navy", "White/Black"],
     features: ["Leather upper", "Perforated 3-Stripes", "OrthoLite Cushioning", "Rubber outsole"]

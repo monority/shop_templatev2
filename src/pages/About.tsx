@@ -1,77 +1,76 @@
 import { Link } from 'react-router-dom';
 import PageMeta from '../components/ui/PageMeta';
+import { DarkPage, DarkCard, DarkSection } from '../components/ui/DarkPage';
+import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 
 const About = () => (
-    <div className="min-h-screen bg-light">
-      <PageMeta
-        title="About Us"
-        description="Born in the streets, built for the future. Sneakara makes premium sneaker culture accessible to everyone."
-      />
-        {/* Hero */}
-        <div className="bg-dark text-white py-24 px-8 text-center">
-            <h1 className="text-5xl font-extrabold tracking-tight mb-4">
-                About SNEAK<span className="text-brand">ARA</span>
-            </h1>
-            <p className="text-gray-300 text-xl max-w-2xl mx-auto">
-                Born in the streets, built for the future.
-            </p>
-        </div>
+  <div className="min-h-screen bg-[#0a0a0a]">
+    <PageMeta title="About Us" description="HORLOGÉ — curated luxury timepieces since 2019." />
+    <DarkPage title="About HORLOGÉ" subtitle="Born from a passion for horology. Built for the modern collector." label="Our Story">
+      <Reveal>
+        <DarkSection title="Our Mission" id="mission">
+          <p className="text-white/50 text-sm leading-relaxed">
+            HORLOGÉ was founded with a single vision: make premium timepiece culture accessible to every collector.
+            We believe a great watch is never just an accessory — it's a statement of craft, heritage, and identity.
+            Every piece we carry is curated for quality, movement, and cultural relevance.
+          </p>
+        </DarkSection>
+      </Reveal>
 
-        <div className="container max-w-4xl mx-auto px-6 py-20 space-y-16">
-        <section aria-labelledby="mission">
-                <h2 id="mission" className="text-3xl font-bold text-dark mb-4">Our Mission</h2>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                    Sneakara was founded with a single vision: make premium sneaker culture accessible to everyone.
-                    We believe great footwear isn't a luxury — it's a statement. Every pair we carry is curated for
-                    quality, design, and cultural relevance.
-                </p>
-            </section>
-
-            {/* Stats */}
-            <section className="grid grid-cols-3 gap-8 text-center">
-                {[['2019', 'Founded'], ['50K+', 'Customers'], ['200+', 'Products']].map(([val, label]) => (
-                    <div key={label} className="card p-8">
-                        <div className="text-4xl font-extrabold text-brand mb-2">{val}</div>
-                        <div className="text-gray-500 font-medium">{label}</div>
-                    </div>
-                ))}
-            </section>
-
-        <section aria-labelledby="story">
-                <h2 id="story" className="text-3xl font-bold text-dark mb-4">Our Story</h2>
-                <p className="text-gray-600 text-lg leading-relaxed mb-4">
-                    What started as a small pop-up in Paris has grown into a destination for sneaker enthusiasts
-                    across Europe. Our team of passionate collectors handpicks every model — from classic silhouettes
-                    to the latest drops.
-                </p>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                    We partner directly with brands and trusted suppliers to guarantee authenticity on every single
-                    item. No fakes, no compromises.
-                </p>
-            </section>
-
-        <section aria-labelledby="values">
-                <h2 id="values" className="text-3xl font-bold text-dark mb-8">What We Stand For</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {[
-                        { icon: '🎯', title: 'Authenticity', text: 'Every item is 100% verified and genuine.' },
-                        { icon: '🌍', title: 'Community', text: 'We celebrate sneaker culture in all its forms.' },
-                        { icon: '♻️', title: 'Responsibility', text: 'Committed to a more sustainable future.' },
-                    ].map(({ icon, title, text }) => (
-                        <div key={title} className="card p-6">
-                            <div className="text-3xl mb-3" aria-hidden="true">{icon}</div>
-                            <h3 className="font-bold text-dark text-lg mb-2">{title}</h3>
-                            <p className="text-gray-500">{text}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            <div className="text-center">
-                <Link to="/shop" className="btn btn-primary">Explore Our Collection</Link>
+      <RevealGroup className="grid grid-cols-3 gap-px bg-white/[0.04]" stagger={0.08}>
+        {[['2019', 'Founded'], ['50K+', 'Collectors'], ['200+', 'References']].map(([val, label]) => (
+          <RevealItem key={label}>
+            <div className="bg-[#0a0a0a] p-8 text-center">
+              <p className="text-white text-3xl font-bold mb-1" style={{ fontFamily: "'DM Serif Display', serif" }}>{val}</p>
+              <p className="text-white/30 text-xs tracking-[0.2em] uppercase">{label}</p>
             </div>
-        </div>
-    </div>
+          </RevealItem>
+        ))}
+      </RevealGroup>
+
+      <Reveal>
+        <DarkSection title="Our Story" id="story">
+          <div className="space-y-4 text-white/50 text-sm leading-relaxed">
+            <p>
+              What started as a small curated selection in Paris has grown into a destination for watch enthusiasts
+              across Europe. Our team of passionate horologists handpicks every reference — from classic dress watches
+              to bold sport chronographs.
+            </p>
+            <p>
+              We partner directly with authorised dealers and trusted suppliers to guarantee authenticity on every
+              single piece. No grey market, no compromises.
+            </p>
+          </div>
+        </DarkSection>
+      </Reveal>
+
+      <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04]" stagger={0.1}>
+        {[
+          { title: 'Authenticity', text: 'Every timepiece is 100% verified by our expert horologists.' },
+          { title: 'Community',    text: 'We celebrate watch culture in all its forms, from vintage to modern.' },
+          { title: 'Responsibility', text: 'Committed to sustainable packaging and ethical sourcing.' },
+        ].map(({ title, text }) => (
+          <RevealItem key={title}>
+            <div className="bg-[#0a0a0a] p-8">
+              <p className="text-white/20 text-[10px] tracking-[0.25em] uppercase mb-3">✦</p>
+              <h3 className="text-white font-semibold mb-2">{title}</h3>
+              <p className="text-white/40 text-sm leading-relaxed">{text}</p>
+            </div>
+          </RevealItem>
+        ))}
+      </RevealGroup>
+
+      <Reveal className="text-center pt-4">
+        <Link
+          to="/shop"
+          className="inline-flex items-center gap-2 text-white text-xs tracking-[0.2em] uppercase border-b border-white/20 pb-0.5 hover:border-white transition-colors"
+        >
+          Explore Our Collection
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </Link>
+      </Reveal>
+    </DarkPage>
+  </div>
 );
 
 export default About;

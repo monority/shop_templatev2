@@ -1,98 +1,95 @@
-import { useState } from 'react';
 import PageMeta from '../../components/ui/PageMeta';
+import { DarkPage, DarkSection } from '../../components/ui/DarkPage';
+import { Reveal } from '../../components/ui/Reveal';
 
-const SIZES = {
-  US: ['6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13'],
-  EU: ['38', '39', '40', '40.5', '41', '42', '42.5', '43', '44', '44.5', '45', '45.5', '46', '47', '47.5'],
-  UK: ['5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12'],
-  CM: ['24', '24.5', '25', '25.5', '26', '26.5', '27', '27', '28', '28.5', '29', '29.5', '30', '30.5', '31'],
-};
+// Watch case size guide — more relevant than shoe sizes
+const CASE_SIZES = [
+  { size: '28–32mm', fit: 'Small / Petite',  desc: 'Ideal for smaller wrists. Classic dress watch proportions.' },
+  { size: '34–36mm', fit: 'Classic',          desc: 'Traditional dress watch size. Timeless and versatile.' },
+  { size: '38–40mm', fit: 'Mid-size',         desc: 'The most popular range. Suits most wrist sizes.' },
+  { size: '42–44mm', fit: 'Large',            desc: 'Bold presence. Sport and diver watches typically fall here.' },
+  { size: '46mm+',   fit: 'Oversized',        desc: 'Statement pieces. Best for larger wrists (18cm+).' },
+];
 
-const SizeGuide = () => {
-  const [gender, setGender] = useState('men');
+const LUG_WIDTHS = [
+  { lug: '16mm', common: 'Dress watches, small cases' },
+  { lug: '18mm', common: 'Mid-size dress and sport watches' },
+  { lug: '20mm', common: 'Most popular — widest strap selection' },
+  { lug: '22mm', common: 'Large sport and diver watches' },
+  { lug: '24mm', common: 'Oversized and pilot watches' },
+];
 
-  return (
-    <div className="min-h-screen bg-light">
-      <PageMeta
-        title="Size Guide"
-        description="Find your perfect sneaker fit with our full size conversion chart for US, EU, UK, and CM."
-      />
-      <div className="bg-dark text-white py-24 px-8 text-center">
-        <h1 className="text-5xl font-extrabold tracking-tight mb-4">Size Guide</h1>
-        <p className="text-gray-300 text-xl max-w-2xl mx-auto">Find your perfect fit every time.</p>
-      </div>
+const SizeGuide = () => (
+  <div className="min-h-screen bg-[#0a0a0a]">
+    <PageMeta title="Watch Size Guide" description="Find the perfect case size and strap width for your wrist." />
+    <DarkPage title="Watch Size Guide" subtitle="Find the perfect case size and lug width for your wrist." label="Guide">
 
-      <div className="container max-w-4xl mx-auto px-6 py-20 space-y-12">
-        {/* How to measure */}
-        <section aria-labelledby="how-to-measure">
-          <h2 id="how-to-measure" className="text-3xl font-bold text-dark mb-6">How to Measure Your Foot</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Reveal>
+        <DarkSection title="How to Measure Your Wrist" id="measure">
+          <div className="space-y-px bg-white/[0.04]">
             {[
-              { step: '1', title: 'Trace your foot',  text: 'Place your foot on paper and trace around it with a pencil held vertically.' },
-              { step: '2', title: 'Measure length',   text: 'Measure from the heel to the longest toe in centimetres.' },
-              { step: '3', title: 'Use the table',    text: 'Match your measurement to the size chart below. When between sizes, go up.' },
+              { step: '01', title: 'Use a tape measure',  text: 'Wrap a flexible tape measure around your wrist just above the wrist bone.' },
+              { step: '02', title: 'Note the circumference', text: 'Record the measurement in centimetres. Most wrists fall between 15–20cm.' },
+              { step: '03', title: 'Choose your case size', text: 'Use the table below to find the ideal case diameter for your wrist.' },
             ].map(({ step, title, text }) => (
-              <div key={step} className="card p-6">
-                <div className="w-10 h-10 bg-brand text-white rounded-full flex items-center justify-center font-extrabold text-lg mb-4" aria-hidden="true">{step}</div>
-                <h3 className="font-bold text-dark mb-2">{title}</h3>
-                <p className="text-gray-500 text-sm">{text}</p>
+              <div key={step} className="bg-[#0a0a0a] p-6 flex items-start gap-6">
+                <span className="text-white/15 font-black text-2xl flex-shrink-0" style={{ fontFamily: "'DM Serif Display', serif" }}>{step}</span>
+                <div>
+                  <p className="text-white text-sm font-medium mb-1">{title}</p>
+                  <p className="text-white/35 text-sm">{text}</p>
+                </div>
               </div>
             ))}
           </div>
-        </section>
+        </DarkSection>
+      </Reveal>
 
-        {/* Size table */}
-        <section aria-labelledby="size-table">
-          <h2 id="size-table" className="sr-only">Size conversion table</h2>
-          <div className="flex gap-3 mb-6" role="group" aria-label="Select gender">
-            {['men', 'women'].map((g) => (
-              <button
-                key={g}
-                onClick={() => setGender(g)}
-                aria-pressed={gender === g}
-                className={`px-5 py-2 rounded-full font-semibold text-sm transition-colors ${gender === g ? 'bg-dark text-white' : 'bg-white text-dark border border-gray-200 hover:border-gray-300'}`}
-              >
-                {g === 'men' ? 'Men' : 'Women'}
-              </button>
+      <Reveal>
+        <DarkSection title="Case Size Guide" id="case-sizes">
+          <div className="space-y-px bg-white/[0.04]">
+            <div className="bg-[#111] grid grid-cols-3 px-6 py-3">
+              {['Case Diameter', 'Fit', 'Description'].map((h) => (
+                <span key={h} className="text-white/25 text-[10px] tracking-[0.2em] uppercase">{h}</span>
+              ))}
+            </div>
+            {CASE_SIZES.map(({ size, fit, desc }) => (
+              <div key={size} className="bg-[#0a0a0a] grid grid-cols-3 px-6 py-4 items-center">
+                <span className="text-white text-sm font-medium">{size}</span>
+                <span className="text-white/50 text-sm">{fit}</span>
+                <span className="text-white/30 text-xs leading-relaxed">{desc}</span>
+              </div>
             ))}
           </div>
+        </DarkSection>
+      </Reveal>
 
-          <div className="card overflow-hidden">
-            <table className="w-full text-sm" aria-label={`${gender} size conversion chart`}>
-              <thead>
-                <tr className="bg-dark text-white">
-                  {Object.keys(SIZES).map((k) => (
-                    <th key={k} className="py-3 px-4 font-semibold text-center" scope="col">{k}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {SIZES.US.map((_, i) => (
-                  <tr key={i} className="border-b border-gray-100 hover:bg-gray-50">
-                    {Object.values(SIZES).map((col, j) => (
-                      <td key={j} className="py-3 px-4 text-center text-dark">{col[i]}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="text-xs text-gray-400 mt-3">
-            * Women's sizes are typically 1.5 sizes smaller than men's US sizing.
+      <Reveal>
+        <DarkSection title="Lug Width Guide" id="lug-widths">
+          <p className="text-white/40 text-sm mb-6 leading-relaxed">
+            The lug width determines which straps are compatible with your watch. Always match your replacement strap to the original lug width.
           </p>
-        </section>
+          <div className="space-y-px bg-white/[0.04]">
+            {LUG_WIDTHS.map(({ lug, common }) => (
+              <div key={lug} className="bg-[#0a0a0a] flex items-center justify-between px-6 py-4">
+                <span className="text-white text-sm font-medium">{lug}</span>
+                <span className="text-white/35 text-sm">{common}</span>
+              </div>
+            ))}
+          </div>
+        </DarkSection>
+      </Reveal>
 
-        <div className="card p-6 bg-brand/5 border border-brand/20">
-          <h3 className="font-bold text-dark mb-1">Still unsure?</h3>
-          <p className="text-gray-600 text-sm">
-            Contact our team at{' '}
-            <a href="mailto:support@sneakara.com" className="text-brand hover:underline">support@sneakara.com</a>
-            {' '}and we'll help you find the right size.
+      <Reveal>
+        <div className="border border-white/[0.06] p-6">
+          <p className="text-white/60 text-sm">
+            Still unsure? Email us at{' '}
+            <a href="mailto:support@horloge.com" className="text-white hover:text-white/70 transition-colors">support@horloge.com</a>
+            {' '}and our horologists will help you find the right fit.
           </p>
         </div>
-      </div>
-    </div>
-  );
-};
+      </Reveal>
+    </DarkPage>
+  </div>
+);
 
 export default SizeGuide;
