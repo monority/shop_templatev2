@@ -7,6 +7,7 @@ import { useAppStore } from './store';
 import Toast from './components/ui/Toast';
 import ErrorBoundary from './components/ui/ErrorBoundary';
 import { ThemeProvider } from './cfg/theme/ThemeProvider';
+import { CursorGlow } from './components/ui/CursorGlow';
 
 // Auth layout — no Nav/Footer
 const AuthLayout = () => (
@@ -60,6 +61,7 @@ const Root = () => {
   return (
     <ErrorBoundary>
       <ThemeProvider>
+        <CursorGlow />
         <Suspense fallback={<PageLoader />}>
           <Routes>
           {/* Auth routes — no Nav/Footer */}

@@ -4,6 +4,7 @@ import Nav from './Nav';
 import Footer from './Footer';
 import Toast from '../ui/Toast';
 import { useAppStore } from '../../store';
+import { PageTransition } from '../ui/PageTransition';
 
 // ── Session Guard ─────────────────────────────────────────────────────────────
 // Vérifie toutes les 5 min que le token Firebase est encore valide.
@@ -42,6 +43,7 @@ const useSessionGuard = () => {
 const Layout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useSessionGuard();
 
@@ -56,10 +58,13 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#f8fafc' }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#0a0a0a' }}>
       <Nav isScrolled={isScrolled} />
       <main className="flex-1" id="main-content">
-        <Outlet />
+        {!isHome && <div className="h-[86px]" aria-hidden="true" />}
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
       </main>
       <Footer />
       <Toast />

@@ -5,24 +5,30 @@ interface PageMetaProps {
   description?: string;
   image?: string;
   noIndex?: boolean;
+  canonical?: string;
 }
 
-const SITE_NAME = 'Sneakara';
-const DEFAULT_DESC = 'Premium sneakers for the modern urban lifestyle. Shop the latest drops at Sneakara.';
-const DEFAULT_IMG  = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&q=80';
-const SITE_URL     = 'https://sneakara.com';
+const SITE_NAME    = 'HORLOGÉ';
+const SITE_URL     = 'https://horloge.com';
+const DEFAULT_DESC = 'Curated luxury timepieces for the modern collector. Shop exclusive watch drops at HORLOGÉ — authenticated, insured, delivered.';
+const DEFAULT_IMG  = 'https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/1.webp';
 
-/**
- * Composant SEO réutilisable — title, meta, Open Graph, Twitter Card.
- */
-const PageMeta = ({ title, description = DEFAULT_DESC, image = DEFAULT_IMG, noIndex = false }: PageMetaProps) => {
-  const pageTitle = title ? `${title} · ${SITE_NAME}` : `${SITE_NAME} — Premium Sneakers`;
+const PageMeta = ({
+  title,
+  description = DEFAULT_DESC,
+  image = DEFAULT_IMG,
+  noIndex = false,
+  canonical,
+}: PageMetaProps) => {
+  const pageTitle = title ? `${title} · ${SITE_NAME}` : `${SITE_NAME} — Luxury Timepieces`;
+  const canonicalUrl = canonical ? `${SITE_URL}${canonical}` : undefined;
 
   return (
     <Helmet>
       <title>{pageTitle}</title>
       <meta name="description" content={description} />
       {noIndex && <meta name="robots" content="noindex,nofollow" />}
+      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
       {/* Open Graph */}
       <meta property="og:type"        content="website" />
@@ -30,7 +36,7 @@ const PageMeta = ({ title, description = DEFAULT_DESC, image = DEFAULT_IMG, noIn
       <meta property="og:description" content={description} />
       <meta property="og:image"       content={image} />
       <meta property="og:site_name"   content={SITE_NAME} />
-      <meta property="og:url"         content={SITE_URL} />
+      <meta property="og:url"         content={canonicalUrl ?? SITE_URL} />
 
       {/* Twitter Card */}
       <meta name="twitter:card"        content="summary_large_image" />

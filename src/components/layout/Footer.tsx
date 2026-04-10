@@ -1,105 +1,125 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const FOOTER_LINKS = {
-  shop: [
-    { label: 'All Products', path: '/shop' },
-    { label: 'Women', path: '/shop/women' },
-    { label: 'Men', path: '/shop/men' },
-    { label: 'New Arrivals', path: '/shop/new' },
-    { label: 'Sale', path: '/shop/sale' },
+  collections: [
+    { label: "Men's Watches",   path: '/shop/men' },
+    { label: "Women's Watches", path: '/shop/women' },
+    { label: 'New Arrivals',    path: '/shop/new' },
+    { label: 'Sale',            path: '/shop/sale' },
+    { label: 'All Timepieces',  path: '/shop' },
   ],
-  help: [
-    { label: 'Size Guide', path: '/help/size-guide' },
-    { label: 'Shipping Info', path: '/help/shipping' },
-    { label: 'Returns', path: '/help/returns' },
-    { label: 'Track Order', path: '/help/track' },
-    { label: 'FAQ', path: '/help/faq' },
+  services: [
+    { label: 'Watch Authentication', path: '/help/faq' },
+    { label: 'Shipping & Delivery',  path: '/help/shipping' },
+    { label: 'Returns & Exchanges',  path: '/help/returns' },
+    { label: 'Track Your Order',     path: '/help/track' },
+    { label: 'Watch Care Guide',     path: '/help/size-guide' },
   ],
   company: [
-    { label: 'About Us', path: '/about' },
-    { label: 'Careers', path: '/careers' },
-    { label: 'Press', path: '/press' },
+    { label: 'Our Story',      path: '/about' },
     { label: 'Sustainability', path: '/sustainability' },
+    { label: 'Press & Media',  path: '/press' },
+    { label: 'Careers',        path: '/careers' },
   ],
 };
+
+const FooterLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
+  <motion.li whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
+    <Link
+      to={to}
+      className="text-white/35 hover:text-white transition-colors text-sm inline-block"
+    >
+      {children}
+    </Link>
+  </motion.li>
+);
 
 const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main footer content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-12">
-          {/* Brand */}
-          <div>
-            <div className="text-2xl font-extrabold tracking-tight mb-4">
-              SNEAK<span className="text-brand">ARA</span>
+    <footer className="bg-[#0a0a0a] border-t border-white/[0.06]">
+      <div className="container">
+
+        {/* Main grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 py-16 border-b border-white/[0.06]">
+
+          {/* Brand — spans 2 cols on lg */}
+          <div className="col-span-2 lg:col-span-2 flex flex-col justify-between gap-8">
+            <div>
+              <button
+                onClick={() => navigate('/')}
+                className="text-white text-2xl font-black tracking-[-0.02em] mb-4 block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/30"
+                style={{ fontFamily: "'DM Serif Display', serif" }}
+                aria-label="HORLOGÉ home"
+              >
+                HORLOGÉ
+              </button>
+              <p className="text-white/30 text-xs leading-relaxed max-w-[220px]">
+                Curated luxury timepieces for the modern collector. Authenticated, insured, delivered.
+              </p>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Premium sneakers for the modern urban lifestyle. Quality, style, and comfort in every step.
-            </p>
+
+            {/* Trust badges */}
+            <div className="flex flex-col gap-3">
+              {[
+                ['✦', 'Every piece authenticated'],
+                ['✦', 'Free shipping over $200'],
+                ['✦', '30-day returns'],
+              ].map(([icon, text]) => (
+                <div key={text} className="flex items-center gap-2">
+                  <span className="text-white/20 text-[10px]">{icon}</span>
+                  <span className="text-white/25 text-xs tracking-wide">{text}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Shop Links */}
+          {/* Collections */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Shop</h3>
-            <ul className="space-y-2">
-              {FOOTER_LINKS.shop.map((link) => (
-                <li key={link.label}>
-                  <button
-                    onClick={() => navigate(link.path)}
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
-                  >
-                    {link.label}
-                  </button>
-                </li>
+            <p className="text-white/20 text-[10px] tracking-[0.25em] uppercase font-semibold mb-6">Collections</p>
+            <ul className="space-y-3">
+              {FOOTER_LINKS.collections.map((link) => (
+                <FooterLink key={link.label} to={link.path}>{link.label}</FooterLink>
               ))}
             </ul>
           </div>
 
-          {/* Help Links */}
+          {/* Services */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Help</h3>
-            <ul className="space-y-2">
-              {FOOTER_LINKS.help.map((link) => (
-                <li key={link.label}>
-                  <Link to={link.path} className="text-gray-400 hover:text-white transition-colors text-sm">
-                    {link.label}
-                  </Link>
-                </li>
+            <p className="text-white/20 text-[10px] tracking-[0.25em] uppercase font-semibold mb-6">Services</p>
+            <ul className="space-y-3">
+              {FOOTER_LINKS.services.map((link) => (
+                <FooterLink key={link.label} to={link.path}>{link.label}</FooterLink>
               ))}
             </ul>
           </div>
 
-          {/* Company Links */}
+          {/* Company */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Company</h3>
-            <ul className="space-y-2">
+            <p className="text-white/20 text-[10px] tracking-[0.25em] uppercase font-semibold mb-6">Company</p>
+            <ul className="space-y-3">
               {FOOTER_LINKS.company.map((link) => (
-                <li key={link.label}>
-                  <Link to={link.path} className="text-gray-400 hover:text-white transition-colors text-sm">
-                    {link.label}
-                  </Link>
-                </li>
+                <FooterLink key={link.label} to={link.path}>{link.label}</FooterLink>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-gray-800 py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-gray-400 text-sm">&copy; 2026 Sneakara. All rights reserved.</p>
-            <div className="flex gap-4 text-sm">
-              <Link to="/legal/privacy" className="text-gray-400 hover:text-white transition-colors">
-                Privacy Policy
-              </Link>
-              <span className="text-gray-600">·</span>
-              <Link to="/legal/terms" className="text-gray-400 hover:text-white transition-colors">
-                Terms &amp; Conditions
-              </Link>
-            </div>
+        {/* Bottom bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
+          <p className="text-white/15 text-xs tracking-wide">
+            &copy; 2026 HORLOGÉ. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 text-xs">
+            <Link to="/legal/privacy" className="text-white/15 hover:text-white/40 transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-white/10" aria-hidden="true">·</span>
+            <Link to="/legal/terms" className="text-white/15 hover:text-white/40 transition-colors">
+              Terms &amp; Conditions
+            </Link>
           </div>
         </div>
       </div>

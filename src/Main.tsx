@@ -5,8 +5,8 @@ import { HelmetProvider } from 'react-helmet-async'
 import Root from './Root'
 import './index.css'
 import { initWebVitals } from './utils/initWebVitals'
+import { LenisProvider } from './utils/lenis'
 
-// Initialize Web Vitals tracking
 initWebVitals()
 
 const rootElement = document.getElementById('root')
@@ -16,7 +16,9 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <Root />
+        <LenisProvider>
+          <Root />
+        </LenisProvider>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,

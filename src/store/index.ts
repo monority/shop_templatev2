@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// Firebase disabled for now - using mock auth
+// Firebase auth — enabled when credentials are configured in .env.local
 // import { onAuthStateChanged, signOut } from 'firebase/auth';
 // import { doc, getDoc } from 'firebase/firestore';
-// import { auth, db } from '../cfg/firebase/firebaseCfg';
+// import { auth, db, isFirebaseConfigured } from '../cfg/firebase/firebaseCfg';
 
 const EMPTY_USER = {
   uid: '', username: '', email: '', phone: '',
@@ -103,7 +103,7 @@ export const useAppStore = create(
       hideToast: () => set((s) => ({ ui: { ...s.ui, toast: null } })),
     }),
     {
-      name: 'sneakara-2026',
+      name: 'HORLOG�-2026',
       partialize: (state) => ({
         cart: state.cart,
         user: state.user?.uid ? { uid: state.user.uid } : {},

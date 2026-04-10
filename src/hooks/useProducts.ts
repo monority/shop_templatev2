@@ -39,6 +39,7 @@ interface Product {
   brand: string;
   price: number;
   image: string;
+  movement?: string;
   [key: string]: any;
 }
 

@@ -6,143 +6,120 @@ import useImageFallback from '../hooks/useImageFallback';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const {
-    items,
-    updateCartQuantity,
-    removeFromCart,
-    getCartSubtotal,
-    getCartShipping,
-    getCartTotal,
-  } = useCart();
+  const { items, updateCartQuantity, removeFromCart, getCartSubtotal, getCartShipping, getCartTotal } = useCart();
   const handleImgError = useImageFallback();
-
   const subtotal = getCartSubtotal();
-  const shipping = getCartShipping();
-  const total    = getCartTotal();
+  const shipping  = getCartShipping();
+  const total     = getCartTotal();
 
   return (
-    <div className="bg-light min-h-screen">
+    <div className="bg-[#0a0a0a] min-h-screen">
       <PageMeta title="Your Cart" />
 
       {/* Header */}
-      <div className="bg-brand-dark py-16 pt-24 text-white">
+      <div className="border-b border-white/[0.06] py-16">
         <div className="container">
-          <h1 className="text-4xl font-extrabold">Shopping Cart</h1>
-          <p className="text-white/90 mt-2">
-            {items.length} {items.length === 1 ? 'item' : 'items'} in your cart
+          <p className="text-white/30 text-[11px] tracking-[0.25em] uppercase mb-3">
+            {items.length} {items.length === 1 ? 'item' : 'items'}
           </p>
+          <h1 className="text-white" style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: 0.95 }}>
+            Shopping Cart
+          </h1>
         </div>
       </div>
 
       <div className="container py-12">
         {items.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="w-28 h-28 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center text-5xl" aria-hidden="true">
-              🛒
-            </div>
-            <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
-            <p className="text-gray mb-6">Looks like you haven't added any items yet.</p>
-            <button className="btn btn-primary" onClick={() => navigate('/shop')}>
+          <div className="text-center py-24">
+            <p className="text-white/20 text-sm tracking-widest uppercase mb-8">Your cart is empty</p>
+            <button
+              className="text-white text-xs tracking-[0.2em] uppercase border-b border-white/20 pb-0.5 hover:border-white transition-colors"
+              onClick={() => navigate('/shop')}
+            >
               Continue Shopping
             </button>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Cart Items */}
-            <div className="lg:col-span-2 space-y-4">
-              {items.map((item) => (
-                <div key={`${item.id}-${item.size}-${item.color}`} className="card flex gap-4 p-4">
-                  <div className="w-28 h-28 flex-shrink-0">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover rounded-lg"
-                      loading="lazy"
-                      onError={handleImgError}
-                    />
-                  </div>
+          <div className="grid lg:grid-cols-3 gap-12">
 
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start">
+            {/* Items */}
+            <div className="lg:col-span-2 space-y-0 divide-y divide-white/[0.06]">
+              {items.map((item) => (
+                <div key={`${item.id}-${item.size}-${item.color}`} className="flex gap-5 py-6">
+                  <div className="w-24 h-24 flex-shrink-0 bg-[#111] overflow-hidden">
+                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" loading="lazy" onError={handleImgError} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start gap-4">
                       <div>
-                        <span className="text-xs font-semibold text-brand uppercase tracking-wide">{item.brand}</span>
-                        <h3 className="text-lg font-semibold text-dark mt-1">{item.name}</h3>
-                        <p className="text-sm text-gray">Size: {item.size} | Color: {item.color}</p>
+                        <p className="text-white/30 text-[10px] tracking-[0.2em] uppercase mb-1">{item.brand}</p>
+                        <h3 className="text-white text-sm font-medium leading-tight">{item.name}</h3>
+                        <p className="text-white/25 text-xs mt-1">Size {item.size} · {item.color}</p>
                       </div>
                       <button
                         onClick={() => removeFromCart(item.id, item.size, item.color)}
-                        className="w-8 h-8 rounded-full bg-gray-100 text-gray hover:bg-error hover:text-white transition-colors flex items-center justify-center"
-                        aria-label={`Remove ${item.name} from cart`}
+                        className="text-white/20 hover:text-white transition-colors flex-shrink-0"
+                        aria-label={`Remove ${item.name}`}
                       >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
                         </svg>
                       </button>
                     </div>
-
-                    <div className="flex justify-between items-center mt-4">
-                      <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden" role="group" aria-label="Quantity">
-                        <button
-                          onClick={() => updateCartQuantity(item.id, item.size, item.color, Math.max(1, item.quantity - 1))}
-                          className="w-9 h-9 bg-white text-dark hover:bg-gray-100 transition-colors"
-                          aria-label="Decrease quantity"
-                        >−</button>
-                        <span className="w-10 text-center font-semibold" aria-live="polite">{item.quantity}</span>
-                        <button
-                          onClick={() => updateCartQuantity(item.id, item.size, item.color, item.quantity + 1)}
-                          className="w-9 h-9 bg-white text-dark hover:bg-gray-100 transition-colors"
-                          aria-label="Increase quantity"
-                        >+</button>
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex items-center border border-white/10" role="group" aria-label="Quantity">
+                        <button onClick={() => updateCartQuantity(item.id, item.size, item.color, Math.max(1, item.quantity - 1))} className="w-8 h-8 text-white/30 hover:text-white transition-colors text-sm">−</button>
+                        <span className="w-8 text-center text-white text-sm">{item.quantity}</span>
+                        <button onClick={() => updateCartQuantity(item.id, item.size, item.color, item.quantity + 1)} className="w-8 h-8 text-white/30 hover:text-white transition-colors text-sm">+</button>
                       </div>
-                      <span className="text-xl font-bold text-dark">
-                        {formatPrice(item.price * item.quantity)}
-                      </span>
+                      <span className="text-white font-medium">{formatPrice(item.price * item.quantity)}</span>
                     </div>
                   </div>
                 </div>
               ))}
 
-              <button onClick={() => navigate('/shop')} className="btn btn-outline mt-4">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>
-                </svg>
-                Continue Shopping
-              </button>
+              <div className="pt-6">
+                <button
+                  onClick={() => navigate('/shop')}
+                  className="flex items-center gap-2 text-white/30 text-xs tracking-[0.2em] uppercase hover:text-white transition-colors"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                  Continue Shopping
+                </button>
+              </div>
             </div>
 
-            {/* Order Summary */}
-            <div className="sticky top-24">
-              <div className="card p-6" role="region" aria-label="Order summary">
-                <h2 className="text-xl font-bold text-dark mb-4">Order Summary</h2>
+            {/* Summary */}
+            <div className="lg:sticky lg:top-24 self-start">
+              <div className="border border-white/[0.06] p-6" role="region" aria-label="Order summary">
+                <p className="text-white/30 text-[11px] tracking-[0.25em] uppercase mb-6">Order Summary</p>
 
-                <div className="space-y-2 mb-4">
-                  <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray">Subtotal</span>
-                    <span className="font-semibold">{formatPrice(subtotal)}</span>
+                <div className="space-y-3 mb-6 pb-6 border-b border-white/[0.06]">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/40">Subtotal</span>
+                    <span className="text-white">{formatPrice(subtotal)}</span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray">Shipping</span>
-                    <span className="font-semibold">{shipping === 0 ? 'Free' : formatPrice(shipping)}</span>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/40">Shipping</span>
+                    <span className="text-white">{shipping === 0 ? 'Free' : formatPrice(shipping)}</span>
                   </div>
                   {shipping === 0 && (
-                    <p className="text-xs text-success" aria-live="polite">🎉 You got free shipping!</p>
+                    <p className="text-white/30 text-xs" aria-live="polite">Free shipping applied</p>
                   )}
                 </div>
 
-                <div className="flex justify-between pt-4 border-t-2 border-gray-100 mb-4">
-                  <span className="font-bold">Total</span>
-                  <span className="text-xl font-extrabold text-brand">{formatPrice(total)}</span>
+                <div className="flex justify-between mb-8">
+                  <span className="text-white font-semibold">Total</span>
+                  <span className="text-white text-xl font-bold">{formatPrice(total)}</span>
                 </div>
 
-                <button onClick={() => navigate('/checkout')} className="btn btn-primary w-full">
-                  Proceed to Checkout
+                <button onClick={() => navigate('/checkout')} className="w-full py-4 bg-white text-[#0a0a0a] text-xs font-bold tracking-[0.2em] uppercase hover:bg-white/90 transition-colors">
+                  Checkout
                 </button>
 
-                <div className="flex justify-center gap-2 mt-4 text-sm text-gray">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-success" aria-hidden="true">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  </svg>
-                  <span>Secure checkout</span>
+                <div className="flex items-center justify-center gap-2 mt-4 text-white/20 text-xs">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Secure checkout
                 </div>
               </div>
             </div>
