@@ -1,109 +1,41 @@
-import { signInWithEmailAndPassword, fetchSignInMethodsForEmail, createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../../cfg/firebase/firebaseCfg';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../store';
 
+const FAKE_USERS = [
+  { email: 'demo@horlog.com', password: 'demo1234', username: 'demo_user' },
+  { email: 'admin@horlog.com', password: 'admin1234', username: 'admin' },
+];
+
 const AuthManagement = () => {
-    const setUser = useAppStore((state) => state.setUser);
-    const showToast = useAppStore((state) => state.showToast);
-    const navigate = useNavigate();
+  const setUser = useAppStore((state) => state.setUser);
+  const showToast = useAppStore((state) => state.showToast);
+  const navigate = useNavigate();
 
-    const handleError = (errorCode) => {
-        const errorMessages = {
-            'auth/email-already-in-use': "The email address is already in use. Please choose another one.",
-            'auth/invalid-email': "The email address entered is invalid.",
-            'auth/weak-password': "The password is too weak. Ensure it has at least 8 characters, an uppercase letter, a number, and a special character.",
-            'auth/missing-password': "The password is required.",
-            'auth/password-does-not-meet-requirements': "The password does not meet the requirements. Ensure it has at least 8 characters, an uppercase letter, a number, and a special character.",
-            'auth/invalid-credential': "Credentials does not match",
-            "auth/network-request-failed": "Network error, please try again later.",
-            "auth/wrong-password": "The password is invalid.",
-        };
-        return errorMessages[errorCode] || "An error occurred. Please try again.";
+  const loginUser = async (data) => {
+    const formData = Object.fromEntries(data);
+    const match = FAKE_USERS.find(
+      (u) => u.email === formData.email?.toLowerCase() && u.password === formData.password
+    );
+    if (match) {
+      setUser({ uid: `fake-${match.username}`, email: match.email, username: match.username, phone: '', address: '', role: 'user', createdAt: new Date().toISOString(), favorites: [] });
+      navigate('/');
+    } else {
+      showToast('Invalid credentials', 'error');
     }
+  };
 
-    const formDataToObject = (formData) => {
-        const obj = {};
-        formData.forEach((value, key) => {
-            obj[key] = value;
-        });
-        return obj;
-    };
+  const registerUser = async (data) => {
+    const formData = Object.fromEntries(data);
+    if (!formData.username) { showToast('Username is required', 'error'); return; }
+    setUser({ uid: `local-${Date.now()}`, email: formData.email, username: formData.username, phone: '', address: '', role: 'user', createdAt: new Date().toISOString(), favorites: [] });
+    navigate('/');
+  };
 
-    const checkUser = async (data) => {
-        try {
-            const email = data.get("email");
-            const emailSecurity = email.toLowerCase();
-            const methods = await fetchSignInMethodsForEmail(auth, emailSecurity);
-            if (methods.length > 0) {
-                navigate("/login");
-            } else {
-                navigate("/login");
-            }
-        } catch (err) {
-            console.error('[checkUser]', err.code, err.message, err);
-            showToast(handleError(err.code));
-        }
-    };
-    const loginUser = async (data) => {
-        try {
-            const formData = formDataToObject(data);
-            const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-            const user = userCredential.user;
-            const userDoc = await getDoc(doc(db, 'users', user.uid));
+  const checkUser = async (_data) => {
+    navigate('/login');
+  };
 
-            if (userDoc.exists()) {
-                setUser({ uid: user.uid, ...userDoc.data() });
-                navigate('/');
-            } else {
-                showToast('User data not found in database', 'error');
-            }
-        } catch (err) {
-            console.error('[loginUser]', err.code, err.message, err);
-            showToast(handleError(err.code));
-        }
-    };
-
-    const registerUser = async (data) => {
-        try {
-            const formData = formDataToObject(data);
-            const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-            const user = userCredential.user;
-            const userRef = doc(db, 'users', user.uid);
-            const userDoc = await getDoc(userRef);
-            if (userDoc.exists()) {
-                showToast('User already exists', 'error');
-                return;
-            }
-            if (formData.username === '') {
-                showToast('Username is required', 'error');
-                return;
-            }
-            await setDoc(userRef, {
-                email: user.email,
-                uid: user.uid,
-                username: formData.username,
-                phone: '',
-                address: '',
-                role: '',
-                createdAt: new Date().toISOString(),
-                products: [],
-                favorites: [],
-            });
-            setUser({ uid: user.uid, email: user.email, username: formData.username });
-            navigate('/');
-        } catch (err) {
-            console.error('[registerUser]', err.code, err.message, err);
-            showToast(handleError(err.code));
-        }
-    };
-
-    return {
-        loginUser,
-        checkUser,
-        registerUser
-    };
+  return { loginUser, checkUser, registerUser };
 };
 
 export default AuthManagement;

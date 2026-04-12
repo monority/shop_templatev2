@@ -1,17 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../cfg/firebase/firebaseCfg';
 import { useAuth } from '../store';
 import PageMeta from '../components/ui/PageMeta';
-
-const AUTH_ERRORS = {
-  'auth/email-already-in-use':  'This email is already in use.',
-  'auth/invalid-email':         'Invalid email address.',
-  'auth/weak-password':         'Password must be at least 8 characters.',
-  'auth/network-request-failed':'Network error, please try again.',
-};
 
 const USERNAME_RE = /^[a-zA-Z0-9_]{3,20}$/;
 
@@ -64,15 +54,21 @@ const Register = () => {
     if (password.length < 8)        { setError('Password must be at least 8 characters.'); return; }
     if (strength < 2)               { setError('Password too weak. Add uppercase, numbers, or symbols.'); return; }
     setLoading(true);
-    try {
-      const { user: fbUser } = await createUserWithEmailAndPassword(auth, email.trim().toLowerCase(), password);
-      const userData = { uid: fbUser.uid, email: fbUser.email, username: trimmed, phone: '', address: '', role: '', createdAt: new Date().toISOString(), favorites: [] };
-      await setDoc(doc(db, 'users', fbUser.uid), userData);
-      setUser(userData);
-      navigate(redirectTo);
-    } catch (err) {
-      setError(AUTH_ERRORS[err.code] || 'An error occurred.');
-    } finally { setLoading(false); }
+
+    await new Promise((r) => setTimeout(r, 500)); // simulate network
+
+    setUser({
+      uid: `local-${Date.now()}`,
+      email: email.trim().toLowerCase(),
+      username: trimmed,
+      phone: '',
+      address: '',
+      role: 'user',
+      createdAt: new Date().toISOString(),
+      favorites: [],
+    });
+    navigate(redirectTo);
+    setLoading(false);
   };
 
   return (
@@ -91,7 +87,7 @@ const Register = () => {
       {/* Left branding */}
       <div className="hidden lg:flex flex-1 flex-col justify-between p-16 border-r border-white/[0.06]">
         <button onClick={() => navigate('/')} className="text-white text-xl font-black tracking-[-0.02em] focus-visible:outline-none" style={{ fontFamily: "'DM Serif Display', serif" }}>
-          HORLOGÉ
+          HORLOGÃ‰
         </button>
         <div>
           <h2 className="text-white leading-tight mb-6" style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
@@ -120,7 +116,7 @@ const Register = () => {
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-sm">
           <div className="lg:hidden mb-10">
-            <p className="text-white text-xl font-black" style={{ fontFamily: "'DM Serif Display', serif" }}>HORLOGÉ</p>
+            <p className="text-white text-xl font-black" style={{ fontFamily: "'DM Serif Display', serif" }}>HORLOGÃ‰</p>
           </div>
 
           <p className="text-white/30 text-[11px] tracking-[0.25em] uppercase mb-3">Account</p>
