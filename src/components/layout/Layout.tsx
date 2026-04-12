@@ -1,43 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Nav from './Nav';
 import Footer from './Footer';
 import Toast from '../ui/Toast';
-import { useAppStore } from '../../store';
 import { PageTransition } from '../ui/PageTransition';
 
-// ── Session Guard ─────────────────────────────────────────────────────────────
-// Vérifie toutes les 5 min que le token Firebase est encore valide.
-// Placé ici car Layout est toujours dans le Router context.
-const useSessionGuard = () => {
-  const navigate        = useNavigate();
-  const isAuthenticated = useAppStore((s) => s.isAuthenticated);
-  const setUser         = useAppStore((s) => s.setUser);
-  const clearCart       = useAppStore((s) => s.clearCart);
-  const showToast       = useAppStore((s) => s.showToast);
-
-  useEffect(() => {
-    if (!isAuthenticated) return;
-
-    const check = async () => {
-      try {
-        const { auth } = await import('../../cfg/firebase/firebaseCfg');
-        const fbUser = auth.currentUser;
-        if (!fbUser) return;
-        await fbUser.getIdToken(true);
-      } catch (err) {
-        console.warn('[SessionGuard] Session expirée', err.code);
-        setUser(null);
-        clearCart();
-        showToast('Your session has expired. Please sign in again.', 'warning');
-        navigate('/login', { replace: true });
-      }
-    };
-
-    const interval = setInterval(check, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, [isAuthenticated, navigate, setUser, clearCart, showToast]);
-};
+// Session guard — no-op (Firebase removed)
+const useSessionGuard = () => {};
 
 // ── Layout ────────────────────────────────────────────────────────────────────
 const Layout = () => {

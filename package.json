@@ -21,7 +21,6 @@
     "prepare": "node -e \"process.env.CI || require('husky').install()\" || true"
   },
   "dependencies": {
-    "firebase": "^12.6.0",
     "framer-motion": "^11.0.8",
     "lenis": "^1.3.21",
     "react": "^18.3.1",
