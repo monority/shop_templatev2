@@ -33,6 +33,7 @@ export const CursorGlow = () => {
         height: 400,
         borderRadius: '50%',
         background: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)',
+        willChange: 'transform',
       }}
       aria-hidden="true"
     />

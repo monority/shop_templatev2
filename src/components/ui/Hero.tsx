@@ -99,11 +99,12 @@ HeroBg.displayName = 'HeroBg';
 // ── Parallax watch image with scroll rotation ────────────────────────────────────────────────
 const ParallaxWatch = memo(({ onError }: { onError: (e: any) => void }) => {
   const { scrollY } = useScroll();
-  const rotateZ = useTransform(scrollY, [0, 300], [0, 15]);
+  const rotateZ = useTransform(scrollY, [0, 500], [0, 12]);
+  const translateY = useTransform(scrollY, [0, 300], [0, -50]);
 
   return (
     <motion.div
-      className="relative z-10 w-full max-w-[460px] lg:max-w-none lg:w-[82%]"
+      className="relative z-10 w-full max-w-[460px] lg:max-w-none lg:w-[82%] will-change-transform"
       style={{ rotateZ, transformPerspective: 1200 }}
       initial={{ opacity: 0, y: 70, rotate: -14 }}
       animate={{ opacity: 1, y: 0, rotate: -5 }}
