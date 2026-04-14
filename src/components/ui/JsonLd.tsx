@@ -9,8 +9,8 @@
  */
 import { Helmet } from 'react-helmet-async';
 
-const SITE_URL  = 'https://horloge.com';
-const SITE_NAME = 'HORLOGÉ';
+const SITE_URL = 'https://horloge.com';
+const SITE_NAME = 'HORLOGÉS';
 
 // ── Product schema ────────────────────────────────────────────────────────────
 interface ProductSchemaProps {

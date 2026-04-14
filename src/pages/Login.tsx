@@ -29,11 +29,11 @@ const Login = () => {
   const { setUser } = useAuth();
   const redirectTo = location.state?.from?.pathname || '/';
 
-  const [email,    setEmail]    = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPw,   setShowPw]   = useState(false);
-  const [error,    setError]    = useState('');
-  const [loading,  setLoading]  = useState(false);
+  const [showPw, setShowPw] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,14 +74,14 @@ const Login = () => {
         className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/30 text-xs tracking-[0.2em] uppercase hover:text-white transition-colors"
         aria-label="Back to home"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5" /><path d="m12 19-7-7 7-7" /></svg>
         Back
       </button>
 
       {/* Left — branding (desktop) */}
       <div className="hidden lg:flex flex-1 flex-col justify-between p-16 border-r border-white/[0.06]">
         <button onClick={() => navigate('/')} className="text-white text-xl font-black tracking-[-0.02em] focus-visible:outline-none" style={{ fontFamily: "'DM Serif Display', serif" }}>
-          HORLOGÉ
+          HORLOGÉS
         </button>
         <div>
           <h2 className="text-white leading-tight mb-6" style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
@@ -110,7 +110,7 @@ const Login = () => {
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-sm">
           <div className="lg:hidden mb-10">
-            <p className="text-white text-xl font-black" style={{ fontFamily: "'DM Serif Display', serif" }}>HORLOGÉ</p>
+            <p className="text-white text-xl font-black" style={{ fontFamily: "'DM Serif Display', serif" }}>HORLOGÉS</p>
           </div>
 
           <p className="text-white/30 text-[11px] tracking-[0.25em] uppercase mb-3">Account</p>

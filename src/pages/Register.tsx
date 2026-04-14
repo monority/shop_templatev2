@@ -32,17 +32,17 @@ const EyeIcon = ({ open }) => open ? (
 );
 
 const Register = () => {
-  const navigate  = useNavigate();
-  const location  = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useAuth();
   const redirectTo = location.state?.from?.pathname || '/';
 
   const [username, setUsername] = useState('');
-  const [email,    setEmail]    = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPw,   setShowPw]   = useState(false);
-  const [error,    setError]    = useState('');
-  const [loading,  setLoading]  = useState(false);
+  const [showPw, setShowPw] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const strength = pwStrength(password);
 
@@ -51,8 +51,8 @@ const Register = () => {
     setError('');
     const trimmed = username.trim();
     if (!USERNAME_RE.test(trimmed)) { setError('Username: 3-20 chars, letters/numbers/underscores.'); return; }
-    if (password.length < 8)        { setError('Password must be at least 8 characters.'); return; }
-    if (strength < 2)               { setError('Password too weak. Add uppercase, numbers, or symbols.'); return; }
+    if (password.length < 8) { setError('Password must be at least 8 characters.'); return; }
+    if (strength < 2) { setError('Password too weak. Add uppercase, numbers, or symbols.'); return; }
     setLoading(true);
 
     await new Promise((r) => setTimeout(r, 500)); // simulate network
@@ -80,14 +80,14 @@ const Register = () => {
         className="absolute top-6 left-6 z-20 flex items-center gap-2 text-white/30 text-xs tracking-[0.2em] uppercase hover:text-white transition-colors"
         aria-label="Back to home"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5" /><path d="m12 19-7-7 7-7" /></svg>
         Back
       </button>
 
       {/* Left branding */}
       <div className="hidden lg:flex flex-1 flex-col justify-between p-16 border-r border-white/[0.06]">
         <button onClick={() => navigate('/')} className="text-white text-xl font-black tracking-[-0.02em] focus-visible:outline-none" style={{ fontFamily: "'DM Serif Display', serif" }}>
-          HORLOGÉ
+          HORLOGÉS
         </button>
         <div>
           <h2 className="text-white leading-tight mb-6" style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
@@ -116,7 +116,7 @@ const Register = () => {
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-sm">
           <div className="lg:hidden mb-10">
-            <p className="text-white text-xl font-black" style={{ fontFamily: "'DM Serif Display', serif" }}>HORLOGÉ</p>
+            <p className="text-white text-xl font-black" style={{ fontFamily: "'DM Serif Display', serif" }}>HORLOGÉS</p>
           </div>
 
           <p className="text-white/30 text-[11px] tracking-[0.25em] uppercase mb-3">Account</p>
@@ -147,7 +147,7 @@ const Register = () => {
               {password.length > 0 && (
                 <div className="mt-2">
                   <div className="flex gap-1 mb-1">
-                    {[1,2,3,4].map((i) => (
+                    {[1, 2, 3, 4].map((i) => (
                       <div key={i} className={`h-0.5 flex-1 transition-colors ${i <= strength ? STRENGTH_COLORS[strength] : 'bg-white/10'}`} />
                     ))}
                   </div>

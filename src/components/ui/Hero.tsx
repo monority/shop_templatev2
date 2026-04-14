@@ -1,13 +1,13 @@
 import { useRef, useEffect, useCallback, memo } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
 
-const WATCH_IMAGE  = 'https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/1.webp';
+const WATCH_IMAGE = 'https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/1.webp';
 const FALLBACK_IMG = 'https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/1.webp';
 
 const TICKER = ['NEW ARRIVALS', 'FREE SHIPPING OVER $200', 'LUXURY TIMEPIECES', 'EXCLUSIVE DROPS', 'LIMITED EDITIONS', 'AUTHENTICATED'];
 
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } } };
-const fadeUp  = { hidden: { opacity: 0, y: 28 }, visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25, 0.1, 0.25, 1] } } };
+const fadeUp = { hidden: { opacity: 0, y: 28 }, visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25, 0.1, 0.25, 1] } } };
 
 // ── Animated background canvas ────────────────────────────────────────────────
 const HeroBg = memo(() => {
@@ -31,7 +31,7 @@ const HeroBg = memo(() => {
     }));
 
     const resize = () => {
-      w = canvas.width  = canvas.offsetWidth;
+      w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
     };
 
@@ -96,30 +96,15 @@ const HeroBg = memo(() => {
 });
 HeroBg.displayName = 'HeroBg';
 
-// ── Mouse parallax watch image ────────────────────────────────────────────────
+// ── Parallax watch image with scroll rotation ────────────────────────────────────────────────
 const ParallaxWatch = memo(({ onError }: { onError: (e: any) => void }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 40, damping: 20 });
-  const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-  const rotateX = useTransform(springY, [-0.5, 0.5], [6, -6]);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    const { innerWidth: W, innerHeight: H } = window;
-    mouseX.set((e.clientX / W - 0.5));
-    mouseY.set((e.clientY / H - 0.5));
-  }, [mouseX, mouseY]);
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [handleMouseMove]);
+  const { scrollY } = useScroll();
+  const rotateZ = useTransform(scrollY, [0, 300], [0, 15]);
 
   return (
     <motion.div
       className="relative z-10 w-full max-w-[460px] lg:max-w-none lg:w-[82%]"
-      style={{ rotateY, rotateX, transformPerspective: 1200 }}
+      style={{ rotateZ, transformPerspective: 1200 }}
       initial={{ opacity: 0, y: 70, rotate: -14 }}
       animate={{ opacity: 1, y: 0, rotate: -5 }}
       transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
@@ -226,7 +211,7 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
                 />
                 Shop Now
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                 </svg>
               </motion.button>
 
@@ -337,18 +322,17 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
 
       {/* ── Ticker ─────────────────────────────────────────────────────────── */}
       <div className="relative z-10 border-t border-white/[0.06] overflow-hidden py-3 bg-white/[0.015]" aria-hidden="true">
-        <motion.div
-          className="flex gap-12 whitespace-nowrap will-change-transform"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 24, ease: 'linear', repeat: Infinity }}
+        <div 
+          className="flex gap-12 whitespace-nowrap"
+          style={{ animation: 'ticker 24s linear infinite' }}
         >
           {[...TICKER, ...TICKER].map((item, i) => (
-            <span key={i} className="text-white/25 text-[10px] tracking-[0.3em] uppercase font-medium flex items-center gap-12">
+            <span key={i} className="text-white/25 text-[10px] tracking-[0.3em] uppercase font-medium flex items-center gap-12 flex-shrink-0">
               {item}
               <span className="w-1 h-1 rounded-full bg-white/15 inline-block" />
             </span>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

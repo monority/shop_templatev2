@@ -3,16 +3,16 @@ import { DarkPage, DarkSection } from '../components/ui/DarkPage';
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 
 const COVERAGE = [
-  { outlet: 'Hodinkee',            quote: 'HORLOGÉ is redefining the European watch retail experience.', date: 'March 2025' },
-  { outlet: 'WatchPro',            quote: 'A curated approach that every serious collector will appreciate.', date: 'January 2025' },
-  { outlet: 'GQ France',           quote: 'The go-to destination for premium timepieces in Paris.', date: 'November 2024' },
-  { outlet: 'Business of Fashion', quote: 'HORLOGÉ shows how community-first retail wins in luxury.', date: 'September 2024' },
+  { outlet: 'Hodinkee', quote: 'HORLOGÉS is redefining the European watch retail experience.', date: 'March 2025' },
+  { outlet: 'WatchPro', quote: 'A curated approach that every serious collector will appreciate.', date: 'January 2025' },
+  { outlet: 'GQ France', quote: 'The go-to destination for premium timepieces in Paris.', date: 'November 2024' },
+  { outlet: 'Business of Fashion', quote: 'HORLOGÉS shows how community-first retail wins in luxury.', date: 'September 2024' },
 ];
 
 const Press = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="Press & Media" description="What the world is saying about HORLOGÉ. Press coverage, media kit, and contact." canonical="/press" />
-    <DarkPage title="Press & Media" subtitle="What the world is saying about HORLOGÉ." label="Media">
+    <PageMeta title="Press & Media" description="What the world is saying about HORLOGÉS. Press coverage, media kit, and contact." canonical="/press" />
+    <DarkPage title="Press & Media" subtitle="What the world is saying about HORLOGÉS." label="Media">
 
       <Reveal>
         <DarkSection title="In the News" id="coverage">

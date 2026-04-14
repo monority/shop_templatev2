@@ -5,12 +5,12 @@ import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 
 const About = () => (
   <div className="min-h-screen bg-[#0a0a0a]">
-    <PageMeta title="About Us" description="HORLOGÉ — curated luxury timepieces since 2019. Born from a passion for horology, built for the modern collector." canonical="/about" />
-    <DarkPage title="About HORLOGÉ" subtitle="Born from a passion for horology. Built for the modern collector." label="Our Story">
+    <PageMeta title="About Us" description="HORLOGÉS — curated luxury timepieces since 2019. Born from a passion for horology, built for the modern collector." canonical="/about" />
+    <DarkPage title="About HORLOGÉS" subtitle="Born from a passion for horology. Built for the modern collector." label="Our Story">
       <Reveal>
         <DarkSection title="Our Mission" id="mission">
           <p className="text-white/50 text-sm leading-relaxed">
-            HORLOGÉ was founded with a single vision: make premium timepiece culture accessible to every collector.
+            HORLOGÉS was founded with a single vision: make premium timepiece culture accessible to every collector.
             We believe a great watch is never just an accessory — it's a statement of craft, heritage, and identity.
             Every piece we carry is curated for quality, movement, and cultural relevance.
           </p>
@@ -47,7 +47,7 @@ const About = () => (
       <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04]" stagger={0.1}>
         {[
           { title: 'Authenticity', text: 'Every timepiece is 100% verified by our expert horologists.' },
-          { title: 'Community',    text: 'We celebrate watch culture in all its forms, from vintage to modern.' },
+          { title: 'Community', text: 'We celebrate watch culture in all its forms, from vintage to modern.' },
           { title: 'Responsibility', text: 'Committed to sustainable packaging and ethical sourcing.' },
         ].map(({ title, text }) => (
           <RevealItem key={title}>
@@ -66,7 +66,7 @@ const About = () => (
           className="inline-flex items-center gap-2 text-white text-xs tracking-[0.2em] uppercase border-b border-white/20 pb-0.5 hover:border-white transition-colors"
         >
           Explore Our Collection
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
         </Link>
       </Reveal>
     </DarkPage>
