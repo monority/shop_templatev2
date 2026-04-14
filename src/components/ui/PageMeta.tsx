@@ -8,10 +8,10 @@ interface PageMetaProps {
   canonical?: string;
 }
 
-const SITE_NAME    = 'HORLOGÉ';
-const SITE_URL     = 'https://horloge.com';
-const DEFAULT_DESC = 'Curated luxury timepieces for the modern collector. Shop exclusive watch drops at HORLOGÉ — authenticated, insured, delivered.';
-const DEFAULT_IMG  = 'https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/1.webp';
+const SITE_NAME = 'HORLOGÉS';
+const SITE_URL = 'https://horloge.com';
+const DEFAULT_DESC = 'Curated luxury timepieces for the modern collector. Shop exclusive watch drops at HORLOGÉS — authenticated, insured, delivered.';
+const DEFAULT_IMG = 'https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/1.webp';
 
 const PageMeta = ({
   title,
@@ -31,18 +31,18 @@ const PageMeta = ({
       {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
       {/* Open Graph */}
-      <meta property="og:type"        content="website" />
-      <meta property="og:title"       content={pageTitle} />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:image"       content={image} />
-      <meta property="og:site_name"   content={SITE_NAME} />
-      <meta property="og:url"         content={canonicalUrl ?? SITE_URL} />
+      <meta property="og:image" content={image} />
+      <meta property="og:site_name" content={SITE_NAME} />
+      <meta property="og:url" content={canonicalUrl ?? SITE_URL} />
 
       {/* Twitter Card */}
-      <meta name="twitter:card"        content="summary_large_image" />
-      <meta name="twitter:title"       content={pageTitle} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image"       content={image} />
+      <meta name="twitter:image" content={image} />
     </Helmet>
   );
 };

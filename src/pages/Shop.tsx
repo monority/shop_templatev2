@@ -8,27 +8,27 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ItemListJsonLd, BreadcrumbJsonLd } from '../components/ui/JsonLd';
 
 const CATEGORIES = [
-  { slug: 'all',   label: 'All' },
-  { slug: 'men',   label: "Men's" },
+  { slug: 'all', label: 'All' },
+  { slug: 'men', label: "Men's" },
   { slug: 'women', label: "Women's" },
-  { slug: 'new',   label: 'New In' },
-  { slug: 'sale',  label: 'Sale' },
+  { slug: 'new', label: 'New In' },
+  { slug: 'sale', label: 'Sale' },
 ];
 
 const SORT_OPTIONS = [
-  { value: 'featured',   label: 'Featured' },
-  { value: 'price-low',  label: 'Price ↑' },
+  { value: 'featured', label: 'Featured' },
+  { value: 'price-low', label: 'Price ↑' },
   { value: 'price-high', label: 'Price ↓' },
-  { value: 'rating',     label: 'Top Rated' },
-  { value: 'newest',     label: 'Newest' },
+  { value: 'rating', label: 'Top Rated' },
+  { value: 'newest', label: 'Newest' },
 ];
 
 const MOVEMENTS = ['All', 'Automatic', 'Quartz', 'Mechanical', 'Solar'];
 const PRICE_RANGES = [
-  { label: 'All Prices', min: 0,    max: Infinity },
-  { label: 'Under $100', min: 0,    max: 100 },
-  { label: '$100–$500',  min: 100,  max: 500 },
-  { label: '$500–$1000', min: 500,  max: 1000 },
+  { label: 'All Prices', min: 0, max: Infinity },
+  { label: 'Under $100', min: 0, max: 100 },
+  { label: '$100–$500', min: 100, max: 500 },
+  { label: '$500–$1000', min: 500, max: 1000 },
   { label: 'Over $1000', min: 1000, max: Infinity },
 ];
 
@@ -77,9 +77,9 @@ const Shop = () => {
   const navigate = useNavigate();
   const filter = category || 'all';
 
-  const [sortBy,      setSortBy]      = useState('featured');
-  const [priceRange,  setPriceRange]  = useState(0);
-  const [movement,    setMovement]    = useState('All');
+  const [sortBy, setSortBy] = useState('featured');
+  const [priceRange, setPriceRange] = useState(0);
+  const [movement, setMovement] = useState('All');
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const { products, loading, error } = useProducts(filter);
@@ -93,11 +93,11 @@ const Shop = () => {
     });
     return result.sort((a, b) => {
       switch (sortBy) {
-        case 'price-low':  return a.price - b.price;
+        case 'price-low': return a.price - b.price;
         case 'price-high': return b.price - a.price;
-        case 'rating':     return (b.rating || 0) - (a.rating || 0);
-        case 'newest':     return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
-        default:           return 0;
+        case 'rating': return (b.rating || 0) - (a.rating || 0);
+        case 'newest': return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+        default: return 0;
       }
     });
   }, [products, sortBy, priceRange, movement]);
@@ -122,7 +122,7 @@ const Shop = () => {
     <>
       <PageMeta
         title={categoryLabel}
-        description={`Shop ${filteredProducts.length}+ ${categoryLabel.toLowerCase()} at HORLOGÉ. Authenticated luxury timepieces, free shipping over $200.`}
+        description={`Shop ${filteredProducts.length}+ ${categoryLabel.toLowerCase()} at HORLOGÉS. Authenticated luxury timepieces, free shipping over $200.`}
         canonical={filter === 'all' ? '/shop' : `/shop/${filter}`}
       />
       {!loading && filteredProducts.length > 0 && (
@@ -173,9 +173,8 @@ const Shop = () => {
                   <button
                     key={c.slug}
                     onClick={() => navigate(c.slug === 'all' ? '/shop' : `/shop/${c.slug}`)}
-                    className={`px-4 h-12 text-[11px] font-semibold tracking-[0.15em] uppercase whitespace-nowrap transition-colors border-b-2 ${
-                      filter === c.slug ? 'text-white border-white' : 'text-white/30 border-transparent hover:text-white/60'
-                    }`}
+                    className={`px-4 h-12 text-[11px] font-semibold tracking-[0.15em] uppercase whitespace-nowrap transition-colors border-b-2 ${filter === c.slug ? 'text-white border-white' : 'text-white/30 border-transparent hover:text-white/60'
+                      }`}
                   >
                     {c.label}
                   </button>
@@ -187,7 +186,7 @@ const Shop = () => {
                 {activeFilters > 0 && (
                   <button onClick={clearFilters} className="text-white/40 text-[10px] tracking-widest uppercase hover:text-white transition-colors flex items-center gap-1.5">
                     Clear ({activeFilters})
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                   </button>
                 )}
 
@@ -196,7 +195,7 @@ const Shop = () => {
                   onClick={() => setFiltersOpen(!filtersOpen)}
                   className="lg:hidden flex items-center gap-1.5 text-white/40 text-[11px] tracking-[0.15em] uppercase hover:text-white transition-colors"
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="6" x2="20" y2="6" /><line x1="8" y1="12" x2="16" y2="12" /><line x1="11" y1="18" x2="13" y2="18" /></svg>
                   Filters {activeFilters > 0 && `(${activeFilters})`}
                 </button>
 
@@ -229,9 +228,8 @@ const Shop = () => {
                     <button
                       key={r.label}
                       onClick={() => setPriceRange(i)}
-                      className={`w-full text-left text-sm py-1.5 transition-colors flex items-center justify-between ${
-                        priceRange === i ? 'text-white' : 'text-white/35 hover:text-white/60'
-                      }`}
+                      className={`w-full text-left text-sm py-1.5 transition-colors flex items-center justify-between ${priceRange === i ? 'text-white' : 'text-white/35 hover:text-white/60'
+                        }`}
                     >
                       {r.label}
                       {priceRange === i && <span className="w-1 h-1 rounded-full bg-white" />}
@@ -246,9 +244,8 @@ const Shop = () => {
                     <button
                       key={m}
                       onClick={() => setMovement(m)}
-                      className={`w-full text-left text-sm py-1.5 transition-colors flex items-center justify-between ${
-                        movement === m ? 'text-white' : 'text-white/35 hover:text-white/60'
-                      }`}
+                      className={`w-full text-left text-sm py-1.5 transition-colors flex items-center justify-between ${movement === m ? 'text-white' : 'text-white/35 hover:text-white/60'
+                        }`}
                     >
                       {m}
                       {movement === m && <span className="w-1 h-1 rounded-full bg-white" />}
@@ -263,10 +260,9 @@ const Shop = () => {
                     <button
                       key={g}
                       onClick={() => navigate(g === 'All' ? '/shop' : g === "Men's" ? '/shop/men' : g === "Women's" ? '/shop/women' : '/shop')}
-                      className={`w-full text-left text-sm py-1.5 transition-colors flex items-center justify-between ${
-                        (g === 'All' && filter === 'all') || (g === "Men's" && filter === 'men') || (g === "Women's" && filter === 'women')
+                      className={`w-full text-left text-sm py-1.5 transition-colors flex items-center justify-between ${(g === 'All' && filter === 'all') || (g === "Men's" && filter === 'men') || (g === "Women's" && filter === 'women')
                           ? 'text-white' : 'text-white/35 hover:text-white/60'
-                      }`}
+                        }`}
                     >
                       {g}
                       {((g === 'All' && filter === 'all') || (g === "Men's" && filter === 'men') || (g === "Women's" && filter === 'women')) && (
@@ -307,7 +303,7 @@ const Shop = () => {
                     <div className="flex items-center justify-between mb-8">
                       <p className="text-white/30 text-[10px] tracking-[0.25em] uppercase">Filters</p>
                       <button onClick={() => setFiltersOpen(false)} className="text-white/30 hover:text-white transition-colors">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                       </button>
                     </div>
 

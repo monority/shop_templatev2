@@ -5,8 +5,8 @@ import { Reveal } from '../../components/ui/Reveal';
 import { motion } from 'framer-motion';
 
 const TrackOrder = () => {
-  const [orderId,   setOrderId]   = useState('');
-  const [email,     setEmail]     = useState('');
+  const [orderId, setOrderId] = useState('');
+  const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -16,7 +16,7 @@ const TrackOrder = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <PageMeta title="Track Your Order" description="Enter your order number and email to check your HORLOGÉ delivery status in real time." canonical="/help/track" />
+      <PageMeta title="Track Your Order" description="Enter your order number and email to check your HORLOGÉS delivery status in real time." canonical="/help/track" />
       <DarkPage title="Track Order" subtitle="Enter your order number and email to check your delivery status." label="Tracking" maxWidth="max-w-xl">
 
         <Reveal>
@@ -29,8 +29,8 @@ const TrackOrder = () => {
                 className="w-12 h-12 border border-white/20 flex items-center justify-center mx-auto mb-6"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/60">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                  <circle cx="12" cy="10" r="3"/>
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
                 </svg>
               </motion.div>
               <p className="text-white/30 text-[11px] tracking-[0.25em] uppercase mb-3">Tracking</p>

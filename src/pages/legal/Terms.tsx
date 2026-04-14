@@ -18,10 +18,10 @@ const Terms = () => (
     <div className="min-h-screen bg-[#0a0a0a]">
       <DarkPage title="Terms & Conditions" subtitle="Last updated: 7 April 2026" label="Legal" maxWidth="max-w-3xl">
         <S title="1. Company Information">
-          <p>HORLOGÉ SAS — 12 Rue de la Paix, 75001 Paris, France. SIRET: 000 000 000 00000. VAT: FR00000000000.</p>
+          <p>HORLOGÉS SAS — 12 Rue de la Paix, 75001 Paris, France. SIRET: 000 000 000 00000. VAT: FR00000000000.</p>
         </S>
         <S title="2. Products & Pricing">
-          <p>All prices are in Euros (€) inclusive of French VAT (20%). HORLOGÉ reserves the right to modify prices at any time. All timepieces are guaranteed authentic.</p>
+          <p>All prices are in Euros (€) inclusive of French VAT (20%). HORLOGÉS reserves the right to modify prices at any time. All timepieces are guaranteed authentic.</p>
         </S>
         <S title="3. Orders & Payment">
           <p>An order is confirmed only after payment is successfully processed. We accept major credit/debit cards. By placing an order you confirm you are at least 18 years of age.</p>
@@ -36,7 +36,7 @@ const Terms = () => (
           <p>All products benefit from the legal guarantee of conformity (Article L217-4 of the Consumer Code) and the guarantee against hidden defects (Article 1641 of the Civil Code).</p>
         </S>
         <S title="7. Limitation of Liability">
-          <p>HORLOGÉ's liability is limited to the value of the order placed. We are not liable for indirect damages, loss of profits, or consequential losses.</p>
+          <p>HORLOGÉS's liability is limited to the value of the order placed. We are not liable for indirect damages, loss of profits, or consequential losses.</p>
         </S>
         <S title="8. Dispute Resolution">
           <p>Contact us first at <a href="mailto:support@horloge.com" className="text-white/60 hover:text-white transition-colors">support@horloge.com</a>. If unresolved, you may refer the matter to the competent French courts or the EU Online Dispute Resolution platform.</p>

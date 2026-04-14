@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "npm@11.12.1",
   "scripts": {
-    "dev": "vite --port 5175",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

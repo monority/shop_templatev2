@@ -32,7 +32,7 @@ const FAQS = [
   {
     category: 'Authentication',
     items: [
-      { q: 'Are all watches authentic?', a: 'Absolutely. Every timepiece sold on HORLOGÉ is 100% verified authentic by our expert horologists. We source directly from authorised dealers.' },
+      { q: 'Are all watches authentic?', a: 'Absolutely. Every timepiece sold on HORLOGÉS is 100% verified authentic by our expert horologists. We source directly from authorised dealers.' },
       { q: 'Do you sell pre-owned watches?', a: 'Yes. All pre-owned pieces go through our rigorous authentication process before listing.' },
       { q: 'Are sold-out references restocked?', a: 'Some popular references are restocked periodically. Sign up for restock alerts on the product page.' },
     ],
@@ -45,7 +45,7 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <PageMeta title="FAQ" description="Answers to common questions about orders, shipping, returns, and watch authentication at HORLOGÉ." canonical="/help/faq" />
+      <PageMeta title="FAQ" description="Answers to common questions about orders, shipping, returns, and watch authentication at HORLOGÉS." canonical="/help/faq" />
       <DarkPage title="FAQ" subtitle="Answers to our most common questions about orders, shipping, and authentication." label="Help">
         {FAQS.map((section) => (
           <Reveal key={section.category}>

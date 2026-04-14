@@ -9,11 +9,11 @@ export const LenisProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1,           // linear interpolation — smoother than duration-based
+      lerp: 0.1,
       smoothWheel: true,
-      wheelMultiplier: 1,  // native feel, no over-multiplication
+      wheelMultiplier: 1,
       touchMultiplier: 1,
-      syncTouch: false,    // don't intercept touch — avoids mobile stutter
+      syncTouch: false,
     });
 
     lenisRef.current = lenis;

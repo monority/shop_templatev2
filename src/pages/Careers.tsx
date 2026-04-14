@@ -5,12 +5,12 @@ import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ROLES = [
-  { title: 'Senior Frontend Engineer',        team: 'Engineering', location: 'Paris / Remote', type: 'Full-time' },
-  { title: 'Brand Partnerships Manager',       team: 'Business',    location: 'Paris',          type: 'Full-time' },
-  { title: 'Head of Community',               team: 'Marketing',   location: 'Remote',         type: 'Full-time' },
-  { title: 'Watch Authenticator & Specialist', team: 'Operations',  location: 'Paris',          type: 'Full-time' },
-  { title: 'UX/UI Designer',                  team: 'Design',      location: 'Paris / Remote', type: 'Full-time' },
-  { title: 'Customer Experience Specialist',  team: 'Support',     location: 'Remote',         type: 'Part-time' },
+  { title: 'Senior Frontend Engineer', team: 'Engineering', location: 'Paris / Remote', type: 'Full-time' },
+  { title: 'Brand Partnerships Manager', team: 'Business', location: 'Paris', type: 'Full-time' },
+  { title: 'Head of Community', team: 'Marketing', location: 'Remote', type: 'Full-time' },
+  { title: 'Watch Authenticator & Specialist', team: 'Operations', location: 'Paris', type: 'Full-time' },
+  { title: 'UX/UI Designer', team: 'Design', location: 'Paris / Remote', type: 'Full-time' },
+  { title: 'Customer Experience Specialist', team: 'Support', location: 'Remote', type: 'Part-time' },
 ];
 
 const Careers = () => {
@@ -19,15 +19,15 @@ const Careers = () => {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      <PageMeta title="Careers" description="Join the HORLOGÉ team. Help us build the future of luxury watch culture." canonical="/careers" />
+      <PageMeta title="Careers" description="Join the HORLOGÉS team. Help us build the future of luxury watch culture." canonical="/careers" />
       <DarkPage title="Join the Team" subtitle="Help us build the future of watch culture." label="Careers">
 
         <RevealGroup className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/[0.04]" stagger={0.08}>
           {[
-            { title: 'Move Fast',       text: 'Small team, big impact. Your work ships quickly.' },
+            { title: 'Move Fast', text: 'Small team, big impact. Your work ships quickly.' },
             { title: 'Creative Freedom', text: 'We value bold ideas from every corner of the team.' },
             { title: 'Remote Friendly', text: 'Many roles work fully or partially remote.' },
-            { title: 'Watch Perks',     text: 'Exclusive access to drops and staff discounts.' },
+            { title: 'Watch Perks', text: 'Exclusive access to drops and staff discounts.' },
           ].map(({ title, text }) => (
             <RevealItem key={title}>
               <div className="bg-[#0a0a0a] p-8">
@@ -73,7 +73,7 @@ const Careers = () => {
                         <div className="px-6 pb-6 border-t border-white/[0.06] pt-4">
                           <p className="text-white/40 text-sm mb-4 leading-relaxed">
                             We're looking for a talented {role.title.toLowerCase()} to join our {role.team.toLowerCase()} team
-                            and help shape the HORLOGÉ experience.
+                            and help shape the HORLOGÉS experience.
                           </p>
                           <a href="mailto:careers@horloge.com" className="text-white text-xs tracking-[0.2em] uppercase border-b border-white/20 pb-0.5 hover:border-white transition-colors">
                             Apply via Email

@@ -17,7 +17,7 @@ const Privacy = () => (
     <div className="min-h-screen bg-[#0a0a0a]">
       <DarkPage title="Privacy Policy" subtitle="Last updated: 7 April 2026" label="Legal" maxWidth="max-w-3xl">
         <S title="1. Who We Are">
-          <p>HORLOGÉ SAS, registered in France (SIRET 000 000 000 00000), operates horloge.com. For privacy enquiries: <a href="mailto:privacy@horloge.com" className="text-white/60 hover:text-white transition-colors">privacy@horloge.com</a>.</p>
+          <p>HORLOGÉS SAS, registered in France (SIRET 000 000 000 00000), operates horloge.com. For privacy enquiries: <a href="mailto:privacy@horloge.com" className="text-white/60 hover:text-white transition-colors">privacy@horloge.com</a>.</p>
         </S>
         <S title="2. Data We Collect">
           <p>We collect the following when you create an account or place an order:</p>
@@ -43,7 +43,7 @@ const Privacy = () => (
           <p>Authentication is handled by Google Firebase. Passwords are never stored in plain text. Data is encrypted in transit (TLS) and at rest.</p>
         </S>
         <S title="8. Contact">
-          <p>HORLOGÉ SAS — 12 Rue de la Paix, 75001 Paris, France<br />Email: <a href="mailto:privacy@horloge.com" className="text-white/60 hover:text-white transition-colors">privacy@horloge.com</a></p>
+          <p>HORLOGÉS SAS — 12 Rue de la Paix, 75001 Paris, France<br />Email: <a href="mailto:privacy@horloge.com" className="text-white/60 hover:text-white transition-colors">privacy@horloge.com</a></p>
         </S>
       </DarkPage>
     </div>

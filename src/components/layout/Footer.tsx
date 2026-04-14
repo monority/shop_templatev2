@@ -3,24 +3,24 @@ import { motion } from 'framer-motion';
 
 const FOOTER_LINKS = {
   collections: [
-    { label: "Men's Watches",   path: '/shop/men' },
+    { label: "Men's Watches", path: '/shop/men' },
     { label: "Women's Watches", path: '/shop/women' },
-    { label: 'New Arrivals',    path: '/shop/new' },
-    { label: 'Sale',            path: '/shop/sale' },
-    { label: 'All Timepieces',  path: '/shop' },
+    { label: 'New Arrivals', path: '/shop/new' },
+    { label: 'Sale', path: '/shop/sale' },
+    { label: 'All Timepieces', path: '/shop' },
   ],
   services: [
     { label: 'Watch Authentication', path: '/help/faq' },
-    { label: 'Shipping & Delivery',  path: '/help/shipping' },
-    { label: 'Returns & Exchanges',  path: '/help/returns' },
-    { label: 'Track Your Order',     path: '/help/track' },
-    { label: 'Watch Care Guide',     path: '/help/size-guide' },
+    { label: 'Shipping & Delivery', path: '/help/shipping' },
+    { label: 'Returns & Exchanges', path: '/help/returns' },
+    { label: 'Track Your Order', path: '/help/track' },
+    { label: 'Watch Care Guide', path: '/help/size-guide' },
   ],
   company: [
-    { label: 'Our Story',      path: '/about' },
+    { label: 'Our Story', path: '/about' },
     { label: 'Sustainability', path: '/sustainability' },
-    { label: 'Press & Media',  path: '/press' },
-    { label: 'Careers',        path: '/careers' },
+    { label: 'Press & Media', path: '/press' },
+    { label: 'Careers', path: '/careers' },
   ],
 };
 
@@ -52,9 +52,9 @@ const Footer = () => {
                 onClick={() => navigate('/')}
                 className="text-white text-2xl font-black tracking-[-0.02em] mb-4 block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/30"
                 style={{ fontFamily: "'DM Serif Display', serif" }}
-                aria-label="HORLOGÉ home"
+                aria-label="HORLOGÉS home"
               >
-                HORLOGÉ
+                HORLOGÉS
               </button>
               <p className="text-white/30 text-xs leading-relaxed max-w-[220px]">
                 Curated luxury timepieces for the modern collector. Authenticated, insured, delivered.
@@ -110,7 +110,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
           <p className="text-white/15 text-xs tracking-wide">
-            &copy; 2026 HORLOGÉ. All rights reserved.
+            &copy; 2026 HORLOGÉS. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-xs">
             <Link to="/legal/privacy" className="text-white/15 hover:text-white/40 transition-colors">

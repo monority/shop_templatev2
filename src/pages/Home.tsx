@@ -12,19 +12,19 @@ import useImageFallback from '../hooks/useImageFallback';
 import { OrganizationJsonLd } from '../components/ui/JsonLd';
 
 const FEATURES = [
-  { num: '01', title: 'Free Express Shipping',   desc: 'Every order delivered within 24–48 hours, fully insured and free over $200.' },
+  { num: '01', title: 'Free Express Shipping', desc: 'Every order delivered within 24–48 hours, fully insured and free over $200.' },
   { num: '02', title: 'Authenticity Guaranteed', desc: 'Every timepiece verified by our expert horologists. Zero counterfeits, ever.' },
-  { num: '03', title: 'Easy Returns',            desc: '30-day hassle-free returns. No questions asked.' },
-  { num: '04', title: 'Exclusive Drops',         desc: 'Early access to limited editions and rare references before anyone else.' },
+  { num: '03', title: 'Easy Returns', desc: '30-day hassle-free returns. No questions asked.' },
+  { num: '04', title: 'Exclusive Drops', desc: 'Early access to limited editions and rare references before anyone else.' },
 ];
 
 const TESTIMONIALS = [
-  { name: 'Alexandre M.', role: 'Watch Collector',     text: 'Best curated selection of authentic timepieces I\'ve found. Fast shipping and impeccable packaging.', rating: 5 },
-  { name: 'Sophie L.',    role: 'Luxury Enthusiast',   text: 'The Longines arrived in perfect condition. Exactly as described. Will definitely order again.', rating: 5 },
-  { name: 'James C.',     role: 'Horology Enthusiast', text: 'Rare references at fair prices. The authentication process gives me complete confidence.', rating: 5 },
+  { name: 'Alexandre M.', role: 'Watch Collector', text: 'Best curated selection of authentic timepieces I\'ve found. Fast shipping and impeccable packaging.', rating: 5 },
+  { name: 'Sophie L.', role: 'Luxury Enthusiast', text: 'The Longines arrived in perfect condition. Exactly as described. Will definitely order again.', rating: 5 },
+  { name: 'James C.', role: 'Horology Enthusiast', text: 'Rare references at fair prices. The authentication process gives me complete confidence.', rating: 5 },
 ];
 
-const MARQUEE_ITEMS = ['HORLOGÉ', 'LUXURY TIMEPIECES', 'SS 2026', 'EXCLUSIVE DROPS', 'FREE SHIPPING', 'AUTHENTICATED'];
+const MARQUEE_ITEMS = ['HORLOGÉS', 'LUXURY TIMEPIECES', 'SS 2026', 'EXCLUSIVE DROPS', 'FREE SHIPPING', 'AUTHENTICATED'];
 
 // Animated counter
 const Counter = ({ value, suffix = '' }: { value: number; suffix?: string }) => {
@@ -56,21 +56,22 @@ const SectionLabel = ({ children, light = false }: { children: string; light?: b
   </div>
 );
 
-// Infinite horizontal marquee
+// Infinite horizontal marquee using CSS
 const Marquee = ({ items, speed = 30, reverse = false }: { items: string[]; speed?: number; reverse?: boolean }) => (
   <div className="overflow-hidden py-5 border-y border-white/[0.06]" aria-hidden="true">
-    <motion.div
+    <div 
       className="flex gap-12 whitespace-nowrap"
-      animate={{ x: reverse ? ['0%', '50%'] : ['0%', '-50%'] }}
-      transition={{ duration: speed, ease: 'linear', repeat: Infinity }}
+      style={{
+        animation: `${reverse ? 'marquee-reverse' : 'marquee'} ${speed}s linear infinite`,
+      }}
     >
       {[...items, ...items, ...items, ...items].map((item, i) => (
-        <span key={i} className="text-white/20 text-[11px] tracking-[0.3em] uppercase font-semibold flex items-center gap-12">
+        <span key={i} className="text-white/20 text-[11px] tracking-[0.3em] uppercase font-semibold flex items-center gap-12 flex-shrink-0">
           {item}
           <span className="w-1.5 h-1.5 rounded-full bg-white/10 inline-block" />
         </span>
       ))}
-    </motion.div>
+    </div>
   </div>
 );
 
@@ -90,14 +91,14 @@ const Home = () => {
   const navigate = useNavigate();
   const { products: featuredProducts, loading: productsLoading, error: productsError } = useFeaturedProducts();
   const { categories, loading: categoriesLoading, error: categoriesError } = useCategories();
-  const goShop = useCallback(() => navigate('/shop'),     [navigate]);
-  const goNew  = useCallback(() => navigate('/shop/new'), [navigate]);
+  const goShop = useCallback(() => navigate('/shop'), [navigate]);
+  const goNew = useCallback(() => navigate('/shop/new'), [navigate]);
   const handleImgError = useImageFallback();
 
   return (
     <div className="bg-[#0a0a0a]">
       <PageMeta
-        description="Curated luxury timepieces for the modern collector. Shop exclusive watch drops at HORLOGÉ — authenticated, insured, delivered."
+        description="Curated luxury timepieces for the modern collector. Shop exclusive watch drops at HORLOGÉS — authenticated, insured, delivered."
         canonical="/"
       />
       <OrganizationJsonLd />
@@ -111,10 +112,10 @@ const Home = () => {
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04]">
             {[
-              { value: 500,  suffix: '+',  label: 'Brands' },
+              { value: 500, suffix: '+', label: 'Brands' },
               { value: 12000, suffix: '+', label: 'Collectors' },
-              { value: 98,   suffix: '%',  label: 'Satisfaction' },
-              { value: 24,   suffix: 'h',  label: 'Avg. Delivery' },
+              { value: 98, suffix: '%', label: 'Satisfaction' },
+              { value: 24, suffix: 'h', label: 'Avg. Delivery' },
             ].map(({ value, suffix, label }) => (
               <Reveal key={label}>
                 <div className="bg-[#0a0a0a] px-8 py-10 text-center">
@@ -151,7 +152,7 @@ const Home = () => {
                 className="hidden sm:flex items-center gap-2 text-white/30 text-xs tracking-[0.2em] uppercase font-medium hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
               >
                 View All
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </button>
             </Reveal>
           </div>
@@ -203,7 +204,7 @@ const Home = () => {
                 className="hidden sm:flex items-center gap-2 text-white/30 text-xs tracking-[0.2em] uppercase hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
               >
                 View All
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </button>
             </Reveal>
           </div>
@@ -297,7 +298,7 @@ const Home = () => {
           }}
         >
           <Reveal className="text-center px-6">
-            <p className="text-white/20 text-[11px] tracking-[0.3em] uppercase mb-4">The Horlogé Promise</p>
+            <p className="text-white/20 text-[11px] tracking-[0.3em] uppercase mb-4">The HORLOGÉS Promise</p>
             <h2
               className="text-white max-w-3xl mx-auto leading-tight"
               style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(2rem, 6vw, 5rem)' }}
@@ -321,7 +322,7 @@ const Home = () => {
       <section className="content-section py-24 md:py-32 bg-[#0a0a0a] border-t border-white/[0.04]" aria-labelledby="features-title">
         <div className="container">
           <Reveal className="mb-14">
-            <SectionLabel>Why Horlogé</SectionLabel>
+            <SectionLabel>Why HORLOGÉS</SectionLabel>
             <h2
               id="features-title"
               className="text-white leading-tight"
