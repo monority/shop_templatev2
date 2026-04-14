@@ -17,10 +17,21 @@ describe('Button Component', () => {
 
   it('renders with different variants', () => {
     const { rerender } = render(<Button variant="primary">Primary</Button>);
-    expect(screen.getByRole('button')).toHaveClass('bg-brand');
+    expect(screen.getByRole('button')).toHaveClass('btn-primary');
 
     rerender(<Button variant="secondary">Secondary</Button>);
-    expect(screen.getByRole('button')).toHaveClass('bg-slate-100');
+    expect(screen.getByRole('button')).toHaveClass('btn-secondary');
+
+    rerender(<Button variant="outline">Outline</Button>);
+    expect(screen.getByRole('button')).toHaveClass('btn-outline');
+  });
+
+  it('renders with different sizes', () => {
+    const { rerender } = render(<Button size="sm">Small</Button>);
+    expect(screen.getByRole('button')).toHaveClass('btn-sm');
+
+    rerender(<Button size="lg">Large</Button>);
+    expect(screen.getByRole('button')).toHaveClass('btn-lg');
   });
 
   it('renders disabled state', () => {
@@ -28,11 +39,8 @@ describe('Button Component', () => {
     expect(screen.getByRole('button')).toBeDisabled();
   });
 
-  it('renders with different sizes', () => {
-    const { rerender } = render(<Button size="sm">Small</Button>);
-    expect(screen.getByRole('button')).toHaveClass('px-2');
-
-    rerender(<Button size="lg">Large</Button>);
-    expect(screen.getByRole('button')).toHaveClass('px-6');
+  it('renders with loading state', () => {
+    render(<Button isLoading>Loading</Button>);
+    expect(screen.getByRole('button')).toBeDisabled();
   });
 });
