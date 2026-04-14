@@ -9,6 +9,7 @@ const securityHeaders = {
   'Referrer-Policy':         'strict-origin-when-cross-origin',
   'Permissions-Policy':      'camera=(), microphone=(), geolocation=()',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'Content-Security-Policy':  "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.dummyjson.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.dummyjson.com https://*.dummyjson.com; frame-src https://www.youtube.com; connect-src 'self' https://*.dummyjson.com",
 };
 
 export default defineConfig({
@@ -35,6 +36,9 @@ export default defineConfig({
 
     // Minification agressive
     minify: 'esbuild',
+
+    // Remove dev-only code
+    target: 'esnext',
 
     // Supprime les console.log en production
     esbuildOptions: {
