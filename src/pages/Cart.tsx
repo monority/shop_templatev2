@@ -57,7 +57,7 @@ const Cart = () => {
                         <p className="text-white/25 text-xs mt-1">Size {item.size} · {item.color}</p>
                       </div>
                       <button
-                        onClick={() => removeFromCart(item.id, item.size, item.color)}
+                        onClick={() => removeFromCart(item.id, item.size!, item.color!)}
                         className="text-white/20 hover:text-white transition-colors flex-shrink-0"
                         aria-label={`Remove ${item.name}`}
                       >
@@ -68,9 +68,9 @@ const Cart = () => {
                     </div>
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex items-center border border-white/10" role="group" aria-label="Quantity">
-                        <button onClick={() => updateCartQuantity(item.id, item.size, item.color, Math.max(1, item.quantity - 1))} className="w-8 h-8 text-white/30 hover:text-white transition-colors text-sm">−</button>
+                        <button onClick={() => updateCartQuantity(item.id, item.size!, item.color!, Math.max(1, item.quantity - 1))} className="w-8 h-8 text-white/30 hover:text-white transition-colors text-sm">−</button>
                         <span className="w-8 text-center text-white text-sm">{item.quantity}</span>
-                        <button onClick={() => updateCartQuantity(item.id, item.size, item.color, item.quantity + 1)} className="w-8 h-8 text-white/30 hover:text-white transition-colors text-sm">+</button>
+                        <button onClick={() => updateCartQuantity(item.id, item.size!, item.color!, item.quantity + 1)} className="w-8 h-8 text-white/30 hover:text-white transition-colors text-sm">+</button>
                       </div>
                       <span className="text-white font-medium">{formatPrice(item.price * item.quantity)}</span>
                     </div>

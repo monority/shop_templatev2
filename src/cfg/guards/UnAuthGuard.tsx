@@ -1,9 +1,14 @@
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAppStore } from '../../store';
 
-const UnAuthGuard = ({ children }) => {
-  const isAuthenticated = useAppStore((state) => state.isAuthenticated);
-  const authLoading = useAppStore((state) => state.authLoading);
+interface UnAuthGuardProps {
+  children: ReactNode;
+}
+
+const UnAuthGuard = ({ children }: UnAuthGuardProps) => {
+  const isAuthenticated = useAppStore((s) => s.isAuthenticated);
+  const authLoading = useAppStore((s) => s.authLoading);
 
   if (authLoading) return null;
   if (isAuthenticated) return <Navigate to="/" replace />;

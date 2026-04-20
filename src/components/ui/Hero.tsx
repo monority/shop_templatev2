@@ -1,5 +1,5 @@
 import { useRef, useEffect, useCallback, memo } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
+import { motion, useTransform, useScroll } from 'framer-motion';
 
 const WATCH_IMAGE = 'https://cdn.dummyjson.com/product-images/mens-watches/rolex-cellini-date-black-dial/1.webp';
 const FALLBACK_IMG = 'https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/1.webp';
@@ -17,8 +17,11 @@ const HeroBg = memo(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d')!;
-    let raf: number;
-    let w = 0, h = 0;
+    let raf = 0;
+    let resizeRaf = 0;
+    let w = 0;
+    let h = 0;
+    let dpr = 1;
 
     // Fewer orbs = less GPU work
     const orbs = Array.from({ length: 3 }, () => ({
@@ -31,36 +34,54 @@ const HeroBg = memo(() => {
     }));
 
     const resize = () => {
-      w = canvas.width = canvas.offsetWidth;
-      h = canvas.height = canvas.offsetHeight;
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        const nextW = canvas.offsetWidth;
+        const nextH = canvas.offsetHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = nextW;
+        h = nextH;
+        canvas.width = Math.max(1, Math.floor(nextW * dpr));
+        canvas.height = Math.max(1, Math.floor(nextH * dpr));
+        canvas.style.width = `${nextW}px`;
+        canvas.style.height = `${nextH}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#080808';
+        ctx.fillRect(0, 0, w, h);
+      });
     };
 
     let frame = 0;
     const draw = () => {
       raf = requestAnimationFrame(draw);
       frame++;
-      // Only redraw every 2 frames (30fps) — imperceptible, halves GPU load
-      if (frame % 2 !== 0) return;
+      ctx.fillStyle = '#080808';
+      ctx.fillRect(0, 0, w, h);
 
-      ctx.clearRect(0, 0, w, h);
-
-      // Grid — draw once every 10 frames since it never changes
-      if (frame % 10 === 0 || frame <= 2) {
-        ctx.strokeStyle = 'rgba(255,255,255,0.022)';
-        ctx.lineWidth = 0.5;
-        const step = 90;
-        for (let x = 0; x < w; x += step) {
-          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
-        }
-        for (let y = 0; y < h; y += step) {
-          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-        }
+      ctx.strokeStyle = 'rgba(255,255,255,0.022)';
+      ctx.lineWidth = 0.5;
+      const step = 90;
+      for (let x = 0; x < w; x += step) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+      }
+      for (let y = 0; y < h; y += step) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
       }
 
       orbs.forEach((o) => {
-        o.x += o.vx; o.y += o.vy;
-        if (o.x < 0 || o.x > 1) o.vx *= -1;
-        if (o.y < 0 || o.y > 1) o.vy *= -1;
+        o.x += o.vx;
+        o.y += o.vy;
+        if (o.x < 0) { o.x = 0; o.vx *= -1; }
+        if (o.x > 1) { o.x = 1; o.vx *= -1; }
+        if (o.y < 0) { o.y = 0; o.vy *= -1; }
+        if (o.y > 1) { o.y = 1; o.vy *= -1; }
         const grd = ctx.createRadialGradient(o.x * w, o.y * h, 0, o.x * w, o.y * h, o.r);
         grd.addColorStop(0, `rgba(255,255,255,${o.opacity})`);
         grd.addColorStop(1, 'rgba(255,255,255,0)');
@@ -72,7 +93,6 @@ const HeroBg = memo(() => {
     };
 
     resize();
-    // Start on idle to not block initial paint
     const start = () => { raf = requestAnimationFrame(draw); };
     if ('requestIdleCallback' in window) {
       (window as any).requestIdleCallback(start, { timeout: 500 });
@@ -83,7 +103,11 @@ const HeroBg = memo(() => {
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
 
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+    return () => {
+      cancelAnimationFrame(raf);
+      cancelAnimationFrame(resizeRaf);
+      ro.disconnect();
+    };
   }, []);
 
   return (
@@ -96,11 +120,9 @@ const HeroBg = memo(() => {
 });
 HeroBg.displayName = 'HeroBg';
 
-// ── Parallax watch image with scroll rotation ────────────────────────────────────────────────
 const ParallaxWatch = memo(({ onError }: { onError: (e: any) => void }) => {
   const { scrollY } = useScroll();
   const rotateZ = useTransform(scrollY, [0, 500], [0, 12]);
-  const translateY = useTransform(scrollY, [0, 300], [0, -50]);
 
   return (
     <motion.div
@@ -110,7 +132,6 @@ const ParallaxWatch = memo(({ onError }: { onError: (e: any) => void }) => {
       animate={{ opacity: 1, y: 0, rotate: -5 }}
       transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
     >
-      {/* Glow under watch */}
       <div
         className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-24 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse, rgba(255,255,255,0.12) 0%, transparent 70%)', filter: 'blur(20px)' }}
@@ -122,7 +143,7 @@ const ParallaxWatch = memo(({ onError }: { onError: (e: any) => void }) => {
         className="w-full object-contain"
         style={{ filter: 'drop-shadow(0 50px 100px rgba(0,0,0,0.95)) drop-shadow(0 0 40px rgba(255,255,255,0.04))' }}
         loading="eager"
-        fetchpriority="high"
+        fetchPriority="high"
         onError={onError}
       />
     </motion.div>
@@ -130,7 +151,6 @@ const ParallaxWatch = memo(({ onError }: { onError: (e: any) => void }) => {
 });
 ParallaxWatch.displayName = 'ParallaxWatch';
 
-// ── Hero ──────────────────────────────────────────────────────────────────────
 interface HeroProps {
   onPrimaryClick?: () => void;
   onSecondaryClick?: () => void;
@@ -147,24 +167,20 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
       style={{ minHeight: '100svh' }}
       aria-labelledby="hero-title"
     >
-      {/* Animated canvas background */}
       <HeroBg />
 
-      {/* Vignette edges */}
       <div className="absolute inset-0 pointer-events-none" style={{
         background: 'radial-gradient(ellipse at center, transparent 40%, rgba(8,8,8,0.8) 100%)'
       }} aria-hidden="true" />
 
       <div className="relative z-10 grid lg:grid-cols-2 min-h-screen">
 
-        {/* ── LEFT: Copy ─────────────────────────────────────────────────── */}
         <motion.div
           className="flex flex-col justify-between px-6 sm:px-10 lg:px-16 pt-32 pb-10 lg:pt-40 lg:pb-16"
           variants={stagger}
           initial="hidden"
           animate="visible"
         >
-          {/* Eyebrow */}
           <motion.div variants={fadeUp} className="flex items-center gap-3">
             <motion.span
               className="w-6 h-px bg-white/40"
@@ -177,7 +193,6 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
             <span className="text-white/50 text-xs tracking-[0.25em] uppercase font-medium">SS 2026 Collection</span>
           </motion.div>
 
-          {/* Headline */}
           <div className="mt-12 lg:mt-0">
             <motion.h1
               id="hero-title"
@@ -203,7 +218,6 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                {/* Shimmer on hover */}
                 <motion.span
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent -translate-x-full"
                   whileHover={{ translateX: '200%' }}
@@ -233,7 +247,6 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
             </motion.div>
           </div>
 
-          {/* Stats */}
           <motion.div
             className="mt-16 lg:mt-auto pt-8 border-t border-white/[0.08] grid grid-cols-3 gap-4"
             variants={fadeUp}
@@ -252,10 +265,8 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
           </motion.div>
         </motion.div>
 
-        {/* ── RIGHT: Watch with parallax ──────────────────────────────────── */}
         <div className="relative flex items-end justify-center overflow-hidden min-h-[50vh] lg:min-h-0">
 
-          {/* Radial spotlight */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{ background: 'radial-gradient(ellipse at 60% 70%, rgba(255,255,255,0.05) 0%, transparent 60%)' }}
@@ -264,7 +275,6 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
             aria-hidden="true"
           />
 
-          {/* Big ghost text */}
           <motion.span
             className="absolute bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-black select-none pointer-events-none"
             style={{
@@ -282,7 +292,6 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
             TEMPS
           </motion.span>
 
-          {/* Floating info tag */}
           <motion.div
             className="absolute top-10 right-6 lg:top-16 lg:right-10 border border-white/10 px-4 py-2.5 backdrop-blur-sm bg-white/[0.02]"
             aria-hidden="true"
@@ -294,7 +303,6 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
             <p className="text-white text-sm font-semibold mt-0.5" style={{ fontFamily: "'DM Serif Display', serif" }}>Rolex Cellini</p>
           </motion.div>
 
-          {/* Vertical label */}
           <motion.div
             className="absolute top-1/2 left-4 lg:left-8 -translate-y-1/2 flex flex-col items-center gap-2"
             aria-hidden="true"
@@ -321,9 +329,8 @@ const Hero = memo(({ onPrimaryClick, onSecondaryClick }: HeroProps) => {
         </div>
       </div>
 
-      {/* ── Ticker ─────────────────────────────────────────────────────────── */}
       <div className="relative z-10 border-t border-white/[0.06] overflow-hidden py-3 bg-white/[0.015]" aria-hidden="true">
-        <div 
+        <div
           className="flex gap-12 whitespace-nowrap"
           style={{ animation: 'ticker 24s linear infinite' }}
         >

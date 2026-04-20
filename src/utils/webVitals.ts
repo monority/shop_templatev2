@@ -7,8 +7,17 @@ export interface WebVitalsMetric {
   navigationType: string;
 }
 
+interface Gtag {
+  (command: 'event', eventName: string, params?: Record<string, unknown>): void;
+}
+
+declare global {
+  interface Window {
+    gtag?: Gtag;
+  }
+}
+
 export const reportWebVitals = (metric: WebVitalsMetric) => {
-  // Send to analytics
   if (window.gtag) {
     window.gtag('event', metric.name, {
       value: Math.round(metric.value),
@@ -18,7 +27,6 @@ export const reportWebVitals = (metric: WebVitalsMetric) => {
     });
   }
 
-  // Log to console in development
   if (import.meta.env.DEV) {
     console.log(`${metric.name}:`, {
       value: metric.value,
@@ -27,33 +35,42 @@ export const reportWebVitals = (metric: WebVitalsMetric) => {
   }
 };
 
+interface LayoutShiftEntry extends PerformanceEntry {
+  hadRecentInput: boolean;
+  value: number;
+  startTime: number;
+}
+
 export const getCLS = (onPerfEntry?: (metric: WebVitalsMetric) => void) => {
   let clsValue = 0;
-  let clsEntries: PerformanceEntry[] = [];
+  const clsEntries: LayoutShiftEntry[] = [];
   let sessionValue = 0;
-  let sessionEntries: PerformanceEntry[] = [];
+  const sessionEntries: LayoutShiftEntry[] = [];
 
   const observer = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
-      if ((entry as any).hadRecentInput) continue;
+      const lsEntry = entry as LayoutShiftEntry;
+      if (lsEntry.hadRecentInput) continue;
 
       const firstSessionEntry = sessionEntries[0];
       const lastSessionEntry = sessionEntries[sessionEntries.length - 1];
 
       if (
         sessionValue &&
-        entry.startTime - (lastSessionEntry?.startTime || 0) < 1000 &&
-        entry.startTime - (firstSessionEntry?.startTime || 0) < 5000
+        lsEntry.startTime - (lastSessionEntry?.startTime || 0) < 1000 &&
+        lsEntry.startTime - (firstSessionEntry?.startTime || 0) < 5000
       ) {
-        sessionEntries.push(entry);
-        sessionValue += (entry as any).value;
+        sessionEntries.push(lsEntry);
+        sessionValue += lsEntry.value;
       } else {
         if (sessionValue > clsValue) {
           clsValue = sessionValue;
-          clsEntries = sessionEntries;
+          clsEntries.length = 0;
+          clsEntries.push(...sessionEntries);
         }
-        sessionEntries = [entry];
-        sessionValue = (entry as any).value;
+        sessionEntries.length = 0;
+        sessionEntries.push(lsEntry);
+        sessionValue = lsEntry.value;
       }
     }
   });
@@ -89,20 +106,26 @@ export const getCLS = (onPerfEntry?: (metric: WebVitalsMetric) => void) => {
   };
 };
 
+interface LCPEntry extends PerformanceEntry {
+  renderTime: number;
+  loadTime: number;
+}
+
 export const getLCP = (onPerfEntry?: (metric: WebVitalsMetric) => void) => {
   const observer = new PerformanceObserver((list) => {
     const entries = list.getEntries();
-    const lastEntry = entries[entries.length - 1];
+    const lastEntry = entries[entries.length - 1] as LCPEntry;
 
     const getRating = (value: number): 'good' | 'needs-improvement' | 'poor' => {
       return value <= 2500 ? 'good' : value <= 4000 ? 'needs-improvement' : 'poor';
     };
 
+    const value = lastEntry.renderTime || lastEntry.loadTime || 0;
     onPerfEntry?.({
       name: 'LCP',
-      value: lastEntry.renderTime || lastEntry.loadTime,
-      rating: getRating(lastEntry.renderTime || lastEntry.loadTime),
-      delta: lastEntry.renderTime || lastEntry.loadTime,
+      value,
+      rating: getRating(value),
+      delta: value,
       id: `v3-${Date.now()}`,
       navigationType: 'navigation',
     });
@@ -124,18 +147,23 @@ export const getLCP = (onPerfEntry?: (metric: WebVitalsMetric) => void) => {
   };
 };
 
+interface FIDEntry extends PerformanceEntry {
+  processingDuration: number;
+}
+
 export const getFID = (onPerfEntry?: (metric: WebVitalsMetric) => void) => {
   const observer = new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
+      const fidEntry = entry as FIDEntry;
       const getRating = (value: number): 'good' | 'needs-improvement' | 'poor' => {
         return value <= 100 ? 'good' : value <= 300 ? 'needs-improvement' : 'poor';
       };
 
       onPerfEntry?.({
         name: 'FID',
-        value: (entry as any).processingDuration,
-        rating: getRating((entry as any).processingDuration),
-        delta: (entry as any).processingDuration,
+        value: fidEntry.processingDuration,
+        rating: getRating(fidEntry.processingDuration),
+        delta: fidEntry.processingDuration,
         id: `v3-${Date.now()}`,
         navigationType: 'navigation',
       });

@@ -49,8 +49,8 @@ const PageLoader = () => (
 );
 
 const Root = () => {
-  const initializeAuth = useAppStore((state) => state.initializeAuth);
-  const unsubRef = useRef(null);
+  const initializeAuth = useAppStore((s) => s.initializeAuth);
+  const unsubRef = useRef<(() => void) | null>(null);
 
   // Run once on mount — initializeAuth is a stable Zustand action
   useEffect(() => {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
-export const useTheme = () => {
-  const [theme, setTheme] = useState(() => {
+export type Theme = 'light' | 'dark';
+
+export const useTheme = (): { theme: Theme; toggleTheme: () => void } => {
+  const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === 'undefined') return 'light';
-    return localStorage.getItem('theme') || 'light';
+    return (localStorage.getItem('theme') as Theme) || 'light';
   });
 
   useEffect(() => {

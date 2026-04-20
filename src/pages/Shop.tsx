@@ -72,12 +72,14 @@ const FilterGroup = ({ title, children }: { title: string; children: React.React
   );
 };
 
+import type { CategoryFilter } from '../services/productService';
+
 const Shop = () => {
   const { category } = useParams();
   const navigate = useNavigate();
-  const filter = category || 'all';
+  const filter: CategoryFilter = (category as CategoryFilter) || 'all';
 
-  const [sortBy, setSortBy] = useState('featured');
+  const [sortBy, setSortBy] = useState<'featured' | 'price-low' | 'price-high' | 'rating' | 'newest'>('featured');
   const [priceRange, setPriceRange] = useState(0);
   const [movement, setMovement] = useState('All');
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -261,7 +263,7 @@ const Shop = () => {
                       key={g}
                       onClick={() => navigate(g === 'All' ? '/shop' : g === "Men's" ? '/shop/men' : g === "Women's" ? '/shop/women' : '/shop')}
                       className={`w-full text-left text-sm py-1.5 transition-colors flex items-center justify-between ${(g === 'All' && filter === 'all') || (g === "Men's" && filter === 'men') || (g === "Women's" && filter === 'women')
-                          ? 'text-white' : 'text-white/35 hover:text-white/60'
+                        ? 'text-white' : 'text-white/35 hover:text-white/60'
                         }`}
                     >
                       {g}
@@ -358,7 +360,7 @@ const Shop = () => {
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-px bg-white/[0.04]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-px">
                   {filteredProducts.map((product) => (
                     <div key={product.id} className="bg-[#0a0a0a]">
                       <ProductCard product={product} dark />

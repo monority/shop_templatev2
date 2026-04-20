@@ -4,10 +4,10 @@
 
 /**
  * Formate un prix en USD.
- * @param {number} amount
- * @returns {string} ex: "$189.00"
+ * @param amount
+ * @returns ex: "$189.00"
  */
-export const formatPrice = (amount) =>
+export const formatPrice = (amount: number): string =>
   new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -17,10 +17,10 @@ export const formatPrice = (amount) =>
 
 /**
  * Formate une date ISO en date lisible.
- * @param {string} dateStr
- * @returns {string} ex: "March 15, 2026"
+ * @param dateStr
+ * @returns ex: "March 15, 2026"
  */
-export const formatDate = (dateStr) =>
+export const formatDate = (dateStr: string): string =>
   new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
@@ -29,9 +29,9 @@ export const formatDate = (dateStr) =>
 
 /**
  * Tronque un texte à une longueur max.
- * @param {string} text
- * @param {number} max
- * @returns {string}
+ * @param text
+ * @param max
+ * @returns
  */
-export const truncate = (text, max = 100) =>
+export const truncate = (text: string, max = 100): string =>
   text.length > max ? `${text.slice(0, max)}…` : text;

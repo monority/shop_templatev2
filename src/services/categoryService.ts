@@ -1,9 +1,10 @@
 import { getAllCategories, getCategoryBySlug } from '../data/categories';
+import type { Category } from '../types';
 
 export const categoryService = {
-  getAll: () => Promise.resolve(getAllCategories()),
+  getAll: (): Promise<Category[]> => Promise.resolve(getAllCategories()),
 
-  getBySlug: (slug) => {
+  getBySlug: (slug: string): Promise<Category> => {
     const category = getCategoryBySlug(slug);
     return category
       ? Promise.resolve(category)

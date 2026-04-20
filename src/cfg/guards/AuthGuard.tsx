@@ -1,17 +1,16 @@
+import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '../../store';
 
-/**
- * Protège les routes authentifiées.
- * - Attend la fin de l'init Firebase avant de rediriger (évite le flash)
- * - Sauvegarde l'URL courante pour rediriger après login
- */
-const AuthGuard = ({ children }) => {
-  const user            = useAppStore((s) => s.user);
-  const authLoading     = useAppStore((s) => s.authLoading);
-  const location        = useLocation();
+interface AuthGuardProps {
+  children: ReactNode;
+}
 
-  // Firebase pas encore initialisé — on attend sans rediriger
+const AuthGuard = ({ children }: AuthGuardProps) => {
+  const user = useAppStore((s) => s.user);
+  const authLoading = useAppStore((s) => s.authLoading);
+  const location = useLocation();
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center" aria-label="Checking authentication" role="status">
@@ -22,7 +21,6 @@ const AuthGuard = ({ children }) => {
   }
 
   if (!user?.uid) {
-    // Sauvegarde la destination pour rediriger après login
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

@@ -1,9 +1,18 @@
-import { createContext, useContext } from 'react';
-import { useTheme } from '../../hooks/useTheme';
+import { createContext, useContext, ReactNode } from 'react';
+import { useTheme, Theme } from '../../hooks/useTheme';
 
-const ThemeContext = createContext();
+interface ThemeContextValue {
+  theme: Theme;
+  toggleTheme: () => void;
+}
 
-export const ThemeProvider = ({ children }) => {
+const ThemeContext = createContext<ThemeContextValue | null>(null);
+
+interface ThemeProviderProps {
+  children: ReactNode;
+}
+
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const themeValue = useTheme();
   return (
     <ThemeContext.Provider value={themeValue}>
@@ -12,7 +21,7 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-export const useThemeContext = () => {
+export const useThemeContext = (): ThemeContextValue => {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error('useThemeContext must be used within ThemeProvider');

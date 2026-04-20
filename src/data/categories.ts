@@ -1,4 +1,6 @@
-export const categories = [
+import type { Category } from '../types';
+
+export const categories: Category[] = [
   {
     id: 'men',
     name: "Men's Watches",
@@ -33,8 +35,9 @@ export const categories = [
   },
 ];
 
-export const getAllCategories = () => categories;
+export const getAllCategories = (): Category[] => categories;
 
-export const getCategoryBySlug = (slug) => categories.find((c) => c.slug === slug);
+export const getCategoryBySlug = (slug: string): Category | undefined =>
+  categories.find((c) => c.slug === slug);
 
 export default categories;

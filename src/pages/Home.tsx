@@ -96,7 +96,7 @@ const Home = () => {
   const handleImgError = useImageFallback();
 
   return (
-    <div className="bg-[#0a0a0a]">
+    <div className="relative bg-[#0a0a0a]">
       <PageMeta
         description="Curated luxury timepieces for the modern collector. Shop exclusive watch drops at HORLOGÉS — authenticated, insured, delivered."
         canonical="/"

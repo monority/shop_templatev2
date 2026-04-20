@@ -3,22 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useCart, useFavorites } from '../../store';
 import { formatPrice } from '../../utils/format';
 import useImageFallback from '../../hooks/useImageFallback';
-
-interface Product {
-  id: string | number;
-  name: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  isNew?: boolean;
-  discount?: number;
-  rating?: number;
-  movement?: string;
-}
+import type { Product as ProductType } from '../../types';
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductType;
   showAddToCart?: boolean;
   dark?: boolean;
 }
@@ -53,8 +41,8 @@ const ProductCard = memo(({ product, showAddToCart = true, dark = false }: Produ
 
   const handleAddToCart = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart({ id, name, brand, price, image, size: 40, color: 'Black Leather', quantity: 1 });
-  }, [id, name, brand, price, image, addToCart]);
+    addToCart({ ...product, size: 40, color: 'Black Leather', quantity: 1 });
+  }, [product, addToCart]);
 
   const handleFavorite = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
