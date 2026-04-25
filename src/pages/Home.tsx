@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion';
+import { animate } from 'framer-motion/dom';
 import { useFeaturedProducts } from '../hooks/useProducts';
 import { useCategories } from '../hooks/useCategories';
 import { Hero } from '../components/ui/Hero';
@@ -30,19 +31,21 @@ const MARQUEE_ITEMS = ['HORLOGÉS', 'LUXURY TIMEPIECES', 'SS 2026', 'EXCLUSIVE D
 const Counter = ({ value, suffix = '' }: { value: number; suffix?: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const motionVal = useMotionValue(0);
-  const rounded = useTransform(motionVal, (v) => Math.round(v).toLocaleString() + suffix);
+  const rounded = useTransform(motionVal, (v: number) => Math.round(v).toLocaleString() + suffix);
 
   useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        const controls = motionVal.animation;
-        import('framer-motion').then(({ animate }) => {
-          animate(motionVal, value, { duration: 1.8, ease: [0.25, 0.1, 0.25, 1] });
-        });
-        observer.disconnect();
-      }
+      if (!entry.isIntersecting) return;
+
+      animate(motionVal, value, { duration: 1.8, ease: [0.25, 0.1, 0.25, 1] });
+      observer.disconnect();
     }, { threshold: 0.5 });
-    if (ref.current) observer.observe(ref.current);
+
+    observer.observe(element);
+
     return () => observer.disconnect();
   }, [value, motionVal]);
 
@@ -59,7 +62,7 @@ const SectionLabel = ({ children, light = false }: { children: string; light?: b
 // Infinite horizontal marquee using CSS
 const Marquee = ({ items, speed = 30, reverse = false }: { items: string[]; speed?: number; reverse?: boolean }) => (
   <div className="overflow-hidden py-5 border-y border-white/[0.06]" aria-hidden="true">
-    <div 
+    <div
       className="flex gap-12 whitespace-nowrap"
       style={{
         animation: `${reverse ? 'marquee-reverse' : 'marquee'} ${speed}s linear infinite`,
