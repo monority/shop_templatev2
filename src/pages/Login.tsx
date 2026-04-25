@@ -9,7 +9,11 @@ const FAKE_USERS = [
   { email: 'admin@horlog.com', password: 'admin1234', username: 'admin' },
 ];
 
-const EyeIcon = ({ open }) => open ? (
+interface EyeIconProps {
+  open: boolean;
+}
+
+const EyeIcon = ({ open }: EyeIconProps) => open ? (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
     <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
     <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
@@ -35,7 +39,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -79,7 +83,7 @@ const Login = () => {
       </button>
 
       {/* Left — branding (desktop) */}
-      <div className="hidden lg:flex flex-1 flex-col justify-between p-16 border-r border-white/[0.06]">
+      <div className="hidden items-center lg:flex flex-1 flex-col justify-between p-16 border-r border-white/[0.06] center">
         <button onClick={() => navigate('/')} className="text-white text-xl font-black tracking-[-0.02em] focus-visible:outline-none" style={{ fontFamily: "'DM Serif Display', serif" }}>
           HORLOGÉS
         </button>
